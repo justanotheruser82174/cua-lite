@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REAL_GSETTINGS=/usr/bin/gsettings
+
+is_large_text_key() {
+  [ "${2:-}" = "org.gnome.desktop.a11y.interface" ] && [ "${3:-}" = "large-text" ]
+}
+
+is_legacy_a11y_interface_schema() {
+  [ "${2:-}" = "org.gnome.desktop.a11y.interface" ]
+}
+
+read_real_text_scale() {
+  "$REAL_GSETTINGS" get org.gnome.desktop.interface text-scaling-factor 2>/dev/null \
+    | tr -d "'" || printf '%s\n' "1.0"
+}
+
+read_large_text() {
+  scale="$(read_real_text_scale)"
+  if awk -v value="$scale" 'BEGIN { exit !(value + 0 > 1.0) }'; then
+    printf '%s\n' "true"
+  else
+    printf '%s\n' "false"
+  fi
+}
+
+set_large_text() {
+  value="$(printf '%s' "${1:-}" | tr '[:upper:]' '[:lower:]')"
+  case "$value" in
+    true|yes|1)
+      scale=1.25
+      ;;
+    false|no|0)
+      scale=1.0
+      ;;
+    *)
+      printf 'Invalid large-text value: %s\n' "${1:-}" >&2
+      exit 1
+      ;;
+  esac
+  "$REAL_GSETTINGS" set org.gnome.desktop.interface text-scaling-factor "$scale"
+}
+
+if is_large_text_key "$@"; then
+  case "${1:-}" in
+    get)
+      read_large_text
+      exit 0
+      ;;
+    set)
+      set_large_text "${4:-}"
+      exit 0
+      ;;
+    reset)
+      "$REAL_GSETTINGS" set org.gnome.desktop.interface text-scaling-factor 1.0
+      exit 0
+      ;;
+    range)
+      printf '%s\n' "type b"
+      exit 0
+      ;;
+    writable)
+      printf '%s\n' "true"
+      exit 0
+      ;;
+    describe)
+      printf '%s\n' "Use large text for accessibility."
+      exit 0
+      ;;
+  esac
+fi
+
+if is_legacy_a11y_interface_schema "$@" && [ "${1:-}" = "list-keys" ]; then
+  printf '%s\n' "large-text"
+  exit 0
+fi
+
+if is_legacy_a11y_interface_schema "$@" && [ "${1:-}" = "list-recursively" ]; then
+  printf 'org.gnome.desktop.a11y.interface large-text %s\n' "$(read_large_text)"
+  exit 0
+fi
+
+exec "$REAL_GSETTINGS" "$@"

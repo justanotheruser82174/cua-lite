@@ -1,0 +1,86 @@
+# GPT vision+coord rollout eval on cua-lite browsergym.webarena.
+#
+# Routing: env declares ``platform="browser"``, ``task_type="use"``,
+# so ``make`` composes the key ``gpt@browser@use``. That resolves to
+# the shared desktop/browser computer-use agent class registered under
+# ``r"gpt@(desktop|browser)@use"``. Same agent class as the OSWorld
+# desktop rollout — only env_kwargs differ.
+#
+# Obs / action shape:
+#   - Native ``{"type":"computer"}`` tool: agent sees the page
+#     as a screenshot, emits coord-based
+#     actions (click(x,y), type(text), keypress, scroll, …) which the
+#     env routes through ``LiteBrowserActionSpace``.
+#   - Env-supplied browsergym ``extra_tools`` (e.g. ``response``,
+#     ``terminate``, ``goto``) surface alongside as function
+#     tools — the same ``extra_tools`` the qwen3_vl default rollout
+#     uses.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/gpt/default/osworld.yaml                          (Mac/Linux desktop counterpart)
+#   - scripts/configs/qwen3_vl/default/browsergym.webarena/default.yaml  (open-source counterpart)
+#
+# Prereqs: WA stack up (`source lite/gym/envs/browsergym/scripts/start.sh webarena`)
+# + ``OPENAI_API_KEY`` set; set ``OPENAI_BASE_URL`` only for a custom endpoint.
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+  # ─── WebArena strict-string final-answer rule ───────────────────────────
+  # WA/VWA grade the final answer with upstream webarena's StringEvaluator.
+  # Two of its three modes (exact_match, must_include) are LITERAL matches —
+  # a correct value wrapped in prose/markdown scores 0 (e.g. "The top-1 best-
+  # selling product is **Sprite Yoga Strap 6 foot**." fails vs ref
+  # "Sprite Yoga Strap 6 foot").
+  #
+  # This prompt is delivered as a ``developer`` message EVERY turn
+  # (system_prompt_in_input defaults true), so it must stay behaviorally
+  # INERT on non-answer tasks. An earlier, chattier version (role framing +
+  # heavy "finish by sending only the value" emphasis) recovered +13
+  # string_match tasks but regressed -23 program_html/url_match/pure_action
+  # tasks — those are graded on final PAGE/URL state, so an answer-format
+  # hint can only hurt them by biasing the agent to stop early and type an
+  # answer instead of landing on the target page. Net ~0. Hence: no role
+  # framing (the native computer tool already defines the role — baseline had
+  # NO system prompt), and an explicit carve-out protecting navigate/act
+  # tasks. NOTE: GPT finishes a QA task by emitting a plain final text message
+  # ("type":"output_text"), NOT a response tool call; the N3 content-only final
+  # path forwards that text through the canonical final-answer path for grading — so the rule
+  # constrains the FINAL TEXT MESSAGE itself. Keeps the evaluator untouched so
+  # scores stay comparable with the published benchmark.
+  system_prompt: |-
+    When a task asks you to report or answer with specific information, your
+    final message must contain ONLY the exact requested value(s) — no prose,
+    labels, explanations, extra facts, markdown (no **bold**, backticks, or
+    bullets), or surrounding quotes/units unless a unit is literally part of
+    the value. Preserve the value exactly as shown: spelling, casing,
+    punctuation, symbols, currency, IDs, names, dates, and the order of
+    multiple values. If several values are requested, separate them exactly as
+    the task specifies. Example: send `Sprite Yoga Strap 6 foot`, not "The
+    top-1 best-selling product is **Sprite Yoga Strap 6 foot**."
+
+    If instead the task asks you to navigate to, open, or display a
+    page/route, or to perform an action, complete it by leaving the browser in
+    the required final state — do not stop early to type an answer.
+
+env_id: "browsergym.webarena"
+env_kwargs:
+  with_homepage_hint: true  # WebArena p_cot homepage hint: appends homepage URL + site list + /password.html creds to the goal (helps weak models navigate, avoids wandering to public URLs). WA-only (VWA TypeErrors).
+  max_steps: 30
+  extra_tools: ["response", "terminate", "goto", "back", "forward", "new_tab", "switch_tab", "close_tab"]
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  # Defaults from ``BrowserGymConfig`` (``use_screenshot=true``,
+  # ``use_ax_tree=false``); listed explicitly here for symmetry with
+  # text_only.yaml's obs-mode block.
+  use_screenshot: true
+  use_ax_tree: false
+
+
+  # Vision fast-path: explicitly skip BrowserGym's O(nodes) per-step DOM-
+  # snapshot + AXTree + extra-properties extraction (only the screenshot is
+  # used). SAFE here: coordinate-only action space (no bids). Independent of
+  # use_ax_tree by design (keeps set-of-marks vision possible). Drops env.step
+  # ~22-32s -> ~1-2s on big WA/VWA pages. See main.py _patch_lightweight_obs.
+  skip_dom_extraction: true

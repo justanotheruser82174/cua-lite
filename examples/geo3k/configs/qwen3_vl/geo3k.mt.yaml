@@ -1,0 +1,16 @@
+# Qwen3-VL base-agent multi-turn GRPO config for Geo3K.
+#
+# Natural-language answers are scored each turn. Wrong answers return
+# model-visible feedback until max_turns is reached.
+
+agent_id: "qwen3_vl.base"
+agent_kwargs:
+  render_tools_section: false
+  system_prompt: |-
+    Solve the geometry problem. You may revise your answer over multiple turns.
+    Reply in natural language, and put the final answer on the last line as:
+    Answer: \boxed{...}
+
+env_id: "geo3k"
+env_kwargs:
+  max_turns: 3

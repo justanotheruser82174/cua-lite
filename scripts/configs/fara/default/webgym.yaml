@@ -1,0 +1,33 @@
+# Fara-1.0 rollout eval on WebGym (OmniBoxes web information-retrieval).
+#
+# Fara-7B is a Qwen2.5-VL-7B web-browsing fine-tune — see the webharbor.webvoyager
+# configs for the full family / hyperparameter rationale. WebGym is a
+# cua-lite browser env (not a Fara reference benchmark); the hyperparameters below
+# still track the reference eval defaults (max_rounds=100, max_n_images=3,
+# temperature=0).
+#
+# Prereqs: the ``lite.webgym`` container (OmniBoxes pool). See
+# lite/gym/envs/webgym/README.md.
+
+agent_id: "fara"
+agent_kwargs:
+  # Do not set agent-side resolution: keep screenshots in the env viewport.
+  # If a 1440x900 browser is needed, set env_kwargs.viewport instead.
+  protocol_kwargs:
+    max_n_images: 3
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "webgym"
+env_kwargs:
+  max_steps: 100    # Fara reference max_rounds default
+  # Fara's web nav/finish is native to computer_use, but the translated
+  # canonical Lite calls (goto/back/terminate/response) still need schemas for
+  # env acceptance and self-contained rollout parquet. Fara's adapter does not
+  # render these schemas into its native prompt grammar.
+  extra_tools: ["goto", "back", "response", "terminate"]
+  # GUI action enum only; Fara-native nav/search/memory/finish stay on the
+  # family wire, not in env_kwargs.valid_actions. The standalone response schema
+  # above only gates env answer capture.
+  valid_actions: ["click", "type", "key", "mouse_move", "scroll", "wait"]

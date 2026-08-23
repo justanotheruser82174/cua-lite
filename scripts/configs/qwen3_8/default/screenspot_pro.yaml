@@ -1,0 +1,17 @@
+# Qwen3.8 rollout eval on ScreenSpot-Pro
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+#
+# Reference (sampling): ${CUA_LITE_REFERENCES_ROOT}/ScreenSpot-Pro-GUI-Grounding/models/qwen3_5.py
+# Upstream HF ``Qwen3_5_Model``: ``do_sample=False, temperature=0.0``
+# (``top_p`` is moot under greedy decoding).
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_8/default/osworld_g.yaml       (sibling grounding bench)
+#   - scripts/configs/qwen3_8/compact/screenspot_pro.yaml       (RL training, history_n=1)
+
+agent_id: "qwen3_8"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "screenspot_pro"

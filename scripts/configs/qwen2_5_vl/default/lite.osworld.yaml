@@ -1,0 +1,18 @@
+# Qwen2.5-VL rollout eval on lite.osworld (docker-based Ubuntu desktop)
+#
+# Reference: upstream OSWorld `mm_agents/qwen25vl_agent.py`.
+# Resolution matches the SFT training config for train/eval alignment.
+# Sampling: temperature=0 (greedy), top_p=0.9.
+
+agent_id: "qwen2_5_vl"
+agent_kwargs:
+  resolution: [1280, 720]
+
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    top_p: 0.9
+    max_new_tokens: 1500
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 50
+  loop_detect: 5

@@ -1,0 +1,12 @@
+## e32c7948 ← 1bdef611  (2026-04-28)
+
+env-side grounding harness rebuilt as `grounding.point`:
+
+- env declares `task_type="grounding.point"` (was `"grounding.action"`); `valid_actions=["point"]`; `step()` consumes `name=="point"`.
+- Each agent family ships a per-platform trimmed grounding harness — single click action only, no scroll/type/key/drag/terminate. Refusal stays on the env's `report_infeasible` extra tool. Per-family wire formats:
+  - `qwen3_vl`/`qwen3_5`/`evocua` desktop: `computer_use(action="left_click", coordinate=...)` — single-enum schema
+  - `qwen3_vl`/`qwen3_5` mobile: `mobile_use(action="click", coordinate=...)` — touchscreen-flavored
+  - `ui_tars`/`ui_tars_15_v1` desktop+mobile: `Action: click(start_box='(x,y)')` — pyautogui-style text, single line
+  - `mai_ui` (NEW family on grounding): `<grounding_think>...</grounding_think><answer>{"coordinate":[x,y]}</answer>` — non-tool_call text format from MAI cookbook
+- Each family ships a grounding-only system prompt (`GROUNDING_POINT_SYSTEM_PROMPT` for Qwen-family, `GROUNDING_USER_PROMPT` for UI-TARS, `MAI_GROUNDING_SYS_PROMPT` for MAI-UI) — replaces the previous "system message is just the tools schema" empty-prompt design.
+- Why it matters here: lets each model run grounding on its own SFT-aligned interface (esp. MAI-UI which couldn't fit into the navigation tool_call schema at all). Numbers from this commit are NOT directly comparable to `8b9d4bd`'s — the harness shape changed end-to-end. Expected to lift MER for MAI-UI (newly enrolled) and reduce schema-leakage noop for Qwen3.5 (trimmed enum).

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "env": "osworld_2",
+  "commit_dir": "2026-07-18T14-23_0cde57702f",
+  "run_id": "run_0",
+  "commit": {
+    "short_sha": "0cde57702f",
+    "subject": "revert: restore osworld launcher code"
+  },
+  "artifact_root": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0",
+  "result_count": 5,
+  "status_counts": {
+    "complete": 4,
+    "partial": 1,
+    "empty": 0
+  },
+  "results": [
+    {
+      "model": "Qwen/Qwen3-VL-32B-Instruct",
+      "slug": "Qwen_Qwen3-VL-32B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-32B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 82,
+      "num_tasks": 82,
+      "num_samples": 82,
+      "mean_episode_return": 0.014600110741971206,
+      "summary_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-32B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-32B-Instruct"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-4B-Instruct",
+      "slug": "Qwen_Qwen3-VL-4B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-4B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 82,
+      "num_tasks": 82,
+      "num_samples": 82,
+      "mean_episode_return": 0.012929901682737758,
+      "summary_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-4B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-4B-Instruct"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "slug": "Qwen_Qwen3-VL-8B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-8B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 82,
+      "num_tasks": 82,
+      "num_samples": 82,
+      "mean_episode_return": 0.00789941387785971,
+      "summary_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-8B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-8B-Instruct"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-2B-Instruct",
+      "slug": "Qwen_Qwen3-VL-2B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-2B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 82,
+      "num_tasks": 82,
+      "num_samples": 82,
+      "mean_episode_return": 0.0061311211949328795,
+      "summary_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-2B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/Qwen_Qwen3-VL-2B-Instruct"
+    },
+    {
+      "model": "gpt-5.5",
+      "slug": "gpt-5.5",
+      "base_slug": "gpt-5.5",
+      "config_id": "default",
+      "status": "partial",
+      "num_valid": 81,
+      "num_tasks": 82,
+      "num_samples": 82,
+      "mean_episode_return": 0.39909327987336085,
+      "summary_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/gpt-5.5/summary.json",
+      "artifact_path": ".exps/eval/osworld_2/2026-07-18T14-23_0cde57702f/run_0/gpt-5.5"
+    }
+  ]
+}

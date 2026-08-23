@@ -1,0 +1,36 @@
+# Fara-1.0 rollout eval on Online-Mind2Web.
+#
+# Fara-7B is a Qwen2.5-VL-7B web-browsing fine-tune — see the webharbor.webvoyager
+# configs for the full family / hyperparameter rationale.
+#
+# The cua-lite ``online_mind2web`` env IS Online-Mind2Web (the same live-web benchmark
+# the reference ``fara/webeval/scripts/om2w.py`` runs, `WebJudge` reward). The
+# reference uses the shared eval defaults: max_rounds=100, max_n_images=3,
+# temperature=0.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/online_mind2web.yaml
+#   - scripts/configs/gpt/default/online_mind2web.yaml
+
+agent_id: "fara"
+agent_kwargs:
+  # Do not set agent-side resolution: keep screenshots in the env viewport.
+  # If a 1440x900 browser is needed, set env_kwargs.viewport instead.
+  protocol_kwargs:
+    max_n_images: 3
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "online_mind2web"
+env_kwargs:
+  max_steps: 100    # Fara reference max_rounds default (caps the per-task budget)
+  # Fara's web nav/finish is native to computer_use, but the translated
+  # canonical Lite calls (goto/back/terminate/response) still need schemas for
+  # env acceptance and self-contained rollout parquet. Fara's adapter does not
+  # render these schemas into its native prompt grammar.
+  extra_tools: ["goto", "back", "response", "terminate"]
+  # GUI action enum only; Fara-native nav/search/memory/finish stay on the
+  # family wire, not in env_kwargs.valid_actions.
+  valid_actions: ["click", "type", "key", "mouse_move", "scroll", "wait"]
+  skip_eval: false

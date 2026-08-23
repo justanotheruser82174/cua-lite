@@ -1,0 +1,89 @@
+# Qwen3.5 text+bid rollout on cua-lite browsergym.webarena.
+#
+# Sampling: greedy decode (temperature 0.0), no native thinking channel
+# (eval-matrix default; the factory pins enable_thinking=False for Qwen3.5).
+# max_new_tokens unset → the 2048 default (lite/infer/serving.py), sufficient
+# for non-thinking bid/answer turns.
+# Sister of `scripts/configs/qwen3_vl/default/browsergym.webarena/text_only.yaml`.
+# Same env knobs + bid system_prompt; only the agent backbone changes
+# (qwen3_5@browser@use registered for the same key pattern). Pair with
+# `--model-id Qwen/Qwen3.5-9B` for direct cua-lite-vs-reference WA comparison.
+#
+# Why `browsergym.generic` (rebuild-per-turn, paper-aligned) and NOT
+# `lite.history` (chat-style increment): cua-lite chat history accumulates
+# the FULL AXTree obs in every user_N message. WA shopping_admin pages can
+# have ~75K-token AXTrees, so by turn 2 the prompt is ~155K and overflows
+# Qwen3.5's 128K context. AgentLab-style rebuild keeps the past actions in
+# a short `# History` section (just `click('a47')` strings) and renders a
+# single current AXTree, so each turn's prompt stays bounded ~80K. Sglang
+# radix cache still hits on the static system + tools preamble.
+#
+# Prereqs: docker WA stack up + WA_* env vars.
+# Optional filter on STATIC task facts in metadata.others (no baked exclude_reason):
+#   --filter "lambda m: 'map' not in m.others.get('sites', []) and not m.others.get('llm_as_a_judge')"
+# Map runs by default (install.sh installs OSM); the map clause is only needed if you
+# built with WEBARENA_INSTALL_MAP=0. The llm_as_a_judge clause skips LLM-judge tasks
+# (they otherwise run with OPENAI_API_KEY).
+# A cold-booting WA service is retried via 503, not pre-excluded.
+# Pair with sglang `--context-length 131072` (Qwen3.5 native max).
+
+agent_id: "qwen3_5.base"
+agent_kwargs:
+  protocol_key: "browsergym.generic"
+  protocol_kwargs:
+    use_concrete_example: false
+    use_hints: true
+    # Render `# History` tool_calls in Qwen3.5's XML wire format (matching this
+    # adapter's `<tool_call><function=...>...</tool_call>`), NOT the protocol's
+    # JSON default — else the history mis-models the format and the XML-strict
+    # parser drops every later turn to noop. (Qwen3-VL siblings keep "json".)
+    tool_call_format: "xml"
+  # Only honored by rollout.py; RL sets sampling via trainer flags.
+  sampling_kwargs:
+    temperature: 0.0
+  # AgentLab paper-aligned system prompt: minimal web-task framing, no
+  # response-format rules. The chat template's auto-injected `# Tools`
+  # section + `<tool_call>` example teaches the wire format. The
+  # protocol-rendered # Hints block (gated by `use_hints=true` above)
+  # provides task-specific guidance (bid usage, dropdowns,
+  # auto-completion). This avoids a `Action: <prose>` requirement that bloats
+  # copied history with per-step reasoning and action prose.
+  # Verbatim from `agentlab.agents.dynamic_prompting.SystemPrompt`
+  # (${CUA_LITE_REFERENCES_ROOT}/AgentLab/src/agentlab/agents/dynamic_prompting.py).
+  system_prompt: |-
+    You are an agent trying to solve a web task based on the content of the page and
+    user instructions. You can interact with the page and explore, and send messages to the user. Each time you
+    submit an action it will be sent to the browser and you will receive a new page.
+
+    Use response when you are ready to provide the final response. For
+    WebArena question-answering tasks, put only the exact requested value(s) in
+    that final message. Do not add preambles, labels, markdown, explanations,
+    quotes unless they are part of the value, or extra facts. Preserve exact
+    spelling, casing, punctuation, symbols, IDs, product names, prices, dates,
+    and order from the page or user request.
+
+env_id: "browsergym.webarena"
+env_kwargs:
+  # WebArena p_cot homepage hint: append homepage URL, site list, and
+  # /password.html creds to the goal. WA-only; VWA does not accept this knob.
+  with_homepage_hint: true
+  max_steps: 30
+  # ─── Obs mode: text-only AXTree (no screenshot) ──────────────────────
+  # ``use_screenshot=false`` + ``use_ax_tree=true`` = text-only obs (the
+  # agent-as-annotators / paper observation shape). Per-step obs is the
+  # AXTree dump — no images. See ``lite/gym/envs/browsergym/main.py``
+  # ``BrowserGymConfig`` for the full ObsFlags surface.
+  use_screenshot: false
+  use_ax_tree: true
+  use_focused_element: true
+  use_error_logs: true
+  extract_visible_tag: true
+  extract_clickable_tag: true
+  extract_coords: "False"
+  filter_visible_elements_only: false
+  action_subsets: ["webarena"]
+  extra_tools: ["scroll", "keyboard_press", "click", "fill", "hover", "switch_tab", "new_tab", "back", "forward", "goto", "close_tab", "select_option", "response", "terminate"]
+  # Disable only the LiteBrowser coord action-batch tool. BrowserGym bid/nav/finish
+  # tools stay active through ``extra_tools`` above; rejected GUI calls still get
+  # paired model-visible feedback with the current obs text/image preserved.
+  valid_actions: []

@@ -1,0 +1,20 @@
+# UI-TARS-1.5-7B rollout eval on OSWorld
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/OSWorld/scripts/python/run_multienv_uitars15_v1.py
+# Sampling per upstream hardcoded call sites (L209, L225): temperature=0.0,
+# top_p=0.9 (top_p is inactive under greedy decoding and omitted).
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/osworld.yaml  (Qwen3-VL rollout)
+#   - scripts/configs/ui_tars/default/osworld.yaml    (UI-TARS rollout)
+
+agent_id: "ui_tars_15_v1"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  extra_tools: ["terminate"]

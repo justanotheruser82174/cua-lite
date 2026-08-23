@@ -1,0 +1,31 @@
+# UI-TARS-1.5-7B rollout eval on MobileWorld
+# 161 tasks (201 upstream − 40 agent-mcp) across 20 apps in DinD boxes,
+# evaluated by real device / backend state.
+#
+# Related configs (sync env_kwargs / sampling when changing):
+#   - scripts/configs/ui_tars/default/mobileworld.yaml  (UI-TARS-7B-DPO)
+#   - scripts/configs/ui_tars_15_v1/default/androidworld.yaml  (mobile sibling)
+#
+# Decoding defaults align with UI-TARS/README_deploy.md (temperature=0.0,
+# top_p=None, max_tokens=400). Kept identical to ui_tars/mobileworld.yaml for
+# fair cross-checkpoint comparison unless reproducing a paper-specific table.
+#
+# NOTE: the 46 agent-user-interaction tasks need the ``ask_user`` extra
+# tool, which UI-TARS's fixed action grammar cannot express — expect those
+# tasks to score 0; GUI-only tasks are unaffected.
+
+agent_id: "ui_tars_15_v1"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    # max_new_tokens=400 matches UI-TARS/README_deploy.md (default would
+    # be 2048 from scripts/rollout.py; we cap to stay aligned with
+    # the upstream deploy example + ui_tars sibling).
+    max_new_tokens: 400
+
+# max_steps omitted: mobileworld's env default is 50 (upstream ``mw eval
+# --max_round 50``).
+env_id: "mobileworld"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["response", "terminate"]

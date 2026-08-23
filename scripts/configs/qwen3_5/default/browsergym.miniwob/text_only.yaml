@@ -1,0 +1,65 @@
+# Qwen3.5 text+bid rollout on cua-lite browsergym.miniwob.
+#
+# Sister of `scripts/configs/qwen3_vl/default/browsergym.miniwob/text_only.yaml`
+# (same env knobs / `["bid", "chat", "infeas"]` action subset / max_steps=10) and of
+# `qwen3_5/default/browsergym.webarena/text_only.yaml` (same agent backbone /
+# sampling / chat-template story). Pair with `--model-id Qwen/Qwen3.5-9B`.
+#
+# Why `browsergym.generic` (rebuild-per-turn) over `lite.history`: same as the
+# webarena sibling — keeps every browsergym text+bid yaml on a single protocol.
+# MiniWoB AXTrees are tiny (~1K) so chat-style accumulation would also fit, but
+# protocol parity simplifies the harness.
+#
+# Prereqs: miniwob HTML server on 7560; MINIWOB_URL=http://localhost:7560/miniwob/.
+# Pair with sglang `--context-length 131072` (Qwen3.5 native max).
+
+agent_id: "qwen3_5.base"
+agent_kwargs:
+  protocol_key: "browsergym.generic"
+  protocol_kwargs:
+    use_concrete_example: false
+    use_hints: true
+    # Render `# History` tool_calls in Qwen3.5's XML wire format (matching this
+    # adapter's `<tool_call><function=...>...</tool_call>`), NOT the protocol's
+    # JSON default — else the history mis-models the format and the XML-strict
+    # parser drops every later turn to noop. (Qwen3-VL siblings keep "json".)
+    tool_call_format: "xml"
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+  # AgentLab paper-aligned minimal system prompt — see webarena sibling
+  # for full rationale. MiniWoB uses the same framing; most tasks are pressed
+  # through the UI, but `response`/`terminate` are surfaced (like every other
+  # browsergym row) so the model has a way to END the episode.
+  system_prompt: |-
+    You are an agent trying to solve a web task based on the content of the page and
+    user instructions. You can interact with the page and explore, and send messages to the user. Each time you
+    submit an action it will be sent to the browser and you will receive a new page.
+
+env_id: "browsergym.miniwob"
+env_kwargs:
+  max_steps: 10
+  # Mark SVG children too; bid-only MiniWoB tasks like ascending-numbers need
+  # individual <text> elements to receive bids.
+  tags_to_mark: "all"
+  # ─── Obs mode: text-only AXTree (no screenshot) ──────────────────────
+  # ``use_screenshot=false`` + ``use_ax_tree=true`` = text-only obs (the
+  # agent-as-annotators / paper observation shape). Per-step obs is the
+  # AXTree dump — no images. See ``lite/gym/envs/browsergym/main.py``
+  # ``BrowserGymConfig`` for the full ObsFlags surface.
+  use_screenshot: false
+  use_ax_tree: true
+  use_focused_element: true
+  use_error_logs: true
+  extract_visible_tag: true
+  extract_clickable_tag: true
+  extract_coords: "False"
+  filter_visible_elements_only: false
+  # bid + chat + infeas: `bid` alone surfaces no finish action. `chat` →
+  # `response`, `infeas` → `terminate`; ``extra_tools`` below makes those
+  # BrowserGym tools active while ``valid_actions: []`` removes only coords.
+  action_subsets: ["bid", "chat", "infeas"]
+  extra_tools: ["scroll", "fill", "select_option", "click", "dblclick", "hover", "press", "focus", "clear", "drag_and_drop", "upload_file", "response", "terminate"]
+  # Disable only the LiteBrowser coord action-batch tool. BrowserGym bid/finish tools
+  # stay active through ``extra_tools`` above; rejected GUI calls still get
+  # paired model-visible feedback with the current obs text/image preserved.
+  valid_actions: []

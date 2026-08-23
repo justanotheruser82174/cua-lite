@@ -1,0 +1,13 @@
+[{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a web agent.'}]},
+ {'role': 'user',
+  'content': [{'type': 'metadata', 'data': {'web_text': '[1] <button> Search;\t[2] <input> Query'}},
+              {'type': 'text',
+               'text': 'Please generate the next move according to the UI screenshot, instruction '
+                       'and previous actions.\n'
+                       '\n'
+                       'Instruction: Find and search for jackets.\n'
+                       '\n'
+                       'Previous actions:\n'
+                       'None\n'
+                       '[1] <button> Search;\t[2] <input> Query'},
+              {'type': 'image', 'index': 0}]}]

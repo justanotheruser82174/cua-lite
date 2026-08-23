@@ -1,0 +1,16 @@
+# Claude rollout eval on lite.osworld
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/gpt/default/lite.osworld.yaml    (GPT rollout)
+#   - scripts/configs/claude/default/osworld.yaml    (OSWorld rollout)
+
+agent_id: "claude"
+agent_kwargs:
+  api_kwargs:
+    effort: "medium"
+    max_tokens: 4096
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 0

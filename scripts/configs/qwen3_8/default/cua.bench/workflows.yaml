@@ -1,0 +1,18 @@
+# Qwen3.8 rollout eval on cua.bench.local.workflows (a real trycua/cua-xfce container; needs Docker).
+# Real-app workflows (openshot, unity; 52 tasks). Medium-length → max_steps 100.
+# Setup: lite/gym/envs/cua/README.md (install.sh downloads datasets → .cache; no export).
+# Sibling structure: scripts/configs/qwen3_8/default/lite.osworld.yaml
+#
+# Run:  uv run python scripts/rollout.py --config-path scripts/configs/qwen3_8/default/cua.bench/workflows.yaml \
+#         --env-id cua.bench.local.workflows --splits eval --concurrency 8
+
+agent_id: "qwen3_8"
+agent_kwargs:
+  sampling_kwargs:   # only honored by rollout.py; RL sets sampling via the trainer
+    temperature: 0.0
+
+env_id: "cua.bench.local.workflows"
+env_kwargs:
+  max_steps: 100
+  loop_detect: 5   # force terminate after 5 identical consecutive actions
+  extra_tools: ["terminate"]

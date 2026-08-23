@@ -1,0 +1,27 @@
+# EvoCUA rollout eval on OSWorld-G
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+# 564 tasks across bbox / polygon / refusal modes; refusals are tagged
+# ``exclude_reason="refusal"`` — skip via
+# ``--filter "lambda m: not m.others.get('exclude_reason')"``.
+#
+# Reference (sampling): no EvoCUA wrapper in
+# ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/ (only gemini / operator /
+# qwen2_5 wrappers ship there). We pin greedy decoding (temperature=0.0)
+# here for deterministic eval — local.py's sampling defaults may change
+# over time, so pinning the value at config-time keeps this rollout
+# stable. EvoCUA's lite.osworld values (T=0.01, top_p=0.9, max_new=32768)
+# are OSWorld-specific multi-turn settings and not transferable to
+# single-step grounding.
+#
+# Reference (eval shape): ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/eval.py
+#
+# Related configs:
+#   - scripts/configs/evocua/default/screenspot_pro.yaml   (sibling grounding bench)
+#   - scripts/configs/evocua/default/lite.osworld.yaml     (multi-turn desktop, EvoCUA-specific sampling)
+
+agent_id: "evocua"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "osworld_g"

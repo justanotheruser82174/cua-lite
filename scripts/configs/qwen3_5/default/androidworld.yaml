@@ -1,0 +1,24 @@
+# Qwen3.5 rollout eval on AndroidWorld
+# Multi-step mobile tasks across 20 apps, evaluated by real device state.
+#
+# Qwen3.5 has no upstream AndroidWorld agent; we reuse the desktop
+# rolling-window + image-fold protocol (Qwen3_5HistoryProtocol) with
+# history_n=50 / image_max=4 / fold_size=4 — consistent with
+# lite.osworld / osworld (the Qwen3_5HistoryProtocol defaults).
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_5/compact/androidworld.yaml  (RL training)
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+# max_steps is omitted so androidworld uses its native complexity-based
+# budget: int(10 * task.complexity). Pass max_steps explicitly to override.
+env_id: "androidworld"
+env_kwargs:
+  # Qwen native open parses to canonical open_app; opt in to the env-side
+  # extra_tool boundary so app launch is available in this task.
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

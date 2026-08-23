@@ -1,0 +1,26 @@
+# Claude rollout eval on OSWorld-V2 (osworld_2)
+#
+# Mirrors scripts/configs/claude/default/osworld.yaml (v1) but uses the official
+# V2 step budget and a larger Claude output budget for longer trajectories.
+# Related configs (sync agent_kwargs when changing): the gpt + qwen3_vl osworld_2 configs.
+
+agent_id: "claude"
+agent_kwargs:
+  api_kwargs:
+    # Highest level Claude offers (low/medium/high/xhigh/max), paired with a
+    # large max_tokens as Anthropic recommends for xhigh/max.
+    #
+    # thinking_budget is raised WITH it, and that is load-bearing: on the 4.6
+    # generation this row still takes the fixed-budget branch
+    # (thinking:{type:"enabled"}), so the family default of 2048 would cap
+    # thinking there no matter what effort says -- the max_tokens bump alone
+    # would buy response text and nothing else. On 4.7/4.8 the branch is
+    # adaptive and effort alone governs depth, so the budget is inert.
+    effort: "max"
+    max_tokens: 64000
+    thinking_budget: 32000
+
+env_id: "osworld_2"
+env_kwargs:
+  max_steps: 200   # OSWorld-V2 official run value (V2 tasks need far longer trajectories than v1's 30)
+  loop_detect: 0   # a make/wrapper knob (LoopDetectWrapper), NOT an OSWorldV2Env.__init__ param

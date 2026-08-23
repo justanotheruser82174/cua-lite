@@ -1,0 +1,18 @@
+# Qwen3.5 base-agent GRPO config for Wordle.
+#
+# The env scores natural-language guesses and returns per-letter marks until
+# the word is found or max_turns is reached.
+
+agent_id: "qwen3_5.base"
+agent_kwargs:
+  render_tools_section: false
+  system_prompt: |-
+    Play Wordle. Use every previous mark to narrow the answer.
+    Think briefly — at most three short sentences — then end your reply with a
+    line of exactly:
+    Guess: <four-letter word>
+    The guess must be exactly four letters. Never repeat an earlier guess.
+
+env_id: "wordle"
+env_kwargs:
+  max_turns: 6

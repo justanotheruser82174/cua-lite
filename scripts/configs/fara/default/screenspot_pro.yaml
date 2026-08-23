@@ -1,0 +1,27 @@
+# Fara-1.0 rollout eval on ScreenSpot-Pro.
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+#
+# Fara-7B is a Qwen2.5-VL-7B fine-tune specialized for multi-step WEB browsing;
+# it has NO native grounding mode. This routes through the Fara family's
+# GroundingPoint adapter (:class:`FaraDesktopGroundingPointAdapter`), which
+# uses the standard ``# Tools`` header + grounding rules block (NOT Fara's
+# web-automation ``FN_CALL_TEMPLATE`` preamble) and a trimmed ``computer_use``
+# schema (``left_click`` only). Best-effort / experimental — provided for
+# completeness of the computer-use eval matrix.
+#
+# Coord wire format: pixel coords in the smart-resized image space (factor=28,
+# Fara's full max_pixels=12.85M). The adapter rescales to / from cua-lite
+# [0,1000] automatically.
+#
+# Sampling follows the grounding convention (max_new_tokens=1024, temperature=0)
+# — the wire format is a single short ``<tool_call>`` block.
+#
+# Related config: scripts/configs/qwen2_5_vl/default/screenspot_pro.yaml.
+
+agent_id: "fara"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1024
+
+env_id: "screenspot_pro"

@@ -1,0 +1,21 @@
+# Qwen3-VL RL training on lite.osworld
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/lite.osworld.yaml   (rollout eval)
+#
+# full_history_size=1 (reduced from the rollout default to save VRAM during training)
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  resolution: [1280, 720]
+  protocol_kwargs:
+    full_history_size: 1
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  # Qwen native `answer` lowers to `response`; imperative tasks still need `terminate`.
+  extra_tools: ["response", "terminate"]

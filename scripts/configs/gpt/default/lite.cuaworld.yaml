@@ -1,0 +1,25 @@
+# GPT rollout eval for any gym-anything (lite.cuaworld.*) software env — a single demo
+# config. The system prompt is intentionally generic (same shape as
+# lite.osworld.yaml); swap `env_id` for any onboarded software (see
+# lite/gym/envs/lite/cuaworld/main.py for the wired list). The default GPT route
+# uses OPENAI_* vars:
+#
+#   export OPENAI_API_KEY="..."
+#   export OPENAI_BASE_URL="..."   # optional; set only for a custom endpoint
+#   uv run python scripts/rollout.py --model-id gpt-5.5 \
+#     --env-id lite.cuaworld.pymol --splits eval --head 1 \
+#     --concurrency 1 --max-attempts 1 --save-data true --config-path \
+#     scripts/configs/gpt/default/lite.cuaworld.yaml \
+#     --filter "lambda m: not m.others.get('exclude_reason')"
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "lite.cuaworld.pymol"
+env_kwargs:
+  max_steps: 30
+  # display_resolution defaults to 1920x1080 for lite.cuaworld software envs — no override needed.
+  loop_detect: 5

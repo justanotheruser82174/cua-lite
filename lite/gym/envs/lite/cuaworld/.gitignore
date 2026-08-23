@@ -1,0 +1,2 @@
+# Upstream gym-anything assets (fetched by scripts/install.sh) — never vendored into git.
+.cache/

@@ -1,0 +1,55 @@
+diff --git a/src/win-arena-container/client/desktop_env/evaluators/getters/chrome.py b/src/win-arena-container/client/desktop_env/evaluators/getters/chrome.py
+index 53985bb..0f65c92 100644
+--- a/src/win-arena-container/client/desktop_env/evaluators/getters/chrome.py
++++ b/src/win-arena-container/client/desktop_env/evaluators/getters/chrome.py
+@@ -597,6 +597,26 @@ def get_active_url_from_accessTree(env, config):
+         Return
+             url: str
+     """
++
++    # UI Automation can take several minutes to traverse a modern Chromium
++    # tree. A single inspectable page is unambiguously the active task page,
++    # so use the already-required CDP endpoint before falling back to UIA.
++    if env.vm_platform == "Windows":
++        try:
++            response = requests.get(
++                f"http://{env.vm_ip}:9222/json/list",
++                timeout=5,
++            )
++            response.raise_for_status()
++            pages = [
++                target for target in response.json()
++                if target.get("type") == "page"
++                and not target.get("url", "").startswith(("chrome://", "edge://"))
++            ]
++            if len(pages) == 1 and pages[0].get("url"):
++                return pages[0]["url"]
++        except Exception as e:
++            logger.warning("Unable to read the active URL through CDP: %s", e)
+     
+     # Determine the correct a11y backend & selector based on OS and system architecture
+     selector = None
+diff --git a/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py b/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py
+index b68fb2d..b87c9ea 100644
+--- a/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py
++++ b/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py
+@@ -325,6 +325,9 @@ def is_cookie_deleted(cookie_data, rule):
+     Check if the cookie is deleted.
+     """
+ 
++    if cookie_data is None:
++        return 0.
++
+     if rule['type'] == 'domains':
+         cookies_domains = [cookie[1] for cookie in cookie_data]
+         for domain in rule['domains']:
+@@ -368,6 +371,9 @@ def check_history_deleted(history_data, rule):
+     Check if the history is deleted.
+     """
+ 
++    if history_data is None:
++        return 0.
++
+     if rule['type'] == 'keywords':
+         history_domains = [history[0] for history in history_data]
+         for keyword in rule['keywords']:

@@ -1,0 +1,17 @@
+# GPT rollout on lite.cuagym tasks.
+#
+# Mirrors the lite.osworld desktop rollout defaults: native 1920x1080 screenshots
+# and server-side response chaining/truncation.
+#
+# CUA-Gym mixes browser and desktop-shaped tasks under one env id. Keep max_steps at
+# 30 so desktop/multi-app tasks are not silently capped by the browser default.
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "lite.cuagym"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 0

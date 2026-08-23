@@ -1,0 +1,21 @@
+# Qwen3-VL RL training on MobileGym
+# Related configs: scripts/configs/qwen3_vl/default/mobilegym.yaml
+#
+# full_history_size=1 (reduced from the rollout default to save VRAM during training)
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  resolution: [720, 1600]
+  protocol_kwargs:
+    full_history_size: 1
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+# max_steps is omitted so mobilegym uses its native difficulty-based
+# budget: L1=15, L2=30, L3=45, L4=60. Pass max_steps explicitly to override.
+env_id: "mobilegym"
+env_kwargs:
+  # Qwen native open parses to canonical open_app; opt in to the env-side
+  # extra_tool boundary so app launch is available in this task.
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

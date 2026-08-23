@@ -1,0 +1,21 @@
+# UI-TARS-7B-DPO rollout eval on ScreenSpot-Pro
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+#
+# Reference (sampling): no UI-TARS wrapper in the upstream ScreenSpot-Pro
+# repo. We use greedy decoding (temperature=0.0) for deterministic eval,
+# matching the ui_tars OSWorld sibling config. UI-TARS's OSWorld
+# `top_p=0.9, max_new=1500` are OSWorld-specific multi-turn settings;
+# top_p is inactive under greedy decoding and omitted, and max_new_tokens
+# falls back to the local.py default (2048) since no Pro-specific reference
+# exists.
+#
+# Related configs:
+#   - scripts/configs/ui_tars/default/osworld_g.yaml           (sibling grounding bench)
+#   - scripts/configs/ui_tars/default/lite.osworld.yaml        (multi-turn desktop)
+
+agent_id: "ui_tars"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "screenspot_pro"

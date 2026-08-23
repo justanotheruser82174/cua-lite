@@ -1,0 +1,67 @@
+# Qwen3-VL text+goal-image rollout on cua-lite browsergym.visualwebarena.
+#
+# Sister to webarena/text_only.yaml. max_steps=30 per BrowserGym
+# DEFAULT_BENCHMARKS.
+#
+# "mixed" mode: page observation is text (AXTree, `use_screenshot=false`)
+# but VWA goal image(s) are still surfaced — the `visualwebarena.goal_image`
+# agent (below) decodes them and shows them on every turn. Single- AND
+# multi-image goals supported; none excluded.
+# See lite/gym/envs/browsergym/README.md#goal-images.
+#
+# Prereqs: WA stack + classifieds containers + VWA_* env vars.
+
+# The browsergym ``goal_image`` agent shows the VWA goal image(s) on every turn;
+# it's model-agnostic and pointed at the model adapter via ``adapter_key`` below
+# (here the text+bid ``qwen3_vl.base`` adapter). It binds
+# ``metadata["goal_images_b64"]`` to persisted image parts via
+# the turn-0 image prefix. See
+# lite/gym/envs/browsergym/README.md#goal-images.
+agent_id: "visualwebarena.goal_image"
+agent_kwargs:
+  adapter_key: "qwen3_vl.base"
+  # See sibling webarena/text_only.yaml for rationale on browsergym.generic
+  # vs lite.history (TL;DR: chat-style accumulation × 75K AXTree obs OOMs
+  # the model context — rebuild-per-turn keeps each prompt bounded ~80K).
+  protocol_key: "browsergym.generic"
+  protocol_kwargs:
+    use_concrete_example: false
+    use_hints: true
+  # Only honored by rollout.py; RL sets sampling via trainer flags.
+  sampling_kwargs:
+    # max_new_tokens unset → 2048 default.
+    temperature: 0.0
+  # AgentLab paper-aligned minimal system prompt — see webarena sibling
+  # for full rationale.
+  system_prompt: |-
+    You are an agent trying to solve a web task based on the content of the page and
+    user instructions. You can interact with the page and explore, and send messages to the user. Each time you
+    submit an action it will be sent to the browser and you will receive a new page.
+
+env_id: "browsergym.visualwebarena"
+env_kwargs:
+  max_steps: 30
+  # ─── Obs mode: text + goal image(s) ──────────────────────────────────
+  # ``use_screenshot=false`` turns off the per-step page screenshot;
+  # ``use_ax_tree=true`` makes the obs the AXTree text. Despite the name
+  # "mixed", the per-step obs is purely text — what makes it "mixed" is
+  # that the VWA env surfaces the task's goal image(s) (``metadata
+  # ["goal_images_b64"]``), which the ``visualwebarena.goal_image`` agent
+  # shows every turn so the model grounds on a visual reference. Single-
+  # and multi-image goals are both supported (none excluded).
+  use_screenshot: false
+  use_ax_tree: true
+  use_focused_element: true
+  use_error_logs: true
+  extract_visible_tag: true
+  extract_clickable_tag: true
+  extract_coords: "False"
+  filter_visible_elements_only: false
+  # Paper-aligned VWA preset (16 actions = WA + upload_file). Matches
+  # `DEFAULT_HIGHLEVEL_ACTION_SET_ARGS["visualwebarena"]`.
+  action_subsets: ["visualwebarena"]
+  extra_tools: ["scroll", "keyboard_press", "click", "fill", "hover", "switch_tab", "new_tab", "back", "forward", "goto", "close_tab", "select_option", "response", "upload_file", "terminate"]
+  # Disable only the LiteBrowser coord action-batch tool. BrowserGym bid/nav/finish
+  # tools stay active through ``extra_tools`` above; rejected GUI calls still get
+  # paired model-visible feedback with the current obs text/image preserved.
+  valid_actions: []

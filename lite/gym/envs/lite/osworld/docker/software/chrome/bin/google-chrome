@@ -1,0 +1,13 @@
+#!/bin/sh
+exec /opt/google/chrome/chrome \
+    --enable-unsafe-swiftshader \
+    --use-gl=angle \
+    --use-angle=swiftshader \
+    --no-first-run \
+    --no-default-browser-check \
+    --disable-features=ChromeWhatsNewUI \
+    --simulate-outdated-no-au="1 Jan 2099" \
+    --password-store=basic \
+    --no-sandbox \
+    --test-type \
+    "$@"

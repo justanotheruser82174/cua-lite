@@ -1,0 +1,63 @@
+# GPT rollout eval on lite.osworld, WITH the agent-facing persistent bash tool.
+#
+# Sibling of scripts/configs/gpt/default/lite.osworld.yaml. Bash-related deltas:
+#   - env_kwargs.extra_tools: ["bash", "terminate"]
+#     `bash` is the actual feature. `terminate` is REQUIRED, not optional: the
+#     moment a row advertises ANY standalone tool surface,
+#     tests/scripts/test_rollout_configs.py's terminal-channel gate
+#     demands a finish tool, because a model answering in tool calls can no
+#     longer rely on the pure-text final that the no-extra_tools sibling drives
+#     on. (Every qwen lite.osworld row already ships `terminate` for this reason.)
+#   - system_prompt rule 3. The sibling's rule 3 ("Prefer GUI operations ... Do
+# not use the terminal to read file contents") is REPLACED here. Keeping it
+# verbatim would have kept the diff minimal, but it forbids the exact tool this
+# row exists to exercise — a bash row whose prompt says "don't use the terminal"
+# measures nothing. Rule 3 now states the real tradeoff (both surfaces are
+# available; pick per subtask) instead of a blanket GUI-only rule.
+#
+# Bash transport and extra_tools ownership live in SandboxBaseEnv:
+# same-container persistent docker exec as the desktop user; `extra_tools`
+# is per-run bind state, not baked container shape. Keep this header as a
+# pointer rather than a second copy of that contract.
+#
+# Non-bash sibling note: it also sets `loop_detect: 0`; this row leaves the
+# lite.osworld default. That difference is not part of the bash transport.
+#
+# Uses GPT Responses computer-use defaults:
+#   - reasoning_effort: medium (set below)
+#   - 1920x1080 env resolution (`detail=original`)
+#   - max_output_tokens: 4096 (set below)
+#
+# All the other relevant fields (`{"type":"computer"}` no display_*,
+# parallel_tool_calls: false, truncation: "auto", previous_response_id chain,
+# input_image.detail: "original", instructions top-level) are set in code
+# defaults; no need to override here.
+#
+# Related configs:
+#   - scripts/configs/gpt/default/lite.osworld.yaml     (same row, no bash)
+#   - scripts/configs/claude/default/lite.osworld.yaml  (Claude rollout)
+#   - scripts/configs/gpt/default/osworld.yaml          (OSWorld rollout)
+
+agent_id: "gpt"
+agent_kwargs:
+  system_prompt: |
+    Task Execution Rules
+    1. **Act, don't just explain.** If the user asks whether or how to do something that can be done in the environment, perform it. Give a text-only answer only when the task is purely a question.
+    2. **Verify before finishing.** Never assume an action succeeded — check the resulting on-screen state, and declare the task complete only after confirming the goal is actually met.
+    3. **Use the right surface for each subtask.** You have both a GUI and a persistent shell on the same machine, and they see the same filesystem. The shell is the better tool for inspecting, locating, and transforming files, and for anything scriptable; the GUI is the better tool for work that only the application can do, and for confirming what a document actually looks like. Note that libraries such as `docx`, `pptx`, `cv2`, and `openpyxl` are not installed. When the goal is a document's rendered state, verify it on screen rather than from the shell alone.
+    4. **Don't duplicate spreadsheet data for charts.** Build charts from the existing data ranges unless the user explicitly asks for new or computed data.
+
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+  # resolution omitted → no agent-side resize; model sees env-native 1920×1080.
+  # (_call_api_with_actual_dim still reads the API-echoed dims for coord norm.)
+  # The native computer tool offers actions that only waste a step here —
+  # steer the model away from them.
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  # display_resolution defaults to 1920×1080 (lite.osworld) — no override needed.
+  # THE delta vs the sibling row. See the header note on why `terminate` rides along.
+  extra_tools: ["bash", "terminate"]

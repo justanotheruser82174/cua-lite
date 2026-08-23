@@ -1,0 +1,29 @@
+commit 2e4a5d48c9199a52167322d4c7682f75bdcd173b
+Author: iTao <1416101719@qq.com>
+Date:   Fri Feb 27 15:22:59 2026 +0800
+
+    [dev] fix(moe): fix the bug where gate was not sliced when kv_head < tp_size. (#3529)
+    
+    Co-authored-by: xiaotaoliu <xiaotaoliu@tencent.com>
+    Co-authored-by: Yuzhong Wang <yuzhongw@nvidia.com>
+    Co-authored-by: Zijie Yan <zijiey@nvidia.com>
+
+diff --git a/megatron/core/transformer/attention.py b/megatron/core/transformer/attention.py
+index d686dd9ef..b8d9ef694 100644
+--- a/megatron/core/transformer/attention.py
++++ b/megatron/core/transformer/attention.py
+@@ -1490,6 +1490,14 @@ class SelfAttention(Attention):
+         if output_gate:
+             # Gate [sq, b, ng, np/ng * hn] -> [sq, b, np, hn]
+             gate = gate.reshape(*gate.shape[:2], -1, self.hidden_size_per_attention_head)
++            if self.config.num_query_groups < self.world_size:
++                idx = get_tensor_model_parallel_rank() % (
++                    self.world_size // self.config.num_query_groups
++                )
++                size = self.num_attention_heads_per_partition // (
++                    self.world_size // self.config.num_query_groups
++                )
++                gate = gate[:, :, idx * size : (idx + 1) * size, :]
+             return query, key, value, gate
+ 
+         return query, key, value

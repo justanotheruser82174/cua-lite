@@ -1,0 +1,16 @@
+#!/bin/sh
+# VS Code (Electron/Chromium) --no-sandbox wrapper. Under Docker's default
+# seccomp/apparmor, unprivileged user-namespace creation is blocked, so
+# Chromium's zygote sandbox aborts with a FATAL "Failed to move to new
+# namespace" (as root: "Running as root without --no-sandbox is not
+# supported") and NO window opens — a terminal `code <path>` cold start
+# silently dies. Same class as the google-chrome wrapper alongside this one.
+# Shadow the real binary on PATH (/usr/local/bin ahead of /usr/bin) and call
+# the shipped CLI entrypoint with --no-sandbox so BOTH `code <path>` (GUI) and
+# `code --install-extension`/`--version` keep working. Absolute path → no
+# recursion with this wrapper.
+# The setup/eval backend may launch VS Code with an env-facing PATH; VS Code's
+# integrated terminals inherit the process environment, so scrub to the
+# agent-facing PATH before the window can expose a shell.
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+exec /usr/share/code/bin/code --no-sandbox "$@"

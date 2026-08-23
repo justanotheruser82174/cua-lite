@@ -1,0 +1,72 @@
+# Qwen3.5 text+bid rollout on cua-lite browsergym.visualwebarena.
+#
+# "mixed" here means **page observation is text** (AXTree, no screenshot)
+# but the VWA goal image(s) are ALSO shown every turn. VWA's `goal_object`
+# is multimodal — it carries goal images (the "this product looks like THIS
+# picture" inputs). The env surfaces them in `metadata["goal_images_b64"]`
+# and the `visualwebarena.goal_image` agent (below) shows them on every
+# turn. Single- and multi-image goals are both supported (none excluded).
+#
+# Obs mode matches the paper's text+bid setup (`use_vision: false,
+# use_ax_tree: true`); sampling is the eval-matrix greedy default, not the
+# paper's `default_kwargs.qwen3`.
+#
+# Sister of `scripts/configs/qwen3_5/default/browsergym.webarena/text_only.yaml`.
+# Same protocol (browsergym.generic), same bid system_prompt, same sampling.
+# Pair with `--model-id Qwen/Qwen3.5-9B` for the paper-model comparison path.
+#
+# Filter `--filter "lambda m: not m.others.get('llm_as_a_judge')"` to skip
+# LLM-judge tasks (static fact in metadata.others; no baked exclude_reason —
+# a cold-booting service is retried via 503). Pair with sglang `--context-length 131072`.
+
+# The browsergym ``goal_image`` agent shows the VWA goal image(s) on every turn;
+# model-agnostic, pointed at the text+bid ``qwen3_5.base`` adapter via
+# ``adapter_key``. It binds ``metadata["goal_images_b64"]`` to persisted image
+# parts at the turn-0 image prefix. See lite/gym/envs/browsergym/README.md#goal-images.
+agent_id: "visualwebarena.goal_image"
+agent_kwargs:
+  adapter_key: "qwen3_5.base"
+  protocol_key: "browsergym.generic"
+  protocol_kwargs:
+    use_concrete_example: false
+    use_hints: true
+    # Render `# History` tool_calls in Qwen3.5's XML wire format (matching this
+    # adapter's `<tool_call><function=...>...</tool_call>`), NOT the protocol's
+    # JSON default — else the history mis-models the format and the XML-strict
+    # parser drops every later turn to noop. (Qwen3-VL siblings keep "json".)
+    tool_call_format: "xml"
+  # Only honored by rollout.py; RL sets sampling via trainer flags.
+  sampling_kwargs:
+    # max_new_tokens unset → 2048 default.
+    temperature: 0.0
+  # AgentLab paper-aligned minimal system prompt — see webarena sibling
+  # for full rationale.
+  system_prompt: |-
+    You are an agent trying to solve a web task based on the content of the page and
+    user instructions. You can interact with the page and explore, and send messages to the user. Each time you
+    submit an action it will be sent to the browser and you will receive a new page.
+
+env_id: "browsergym.visualwebarena"
+env_kwargs:
+  max_steps: 30
+  # ─── Obs mode: text + goal image(s) ──────────────────────────────────
+  # ``use_screenshot=false`` turns off the per-step page screenshot;
+  # ``use_ax_tree=true`` makes the obs the AXTree text. Despite the name
+  # "mixed", the per-step obs is purely text — what makes it "mixed" is
+  # that the VWA env surfaces the task's goal image(s) (``metadata
+  # ["goal_images_b64"]``), which the ``visualwebarena.goal_image`` agent
+  # shows every turn. Single- and multi-image goals both supported.
+  use_screenshot: false
+  use_ax_tree: true
+  use_focused_element: true
+  use_error_logs: true
+  extract_visible_tag: true
+  extract_clickable_tag: true
+  extract_coords: "False"
+  filter_visible_elements_only: false
+  action_subsets: ["visualwebarena"]
+  extra_tools: ["scroll", "keyboard_press", "click", "fill", "hover", "switch_tab", "new_tab", "back", "forward", "goto", "close_tab", "select_option", "response", "upload_file", "terminate"]
+  # Disable only the LiteBrowser coord action-batch tool. BrowserGym bid/nav/finish
+  # tools stay active through ``extra_tools`` above; rejected GUI calls still get
+  # paired model-visible feedback with the current obs text/image preserved.
+  valid_actions: []

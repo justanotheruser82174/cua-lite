@@ -1,0 +1,32 @@
+# GPT rollout eval on lite.demo
+#
+# Uses GPT Responses computer-use defaults:
+#   - reasoning_effort: medium (set below)
+#   - 1920x1080 env resolution (`detail=original`)
+#   - max_output_tokens: 4096 (set below)
+#
+# All the other relevant fields (`{"type":"computer"}` no display_*,
+# parallel_tool_calls: false, truncation: "auto", previous_response_id chain,
+# input_image.detail: "original", instructions top-level) are set in code
+# defaults; no need to override here.
+#
+# Related configs:
+#   - scripts/configs/claude/default/lite.osworld.yaml  (Claude rollout)
+#   - scripts/configs/gpt/default/osworld.yaml          (OSWorld rollout)
+#   - scripts/configs/gpt/default/androidworld.yaml    (GPT mobile)
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+  # resolution omitted → no agent-side resize; model sees env-native 1920×1080.
+  # (_call_api_with_actual_dim still reads the API-echoed dims for coord norm.)
+  # The native computer tool offers actions that only waste a step here —
+  # steer the model away from them.
+
+env_id: "lite.demo"
+env_kwargs:
+  max_steps: 30
+  # display_resolution defaults to 1920x1080 for lite.demo — no override needed.
+  loop_detect: 0

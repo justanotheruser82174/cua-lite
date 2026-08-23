@@ -1,0 +1,2 @@
+<|im_start|>user
+<|vision_start|><|image_pad|><|vision_end|>What is visible?<|im_end|>

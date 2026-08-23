@@ -1,0 +1,20 @@
+# Qwen3-VL rollout eval on lite.osworld
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/OSWorld/scripts/python/run_multienv_qwen3vl.py
+# Sampling per upstream CLI default (temperature=0; top_p is inactive
+# under greedy decoding and omitted).
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/compact/lite.osworld.yaml        (RL training, full_history_size=1)
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  # Qwen native `answer` lowers to `response`; imperative tasks still need `terminate`.
+  extra_tools: ["response", "terminate"]

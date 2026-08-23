@@ -1,0 +1,30 @@
+# Qwen3-VL rollout eval on AndroidLab
+# 138 multi-step tasks across 9 offline apps. Docker-per-worker emulator with
+# the reference's Quick Boot snapshot (seeded state). Eval-only.
+#
+# No upstream Qwen3-VL reference for AndroidLab; greedy decoding
+# (temperature=0) matches the OSWorld sibling config.
+#
+# Related configs:
+#   - scripts/configs/qwen3_vl/default/androidworld.yaml  (AndroidWorld baseline)
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "androidlab"
+env_kwargs:
+  # Reference paper uses max_steps=20 for all 138 tasks.
+  max_steps: 20
+  # Qwen native open parses to canonical open_app; opt in to the env-side
+  # extra_tool boundary so app launch is available in this task.
+  extra_tools: ["open_app", "response", "terminate"]
+  # observation_text defaults to "none" (screenshot only, matches androidworld
+  # and the Qwen3-VL mobile cookbook). Qwen3-VL's mobile cookbook expects
+  # [0,1000] normalized coords, so if you switch on text observation use the
+  # :norm variants — :pixel would mismatch the coord space of its actions.
+  # Alternatives:
+  #   "a11y_tree:norm"  — reference's compressed UIAutomator tree, normalized
+  #   "a11y_list:norm"  — androidworld-style flat element list, normalized
+  loop_detect: 5

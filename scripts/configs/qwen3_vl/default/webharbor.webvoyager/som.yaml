@@ -1,0 +1,51 @@
+# Qwen3-VL Set-of-Marks (SoM) rollout eval on WebVoyager.
+#
+# WebHarbor-style SoM mode: screenshot INPUT, index OUTPUT.
+#   - Obs: screenshot annotated with colored bounding boxes labeled [N],
+#     plus accessibility tree text "[N]: <tag> text @ (cx, cy)" in the
+#     conversation.
+#   - Action: standalone WebHarbor-style tools (click/input/scroll/
+#     go_back/response). ``valid_actions: []`` removes Qwen's GUI action enum;
+#     the WebHarbor tools come from env ``extra_tool_schemas``. ``response``
+#     is rendered as its own standalone tool, so final answers use
+#     ``response.text``.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/webharbor.webvoyager/default.yaml  (coord baseline)
+#   - scripts/configs/qwen3_5/default/webharbor.webvoyager/som.yaml
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  # webharbor.webvoyager.qwen3_vl.history = qwen3_vl.history + the SoM turn-0 web_text
+  # splice (lite/agents/extensions/webharbor/webvoyager/). The splice is env-specific, so
+  # it lives in an extension protocol, not on the shared qwen3_vl.history.
+  protocol_key: "webharbor.webvoyager.qwen3_vl.history"
+  protocol_kwargs:
+    keep_text_with_images: true
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+  system_prompt: |-
+    You are a web agent driving a real browser. Each turn you receive:
+      1. an accessibility tree of the current page, where [N] are interactive element indices;
+      2. a screenshot of the same page with colored boxes labeled [N].
+
+    Respond with one sentence "Action: ..." followed by a single <tool_call>{"name":...,"arguments":...}</tool_call>.
+    The available tools (click/input/scroll/go_back/response) and their argument schemas are defined in the # Tools section below.
+
+    Rules:
+    - Use indices that appear in the accessibility tree; do not invent them.
+    - The action index is only the integer inside square brackets [N].
+    - If the task asks for an answer (e.g. "what is X"), write it in response.text.
+    - Call response as soon as the task is complete or clearly impossible.
+
+env_id: "webharbor.webvoyager"
+env_kwargs:
+  # ``navigate`` is intentionally omitted: WebVoyager is a fully offline
+  # WebHarbor mirror (127.0.0.1:4000x only, no domain→mirror resolver rules),
+  # so a URL ``navigate`` escapes to the live internet and breaks the eval.
+  # Tasks are single-site and start on the correct mirror; ``go_back`` is
+  # history-only and stays on the mirror.
+  extra_tools: [click, input, scroll, go_back, response]
+
+  use_som: true   # draw the [N] Set-of-Marks boxes on the screenshot (SoM mode; default.yaml leaves it off → plain screenshot)
+  valid_actions: []

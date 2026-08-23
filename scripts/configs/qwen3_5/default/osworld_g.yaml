@@ -1,0 +1,21 @@
+# Qwen3.5 rollout eval on OSWorld-G
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+# 564 tasks across bbox / polygon / refusal modes; refusals are tagged
+# ``exclude_reason="refusal"`` — skip via
+# ``--filter "lambda m: not m.others.get('exclude_reason')"``.
+#
+# Reference (sampling): no Qwen3.5-specific upstream wrapper for OSWorld-G;
+# closest is the Jedi-paper ``qwen25_vllm_osworld_g_jedi.py`` (Qwen2.5-VL
+# variant, temperature=0). cua-lite uses greedy decoding (temperature=0.0).
+#
+# Reference (eval shape): ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/eval.py
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_5/default/screenspot_pro.yaml    (sibling grounding bench)
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "osworld_g"

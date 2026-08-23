@@ -1,0 +1,11 @@
+--- a/scripts/fetch_assets.sh
++++ b/scripts/fetch_assets.sh
+@@ -47,7 +47,7 @@
+     site=$(basename "$tarball" .tar.gz)
+     if [[ -n "$ONLY_SITE" && "$site" != "$ONLY_SITE" ]]; then continue; fi
+     echo "[fetch] extracting $site"
+-    tar -xzf "$tarball" -C sites/
++    tar --no-same-owner -xzf "$tarball" -C sites/
+     extracted=$((extracted + 1))
+ done
+ 

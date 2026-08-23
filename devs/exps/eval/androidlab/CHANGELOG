@@ -1,0 +1,7 @@
+## (post-hoc, 2026-04-28) — Qwen3.5 mobile `left_click` leakage diagnosis
+
+Annotated `2026-04-26T18-38_8b9d4bd/run_0.md`: marked Qwen3.5-4B (0.2754, the worst-MER finished model) and Qwen3.5-9B (0.3696) rows with ⚠️ and added a Highlights bullet — leakage rate is **inverted vs androidworld**: 4B 35.8% (mostly on `pimusic`/`zoom`/`map`/`clock`, 26 tasks at 100% leakage hit step-limit loop), 9B 10.0% (mostly `bluecoins`/`cantook`); the two models fire on **disjoint app sets**. 2B and Qwen3-VL family 0%. Fix landed at `lite/agents/core/qwen3_5/action_space.py` (same `Qwen3_5MobileActionSpace._MOBILE_ACTION_ALIASES["left_click"] = "click"` alias as androidworld); next snapshot will run under the fix.
+
+## 8b9d4bd  (2026-04-26)
+
+Initial standardized snapshot at this commit; no predecessor entry.

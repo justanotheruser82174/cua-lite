@@ -1,0 +1,39 @@
+# DAgger (online teacher-forcing) — Qwen3-VL 2B student <- 4B teacher, MobileGym.
+#
+# Student rolls out (its own actions drive the env + fill history); each step's SFT
+# target is relabeled with the teacher's GENERATED action; trained with sft_loss.
+# Shared env + student agent_* (top-level) + all teacher/DAgger config under `dagger:`.
+# The teacher is a separate sglang /generate server (sglang-teacher-only) launched by
+# scripts/train/run_dagger.sh on a dynamic free port (threaded via
+# DAGGER_TEACHER_URL); see that script and lite/train/rollout/dagger/teacher.py.
+
+env_id: "mobilegym"
+env_kwargs:
+  loop_detect: 5
+  # qwen3_vl mobile_use has no native open_app action. Finish tools are explicit
+  # so response/terminate are active in the prompt-visible tool surface.
+  extra_tools: ["open_app", "response", "terminate"]
+
+agent_id: "qwen3_vl"              # STUDENT — drives the env (full_history_size=1 ⇒ clean per-step data)
+agent_kwargs:
+  resolution: [720, 1600]
+
+  protocol_kwargs:
+    full_history_size: 1
+# All DAgger config lives under one namespace (read by
+# lite/train/rollout/dagger/teacher.py + lite/train/rollout/dagger/rollout.py): the
+# teacher agent (mirrors the student's top-level agent_id/agent_kwargs)
+# plus the runtime knobs.
+# NOTE: teacher_url is NOT here — run_dagger.sh starts the teacher
+# on a DYNAMIC free port and threads it via DAGGER_TEACHER_URL (Ray runtime-env). Set
+# dagger.teacher_url here only to pin an external/remote teacher (overrides the env).
+# Other knobs default sensibly and are omitted: teacher_max_new_tokens → the student's
+# --rollout-max-response-len; strip_teacher_think → false (keep the teacher's learnable
+# <think>); step_filter → keep_all (set "success_traj" for the anti-DAgger ablation).
+dagger:
+  teacher_agent_id: "qwen3_vl"    # TEACHER — relabel target only (richer history, same res)
+  teacher_agent_kwargs:
+    protocol_kwargs:
+      full_history_size: 4        # > student's 1 → stronger labels
+    resolution: [720, 1600]       # raise freely: lite_sample carries raw images
+  teacher_temperature: 0.0        # greedy "best next action"

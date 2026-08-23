@@ -1,0 +1,32 @@
+# GPT rollout eval on WebGym — plain agent, Action-only.
+#
+# Authored for the refactor rollout-validation matrix. The only
+# pre-existing gpt WebGym config is `gpt/recipes/collect/webgym.yaml`, which is
+# a COLLECTION recipe: it uses `agent_id: gpt.teacher`, appends a WebGym
+# anti-failure prompt scaffold, and re-parses replies into inline_reasoning +
+# action_description content parts. That shape is right for distillation and
+# wrong for a cross-model comparison — the qwen arms emit plain `text`, so
+# diffing `01_prompt` / `03_actions` against them compares two different
+# protocols rather than two models.
+#
+# env_kwargs are kept byte-identical to the qwen arms so the three cells differ
+# only in the model:
+#   - scripts/configs/qwen3_5/default/webgym.yaml
+#   - scripts/configs/qwen3_vl/default/webgym.yaml
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    # Stated explicitly like every sibling gpt row. This row is the gpt cell
+    # of a cross-family validation matrix (see header), so the level has to
+    # be visible in the file rather than inherited from the class default.
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "webgym"
+env_kwargs:
+  instruction_template: "{instruction}\n\nInitial website: {website}\n\nWhen you have found the answer, submit it to finish the task."
+  # WebGym is a Playwright env whose screenshot has NO browser chrome (no
+  # address bar / tabs), so cross-page tasks are only solvable with nav tools.
+  loop_detect: 5
+  extra_tools: ["goto", "back", "response"]

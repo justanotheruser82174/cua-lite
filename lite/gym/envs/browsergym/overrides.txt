@@ -1,0 +1,12 @@
+# uv override file for the browsergym env install (passed via `uv pip install --override`).
+#
+# browsergym==0.14.3 -> browsergym-webarena -> libwebarena -> text-generation, and
+# text-generation caps `huggingface-hub<1.0` — but only for HF's TGI *baseline
+# agents*, which cua-lite never runs (we drive browsergym with our own agent). That
+# stale cap is unsatisfiable with the model stack's `transformers>=5` (needs
+# huggingface-hub>=1.3) once browsergym installs into the unified top-level venv.
+#
+# Force the model stack's hub so webarena/vwa co-resolve; text-generation lands
+# present-but-unused. Scoping this to the env's own install (not the repo-root
+# pyproject) keeps `uv sync` env-agnostic and `install.sh` self-contained.
+huggingface-hub>=1.3.0

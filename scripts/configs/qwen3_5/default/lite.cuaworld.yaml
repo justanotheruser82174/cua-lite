@@ -1,0 +1,12 @@
+# Qwen3.5 rollout eval for a lite.cuaworld.* software environment.
+# Override --env-id to select another software. Per-task max_steps and timeout
+# remain upstream-owned because this config does not replace them.
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  sampling_kwargs:
+    temperature: 0.0
+
+env_id: "lite.cuaworld.pymol"
+env_kwargs:
+  extra_tools: ["terminate"]

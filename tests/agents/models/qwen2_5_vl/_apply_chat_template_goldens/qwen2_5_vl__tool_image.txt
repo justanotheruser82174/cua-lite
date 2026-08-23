@@ -1,0 +1,14 @@
+<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Task<|im_end|>
+<|im_start|>assistant
+<tool_call>
+<function=computer>
+<parameter=action>
+click
+</parameter>
+</function>
+</tool_call><|im_end|>
+<|im_start|>tool
+<|vision_start|><|image_pad|><|vision_end|>screen<|im_end|>

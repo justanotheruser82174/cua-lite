@@ -1,0 +1,30 @@
+# Gemini rollout eval on lite.osworld
+#
+# Uses Gemini's NATIVE generateContent computer-use surface. Not the
+# OpenAI-compatible path: litellm has no representation for the computerUse
+# tool and drops it, taking `environment` with it. Coordinates are already on
+# the canonical 0-1000 grid, so unlike the GPT/Claude rows there is no
+# agent-side rescaling and the tool declaration carries no display dimensions.
+#
+# No system_prompt override: the model runs on its own computer-use prior,
+# same as the Claude row.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/claude/default/lite.osworld.yaml   (Claude rollout)
+#   - scripts/configs/gpt/default/lite.osworld.yaml      (GPT rollout)
+#   - scripts/configs/gemini/default/osworld.yaml        (OSWorld rollout)
+
+agent_id: "gemini"
+agent_kwargs:
+  api_kwargs:
+    # Native knobs live in generationConfig, NOT OpenAI's max_output_tokens
+    # spelling; the agent maps these to thinkingConfig / maxOutputTokens.
+    thinking_level: "medium"
+    max_output_tokens: 4096
+  # resolution omitted → no agent-side resize; the model sees the env-native
+  # 1920×1080 frame. Coordinates are normalized and never depend on it.
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 0

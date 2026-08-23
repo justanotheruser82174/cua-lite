@@ -1,0 +1,24 @@
+# GPT-5.5 vision+coord rollout eval on cua-lite browsergym.miniwob.
+#
+# Mirrors the Claude MiniWoB screenshot config, but routes through the GPT
+# native computer-use agent.
+#
+# Prereqs: miniwob HTML server on 7560; MINIWOB_URL=http://localhost:7560/miniwob/.
+# OPENAI_API_KEY must be set; set OPENAI_BASE_URL only for a custom endpoint.
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "browsergym.miniwob"
+env_kwargs:
+  max_steps: 10
+  extra_tools: ["response", "terminate", "goto", "back", "forward"]
+  use_screenshot: true
+  use_ax_tree: false
+
+  # Vision fast-path: screenshot only; coordinate actions go through the
+  # LiteBrowser action wrapper and MiniWoB viewport conversion.
+  skip_dom_extraction: true

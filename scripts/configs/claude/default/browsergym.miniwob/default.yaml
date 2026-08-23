@@ -1,0 +1,36 @@
+# Claude vision+coord rollout eval on cua-lite browsergym.miniwob.
+#
+# Routing: env declares ``platform="browser"``, ``task_type="use"`` →
+# key ``claude@browser@use`` resolves to the shared desktop/browser
+# computer-use agent class.
+#
+# Obs / action shape:
+#   - Native ``computer_*`` tool: agent sees the page as a screenshot,
+#     emits coord-based actions. MiniWoB viewport is small (498×321);
+#     conversion happens inside the env.
+#   - Env-supplied browsergym ``extra_tools`` surface alongside.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/browsergym.miniwob/default.yaml
+#   - scripts/configs/claude/default/browsergym.webarena/default.yaml
+#
+# Prereqs: miniwob HTML server on 7560; ``ANTHROPIC_API_KEY`` (and
+#   optionally ``ANTHROPIC_BASE_URL`` for a litellm proxy).
+
+agent_id: "claude"
+agent_kwargs:
+  api_kwargs:
+    effort: "medium"
+    max_tokens: 4096
+
+env_id: "browsergym.miniwob"
+env_kwargs:
+  max_steps: 10
+  extra_tools: ["response", "terminate", "goto", "back", "forward"]
+  use_screenshot: true
+  use_ax_tree: false
+
+
+  # Vision fast-path: screenshot only; coordinate actions go through the
+  # LiteBrowser action wrapper and MiniWoB viewport conversion.
+  skip_dom_extraction: true

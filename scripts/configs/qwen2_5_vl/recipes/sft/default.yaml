@@ -1,0 +1,29 @@
+# Qwen2.5-VL SFT export — model defaults (adapter full_history_size=4).
+#
+# Agent recipe only: which adapter + how it renders. The dataset is per-run —
+# pass it on the CLI with --data-paths (and --image-root). Use this for
+# single-step data (grounding.action, grounding.point, grounding.bbox), where
+# the history window has no prior turns to retain. For multi-step `use`
+# trajectories, prefer the rollout config that produced the data.
+#
+# PREFER THE ROLLOUT CONFIG for data collected by a cua-lite rollout: export
+# with that env's scripts/configs/qwen2_5_vl/default/<env>.yaml, because
+# export_sft re-renders every step through the agent adapter and exporting
+# under a different history window or resolution than the rollout used trains
+# the model on prompts it will never see at inference. This recipe deliberately
+# differs from the rollout configs in NOTHING: resolution [1280, 720] and the
+# adapter-default window both match scripts/configs/qwen2_5_vl/default/
+# lite.osworld.yaml (whose header records that alignment). resolution belongs
+# under agent_kwargs: the adapter applies it identically at rollout and at
+# export, which is what keeps model-IO parity.
+#
+# Run: uv run python -m lite.train.export.export_sft \
+#         --config scripts/configs/qwen2_5_vl/recipes/sft/default.yaml \
+#         --model-id Qwen/Qwen2.5-VL-3B-Instruct \
+#         --data-paths "${CUA_LITE_DATASETS_ROOT}/cua-lite/ScaleCUA/(desktop|browser|mobile)/grounding.action" \
+#         --image-root "${CUA_LITE_DATASETS_ROOT}" \
+#         -o .data/sft/qwen25-grounding/train.parquet
+
+agent_id: "qwen2_5_vl"
+agent_kwargs:
+  resolution: [1280, 720]

@@ -1,0 +1,21 @@
+# Gemini rollout eval on OSWorld-V2 (osworld_2)
+#
+# Mirrors scripts/configs/gemini/default/osworld.yaml (v1) but uses the
+# official V2 step budget and a larger output budget for longer trajectories.
+#
+# Related configs (sync agent_kwargs when changing):
+#   - scripts/configs/claude/default/osworld_2.yaml  (Claude counterpart)
+#   - scripts/configs/gpt/default/osworld_2.yaml     (GPT counterpart)
+
+agent_id: "gemini"
+agent_kwargs:
+  api_kwargs:
+    # Highest level Gemini offers -- minimal/low/medium/high; XHIGH and MAX are
+    # rejected. V2 tasks run far longer than v1's, so this row buys depth.
+    thinking_level: "high"
+    max_output_tokens: 8192
+
+env_id: "osworld_2"
+env_kwargs:
+  max_steps: 200   # OSWorld-V2 official run value (V2 tasks need far longer trajectories than v1's 30)
+  loop_detect: 0   # a make/wrapper knob (LoopDetectWrapper), NOT an OSWorldV2Env.__init__ param

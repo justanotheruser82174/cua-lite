@@ -1,0 +1,24 @@
+# UI-TARS-1.5-7B rollout eval on OSWorld-G
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+# 564 tasks across bbox / polygon / refusal modes; refusals are tagged
+# ``exclude_reason="refusal"`` — skip via
+# ``--filter "lambda m: not m.others.get('exclude_reason')"``.
+#
+# Reference (sampling): no UI-TARS-1.5 wrapper in
+# ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/. We use greedy decoding
+# (temperature=0.0) for deterministic eval, matching the ui_tars_15_v1
+# OSWorld sibling config. top_p is inactive under greedy decoding and
+# omitted; max_new_tokens falls back to the local.py default (2048).
+#
+# Reference (eval shape): ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/eval.py
+#
+# Related configs:
+#   - scripts/configs/ui_tars_15_v1/default/screenspot_pro.yaml (sibling grounding bench)
+#   - scripts/configs/ui_tars_15_v1/default/lite.osworld.yaml   (multi-turn desktop)
+
+agent_id: "ui_tars_15_v1"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "osworld_g"

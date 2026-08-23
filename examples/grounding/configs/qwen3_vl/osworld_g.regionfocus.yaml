@@ -1,0 +1,10 @@
+# Qwen3-VL RegionFocus multi-turn GRPO config for OSWorld-G.
+#
+# Trains on every generate call: initial, judge, seed, every valid
+# crop-refine, and the aggregate selection.
+
+agent_id: "qwen3_vl.regionfocus"
+agent_kwargs:
+  judge_initial_point: true
+
+env_id: "osworld_g"

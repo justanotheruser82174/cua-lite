@@ -1,0 +1,31 @@
+# GPT mobile on MobileWorld
+# 161 tasks (201 upstream − 40 agent-mcp) across 20 apps in DinD boxes,
+# evaluated by real device / backend state.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/claude/default/mobileworld.yaml  (Claude mobile)
+#   - scripts/configs/qwen3_vl/default/mobileworld.yaml  (Qwen3-VL baseline)
+#   - scripts/configs/gpt/default/androidworld.yaml  (GPT mobile sibling)
+#
+# The 46 agent-user-interaction tasks need the ``ask_user`` extra tool
+# (enabled below) AND OPENAI_API_KEY exported before containers spawn. Set
+# OPENAI_BASE_URL only for a custom endpoint. The vars are forwarded into each
+# box for the simulated-user LLM, whose model is the env's
+# server_kwargs.user_agent_model knob. GUI-only tasks ignore both.
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+  # Mobile API resolution: the emulator is 1080x2400 (Pixel 8 AVD) — same
+  # patch-budget reasoning as the androidworld sibling config.
+
+# max_steps omitted: mobileworld's env default is 50 (upstream ``mw eval
+# --max_round 50``).
+env_id: "mobileworld"
+env_kwargs:
+  # open_app (make_open_app_tool → app-name enum) + ask_user are both env
+  # extra_tools now; GPT no longer defines open_app natively (surfaced like qwen).
+  loop_detect: 0
+  extra_tools: ["open_app", "ask_user", "response", "terminate"]

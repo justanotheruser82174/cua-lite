@@ -1,0 +1,21 @@
+#!/bin/bash
+# cuagym's agent-facing google-chrome wrapper (overrides the base osworld chrome at
+# /usr/local/bin/google-chrome). cuagym browser setups run a bare `google-chrome <url>`
+# and then `curl 127.0.0.1:9222/json`, so this opens MAXIMISED with CDP on :9222 and
+# a /tmp/chrome-profile. Runs as the desktop user (the server's uid) directly.
+# execs the REAL binary /opt/google/chrome/chrome (NOT /usr/local/bin/google-chrome,
+# which is this wrapper → infinite loop). Reproduces the base swiftshader GL flags
+# (software GL on Chrome 130 is gated behind --enable-unsafe-swiftshader) + the
+# maximised/CDP flags.
+geom="$(DISPLAY="${DISPLAY:-:1}" xdpyinfo 2>/dev/null | awk '/dimensions:/{print $2; exit}')"
+size_flags="--start-maximized"
+[ -n "$geom" ] && size_flags="--start-maximized --window-size=${geom%x*},${geom#*x}"
+exec /opt/google/chrome/chrome \
+  --enable-unsafe-swiftshader --use-gl=angle --use-angle=swiftshader \
+  --no-sandbox --test-type --disable-dev-shm-usage \
+  --force-device-scale-factor=1 --window-position=0,0 $size_flags \
+  --no-first-run --no-default-browser-check --disable-session-crashed-bubble \
+  --disable-infobars --password-store=basic --simulate-outdated-no-au="1 Jan 2099" \
+  --disable-features=Translate,TranslateUI,InfobarScreenshot,ChromeWhatsNewUI \
+  --remote-debugging-port=9222 --remote-allow-origins=* \
+  --user-data-dir=/tmp/chrome-profile "$@"

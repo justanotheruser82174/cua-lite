@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "env": "webharbor.webvoyager",
+  "commit_dir": "2026-07-10T15-40_651af22040",
+  "run_id": "run_0_default",
+  "commit": {
+    "short_sha": "651af22040",
+    "subject": "add gpt-5.6-sol"
+  },
+  "artifact_root": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default",
+  "result_count": 9,
+  "status_counts": {
+    "complete": 9,
+    "partial": 0,
+    "empty": 0
+  },
+  "results": [
+    {
+      "model": "gpt-5.5",
+      "slug": "gpt-5.5",
+      "base_slug": "gpt-5.5",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.776049766718507,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/gpt-5.5/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/gpt-5.5"
+    },
+    {
+      "model": "Qwen/Qwen3.5-27B",
+      "slug": "Qwen_Qwen3.5-27B",
+      "base_slug": "Qwen_Qwen3.5-27B",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.5069984447900466,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-27B/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-27B"
+    },
+    {
+      "model": "Qwen/Qwen3.5-9B",
+      "slug": "Qwen_Qwen3.5-9B",
+      "base_slug": "Qwen_Qwen3.5-9B",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.3545878693623639,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-9B/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-9B"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-32B-Instruct",
+      "slug": "Qwen_Qwen3-VL-32B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-32B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.18662519440124417,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-32B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-32B-Instruct"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-4B-Instruct",
+      "slug": "Qwen_Qwen3-VL-4B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-4B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.11353032659409021,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-4B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-4B-Instruct"
+    },
+    {
+      "model": "Qwen/Qwen3.5-4B",
+      "slug": "Qwen_Qwen3.5-4B",
+      "base_slug": "Qwen_Qwen3.5-4B",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.09331259720062209,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-4B/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-4B"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "slug": "Qwen_Qwen3-VL-8B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-8B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.08398133748055987,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-8B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-8B-Instruct"
+    },
+    {
+      "model": "Qwen/Qwen3.5-2B",
+      "slug": "Qwen_Qwen3.5-2B",
+      "base_slug": "Qwen_Qwen3.5-2B",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.0015552099533437014,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-2B/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3.5-2B"
+    },
+    {
+      "model": "Qwen/Qwen3-VL-2B-Instruct",
+      "slug": "Qwen_Qwen3-VL-2B-Instruct",
+      "base_slug": "Qwen_Qwen3-VL-2B-Instruct",
+      "config_id": "default",
+      "status": "complete",
+      "num_valid": 643,
+      "num_tasks": 643,
+      "num_samples": 643,
+      "mean_episode_return": 0.0,
+      "summary_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-2B-Instruct/summary.json",
+      "artifact_path": ".exps/eval/webharbor.webvoyager/2026-07-10T15-40_651af22040/run_0_default/Qwen_Qwen3-VL-2B-Instruct"
+    }
+  ]
+}

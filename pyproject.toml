@@ -1,0 +1,128 @@
+[build-system]
+# Recursive package-data globs need setuptools >=64.
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# Ship lite packages plus checked-in configs/registration metadata. Generated
+# task catalogs, caches, and large assets are installed by each env's install.sh.
+[tool.setuptools.packages.find]
+include = ["lite*"]
+[tool.setuptools.package-data]
+"*" = ["**/*.yaml", "**/*.yml", "data/*.json", "data/**/*.json"]
+
+[project]
+name = "lite"
+version = "0.1.0"
+description = "CUA-Lite: Computer-Use Agents Made Simple"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[project.optional-dependencies]
+
+quick-start = [
+    # Host quick-start stack: keep torch/sglang on CUDA-12-compatible wheels.
+    # Training containers own their own dependency stack.
+    "torch>=2.9.1,<2.11",
+    "transformers>=5.0",
+    # Source-pinned in [tool.uv.sources] for the Qwen3.5 GDN kernel fix while
+    # staying on the CUDA-12 host stack.
+    "sglang[all]",
+    "litellm>=1.72",
+]
+
+# Env-server/direct-gym runtime. Env install.sh scripts install into this venv;
+# resolver floors below keep the model stack compatible.
+gym = [
+    "pillow>=10.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "starlette>=0.36",
+    "httpx>=0.27",
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "psutil>=5.9",
+    "numpy>=1.26",          # common-env convenience (osworld/android/browsergym mains)
+    "docker>=7.0",          # host docker SDK for container lifecycle
+    "zstandard>=0.22",      # CUA-Gym task bundles are .tar.zst archives
+    "pygame==2.6.1",        # host-side OSWorld snake test-suite evaluator imports pygame
+]
+
+data = [
+    "datasets>=4.8.5",
+    "jsonschema>=4.23",
+    "numpy>=1.26",
+    "pillow>=10.0",
+    "pyarrow>=18.0",
+]
+
+dev = [
+    "ruff>=0.8",
+    "pyright>=1.1",
+    "pytest-asyncio>=0.24",
+    "pytest-mock>=3.14",
+    "pytest-xdist>=3.5",
+]
+
+[tool.uv]
+# Resolve for the supported Linux x86_64 GPU host target.
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+# Required by the source-pinned sglang dependency.
+prerelease = "allow"
+override-dependencies = [
+    "nvidia-cudnn-cu12==9.16.0.29",
+    # Guard the unified venv's model-stack floor during uv resolution.
+    "transformers>=5.0",
+    # Keep hub-kernels API compatibility with the resolved transformers tier.
+    "kernels>=0.10.2,<0.11",
+]
+
+
+[tool.uv.sources]
+# Source-pinned for the Qwen3.5 GDN kernel fix.
+sglang = { git = "https://github.com/sgl-project/sglang.git", rev = "8ba96460440c6f83ed523b33ed07b05e302ad690", subdirectory = "python" }
+# Match sglang's torch index config to avoid resolver conflicts.
+torch = [
+  { index = "pypi", marker = "platform_machine == 'x86_64'" },
+  { index = "torch-cu129", marker = "platform_machine == 'aarch64'" },
+]
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+[[tool.uv.index]]
+name = "torch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "basic"
+reportArgumentType = false
+reportAttributeAccessIssue = false
+reportGeneralTypeIssues = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "examples"]
+python_files = ["test_*.py"]
+pythonpath = [".", "tests"]
+# Keep default test runs bounded and skip live/stress suites unless requested.
+# Add `-n <workers>` locally or in CI when parallelism is useful for that host.
+addopts = "-v -ra --strict-markers -m 'not live and not stress'"
+asyncio_mode = "auto"
+markers = [
+    "live: requires production-like environment (live env-server on port 30200 OR real docker daemon)",
+    "stress: deliberately load-tests; runs for minutes",
+]

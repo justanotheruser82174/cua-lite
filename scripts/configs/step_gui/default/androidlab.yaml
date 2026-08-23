@@ -1,0 +1,31 @@
+# Step-GUI (GELab-Zero) rollout eval on AndroidLab
+# 138 multi-step tasks across 9 offline apps. Docker-per-worker emulator with
+# the reference's Quick Boot snapshot (seeded state). Eval-only.
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/gelab-zero/mcp_server_config.yaml
+# Sampling per upstream main gui model_config (L10-14): temperature=0.1,
+# top_p=0.95. The reply_config / caption_config entries (L44-45, L68-69)
+# use t=0.5 but apply only to auxiliary auto-reply and captioning paths,
+# not the main agent loop.
+#
+# Step-GUI uses a rolling summary approach — no history windowing needed.
+# The model outputs a cumulative `summary:` field each step, so only the
+# latest summary is used as history context for the next turn.
+#
+# Run:
+#   CUDA_VISIBLE_DEVICES=0 uv run python scripts/rollout.py \
+#     --model-id stepfun-ai/GELab-Zero-4B-preview --env-id androidlab \
+#     --config-path scripts/configs/step_gui/default/androidlab.yaml \
+#     --save-video true --concurrency 8
+
+agent_id: "step_gui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.1
+    top_p: 0.95
+
+env_id: "androidlab"
+env_kwargs:
+  max_steps: 20
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

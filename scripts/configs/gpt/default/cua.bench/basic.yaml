@@ -1,0 +1,19 @@
+# gpt rollout eval on cua.bench.local.basic (a real trycua/cua-xfce container; needs Docker).
+# GUI-action tasks (click-button, fill-form, …; 68 tasks). Short → max_steps 30.
+# Setup: lite/gym/envs/cua/README.md (install.sh downloads datasets → .cache; no export).
+# Sibling structure: scripts/configs/gpt/default/lite.osworld.yaml
+#
+# Run:  uv run python scripts/rollout.py --config-path scripts/configs/gpt/default/cua.bench/basic.yaml \
+#         --env-id cua.bench.local.basic --splits eval --concurrency 8
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "cua.bench.local.basic"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 0   # 0 = disable loop detection
+  extra_tools: []

@@ -1,0 +1,68 @@
+diff --git a/src/win-arena-container/client/desktop_env/controllers/setup.py b/src/win-arena-container/client/desktop_env/controllers/setup.py
+index 0e19646..db513c4 100644
+--- a/src/win-arena-container/client/desktop_env/controllers/setup.py
++++ b/src/win-arena-container/client/desktop_env/controllers/setup.py
+@@ -492,23 +492,21 @@ class SetupController:
+                     return
+ 
+                 logger.info("Opening %s...", urls_to_open)
++                context = browser.contexts[0]
+                 for i, url in enumerate(urls_to_open):
+-                    # Use the first context (which should be the only one if using default profile)
+-                    if i == 0:
+-                        context = browser.contexts[0]
+-
+-                    page = context.new_page()  # Create a new page (tab) within the existing context
++                    # Modern Chromium can start on a first-run page that cannot
++                    # be closed over CDP. Reuse it for the first requested URL.
++                    page = (
++                        context.pages[0]
++                        if i == 0 and context.pages
++                        else context.new_page()
++                    )
+                     try:
+                         page.goto(url, timeout=60000)
+                     except:
+                         logger.warning("Opening %s exceeds time limit", url)  # only for human test
+                     logger.info(f"Opened tab {i + 1}: {url}")
+ 
+-                    if i == 0:
+-                        # clear the default tab
+-                        default_page = context.pages[0]
+-                        default_page.close()
+-
+                 # Do not close the context or browser; they will remain open after script ends
+                 return browser, context
+             
+@@ -541,23 +539,21 @@ class SetupController:
+                     return
+ 
+                 logger.info("Opening %s...", urls_to_open)
++                context = browser.contexts[0]
+                 for i, url in enumerate(urls_to_open):
+-                    # Use the first context (which should be the only one if using default profile)
+-                    if i == 0:
+-                        context = browser.contexts[0]
+-
+-                    page = context.new_page()  # Create a new page (tab) within the existing context
++                    # Modern Chromium can start on a first-run page that cannot
++                    # be closed over CDP. Reuse it for the first requested URL.
++                    page = (
++                        context.pages[0]
++                        if i == 0 and context.pages
++                        else context.new_page()
++                    )
+                     try:
+                         page.goto(url, timeout=60000)
+                     except:
+                         logger.warning("Opening %s exceeds time limit", url)  # only for human test
+                     logger.info(f"Opened tab {i + 1}: {url}")
+ 
+-                    if i == 0:
+-                        # clear the default tab
+-                        default_page = context.pages[0]
+-                        default_page.close()
+-
+                 # Do not close the context or browser; they will remain open after script ends
+                 return browser, context
+ 

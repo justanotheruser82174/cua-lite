@@ -1,0 +1,45 @@
+diff --git a/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py b/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py
+index 728a2c5..f24c724 100644
+--- a/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py
++++ b/src/win-arena-container/client/desktop_env/evaluators/metrics/chrome.py
+@@ -180,8 +180,6 @@ def compare_pdfs(pdf1_path: str, pdf2_path: str, **kwargs) -> float:
+
+ import fitz
+ from PIL import Image
+-from borb.pdf import Document
+-from borb.pdf import PDF
+
+ from pathlib import Path
+ import typing
+@@ -205,6 +203,9 @@ def compare_pdf_images(pdf1_path: str, pdf2_path: str, **kwargs) -> float:
+         return images
+
+     def fix_pdf(in_path: Path, out_path: Path) -> None:
++        # This metric is not used by WAA's published 154-task suite. Keep borb
++        # optional so importing the evaluator catalog does not require it.
++        from borb.pdf import Document, PDF
+         doc: typing.Optional[Document] = None
+         with open(in_path, "rb") as fh:
+             doc = PDF.loads(fh)
+diff --git a/src/win-arena-container/client/desktop_env/evaluators/metrics/docs.py b/src/win-arena-container/client/desktop_env/evaluators/metrics/docs.py
+index 531c191..66bd1da 100644
+--- a/src/win-arena-container/client/desktop_env/evaluators/metrics/docs.py
++++ b/src/win-arena-container/client/desktop_env/evaluators/metrics/docs.py
+@@ -6,7 +6,6 @@ import zipfile
+ from io import BytesIO
+ from typing import List, Dict, Any
+
+-import easyocr
+ from PIL import Image
+ from docx import Document
+ from docx.enum.text import WD_PARAGRAPH_ALIGNMENT, WD_TAB_ALIGNMENT
+@@ -252,6 +251,9 @@ def compare_docx_images(docx_file1, docx_file2):
+ def compare_image_text(image_path, rule):
+     if not image_path:
+         return 0
++    # This metric is not used by WAA's published 154-task suite. Import lazily
++    # so the runner does not pull torch solely while loading the metric catalog.
++    import easyocr
+     reader = easyocr.Reader(['en'])
+     result = reader.readtext(image_path)
+     extracted_text = ' '.join([entry[1] for entry in result])

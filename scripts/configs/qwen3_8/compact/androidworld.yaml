@@ -1,0 +1,26 @@
+# Qwen3.8 RL training on AndroidWorld
+# Multi-step mobile tasks across 20 apps, evaluated by real device state.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_8/default/androidworld.yaml  (rollout eval)
+#
+# history_n=1 (reduced from the rollout default to save VRAM during training)
+
+agent_id: "qwen3_8"
+agent_kwargs:
+  # Downsampled from native 1080x2400 for ~50% speedup during RL.
+  # ~1469 vision tokens/image vs 3306 at 1080p; minimal acc drop.
+  resolution: [720, 1600]
+  protocol_kwargs:
+    history_n: 1
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+# max_steps is omitted so androidworld uses its native complexity-based
+# budget: int(10 * task.complexity). Pass max_steps explicitly to override.
+env_id: "androidworld"
+env_kwargs:
+  # Qwen native open parses to canonical open_app; opt in to the env-side
+  # extra_tool boundary so app launch is available in this task.
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

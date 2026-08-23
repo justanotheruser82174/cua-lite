@@ -1,0 +1,22 @@
+# Gemini rollout eval on OSWorld
+#
+# Same agent row as scripts/configs/gemini/default/lite.osworld.yaml — only
+# env_kwargs differ. Coordinates are already on the canonical 0-1000 grid
+# (the wire tops out at 999), so no agent-side
+# rescaling and no display dimensions in the tool declaration.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/claude/default/osworld.yaml   (Claude rollout)
+#   - scripts/configs/gpt/default/osworld.yaml      (GPT rollout)
+#   - scripts/configs/gemini/default/osworld_2.yaml (OSWorld-V2 step budget)
+
+agent_id: "gemini"
+agent_kwargs:
+  api_kwargs:
+    thinking_level: "medium"
+    max_output_tokens: 4096
+
+env_id: "osworld"
+env_kwargs:
+  max_steps: 30   # v1 step budget (osworld_2 uses 200 — see scripts/configs/gemini/default/osworld_2.yaml)
+  loop_detect: 0

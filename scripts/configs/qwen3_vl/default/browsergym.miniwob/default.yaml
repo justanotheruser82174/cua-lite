@@ -1,0 +1,38 @@
+# Qwen3-VL vision+coord rollout eval on cua-lite browsergym.miniwob (full 125 tasks).
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/OSWorld/scripts/python/run_multienv_qwen3vl.py
+# Sampling: greedy decode (temperature 0.0), OSWorld convention; no native
+# thinking channel (eval-matrix default; qwen3_vl adapter enable_thinking=False).
+# top_p inactive under greedy, omitted.
+#
+# Same protocol/sampling as `scripts/configs/qwen3_vl/default/lite.osworld.yaml`
+# (`Qwen3VLHistoryProtocol`, `full_history_size=4`).
+#
+# Prereqs: miniwob HTML server on 7560; MINIWOB_URL=http://localhost:7560/miniwob/.
+# Viewport/action conversion happens inside the env (miniwob: 498×321), so
+# env_kwargs only carries step budget.
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    # See top-of-file Reference block for justification.
+    temperature: 0.0
+
+env_id: "browsergym.miniwob"
+env_kwargs:
+  max_steps: 10
+  extra_tools: ["response", "terminate", "goto", "back", "forward"]
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  # Defaults from ``BrowserGymConfig`` (``use_screenshot=true``,
+  # ``use_ax_tree=false``); the agent sees the page as a raw screenshot
+  # and emits coord-based actions via ``LiteBrowserActionSpace``. Listed
+  # explicitly here for symmetry with text_only.yaml's obs-mode block.
+  use_screenshot: true
+  use_ax_tree: false
+
+  # Vision fast-path: explicitly skip BrowserGym's O(nodes) per-step DOM-
+  # snapshot + AXTree + extra-properties extraction (only the screenshot is
+  # used). SAFE here: coordinate-only action space (no bids). Independent of
+  # use_ax_tree by design (keeps set-of-marks vision possible). Drops env.step
+  # ~22-32s -> ~1-2s on big WA/VWA pages. See main.py _patch_lightweight_obs.
+  skip_dom_extraction: true

@@ -1,0 +1,45 @@
+# Qwen3-VL rollout eval on lite.osworld, WITH the agent-facing persistent bash tool.
+#
+# Sibling of scripts/configs/qwen3_vl/default/lite.osworld.yaml — every other knob
+# is byte-identical so the two rows stay diffable. The ONLY delta is
+# `env_kwargs.extra_tools`, which gains `bash`; `response` and `terminate` were
+# already there (every qwen lite.osworld row ships both, because Qwen's native
+# `answer` action lowers to `response` while imperative tasks still need
+# `terminate` — see
+# tests/scripts/test_rollout_configs.py).
+#
+# Bash transport and extra_tools ownership live in SandboxBaseEnv:
+# same-container persistent docker exec as the desktop user; `extra_tools`
+# is per-run bind state, not baked container shape. This row only opts in
+# by adding `bash` to the sibling's finish-tool surface.
+#
+# WHY THIS ROW MATTERS MORE THAN THE QWEN3.5 ONE — the window is far tighter.
+# Qwen3VLHistoryProtocol keeps `full_history_size` (default 4) turns in full and
+# summarizes everything older, so its summary engages after 4 image turns, where
+# Qwen3.5's `history_n` summary only engages after 50. That budget is now spent
+# by image-bearing turns only:
+#   - a bash turn returns text and no screenshot, so it no longer pushes a
+#     screenshot out of the window — the same 4-image cost now buys more context;
+#   - a bash turn that DOES fall out of the window is summarized WITH its output
+#     rather than reduced to an action line. A screenshot's state is
+#     re-observable (the next screenshot shows it); a shell's output is one-shot,
+#     so dropping it erases information nothing downstream can recover.
+# On a pure-GUI trajectory every turn carries an image, both rules reduce to the
+# previous turn-count arithmetic exactly, and the render goldens pin that.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/lite.osworld.yaml   (same row, no bash)
+#   - scripts/configs/qwen3_5/default/lite.osworld.bash.yaml  (Qwen3.5 pair)
+#   - scripts/configs/gpt/default/lite.osworld.bash.yaml   (teacher row)
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  # THE delta vs the sibling row: `bash` added; finish tools already required.
+  extra_tools: ["bash", "response", "terminate"]

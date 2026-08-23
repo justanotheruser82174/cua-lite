@@ -1,0 +1,18 @@
+# Qwen3.5 base-eval desktop.use config (Official prompt, Action-only, NO inline reasoning).
+#
+# The BASE-model counterpart of reasoning/desktop.use.yaml, shared across the whole
+# desktop.use family (Lite.OSWorld / Lite.ScaleCUA / Lite.CUAGym / Lite.CUAWorld). Use
+# this for the BASE model — it never saw the inline-reasoning recipe, so the reasoning
+# config would unfairly handicap it; this gives a clean Action-only baseline.
+#
+# NO env_id: the env is selected by --env-id (required; CLI overrides config), so one
+# config evals any desktop env. env_kwargs below apply at rollout.
+#
+# max_steps=30.
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  # resolution: [1920, 1080]   # default
+
+env_kwargs:
+  max_steps: 30

@@ -1,0 +1,39 @@
+[{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a web agent.'}]},
+ {'role': 'user',
+  'content': [{'type': 'image', 'index': 0},
+              {'type': 'text',
+               'text': 'Please generate the next move according to the UI screenshot, instruction '
+                       'and previous actions.\n'
+                       '\n'
+                       'Instruction: Find the cheapest laptop.\n'
+                       '\n'
+                       'Previous actions:\n'
+                       'None'},
+              {'type': 'metadata', 'data': {'page_title': 'Page 0'}}]},
+ {'role': 'assistant',
+  'content': [{'type': 'action_description', 'text': 'click item 0'}],
+  'tool_calls': [{'id': 'call_0',
+                  'type': 'function',
+                  'function': {'name': 'click', 'arguments': {'coordinate': [10, 20]}}}]},
+ {'role': 'user',
+  'content': [{'type': 'image', 'index': 1},
+              {'type': 'text',
+               'text': 'After the action above, the webpage changed (this means the last action '
+                       'was effective).'},
+              {'type': 'metadata', 'data': {'page_title': 'Page 1'}}]},
+ {'role': 'assistant',
+  'content': [{'type': 'action_description', 'text': 'click item 1'}],
+  'tool_calls': [{'id': 'call_1',
+                  'type': 'function',
+                  'function': {'name': 'click', 'arguments': {'coordinate': [11, 21]}}}]},
+ {'role': 'user',
+  'content': [{'type': 'image', 'index': 2},
+              {'type': 'text',
+               'text': 'After the action above, the webpage changed (this means the last action '
+                       'was effective).'},
+              {'type': 'metadata', 'data': {'page_title': 'Page 2'}}]},
+ {'role': 'assistant',
+  'content': [{'type': 'action_description', 'text': 'click item 2'}],
+  'tool_calls': [{'id': 'call_2',
+                  'type': 'function',
+                  'function': {'name': 'click', 'arguments': {'coordinate': [12, 22]}}}]}]

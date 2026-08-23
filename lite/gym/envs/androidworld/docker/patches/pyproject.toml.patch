@@ -1,0 +1,50 @@
+diff --git a/pyproject.toml b/pyproject.toml
+index 7dd1994..2ba8f1e 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -2,7 +2,7 @@
+ # only. The non-docker implementation uses a requirements.txt file.
+ 
+ [build-system]
+-requires = ["setuptools>=61.0", "grpcio-tools==1.71.0"]
++requires = ["setuptools>=61.0", "grpcio-tools>=1.62.0", "setuptools"]
+ build-backend = "setuptools.build_meta"
+ 
+ [project]
+@@ -12,27 +12,20 @@ description = "Android World Environment Project"
+ readme = "README.md"
+ requires-python = ">=3.11"
+ dependencies = [
+-    "absl-py==2.1.0",
+-    "android_env==1.2.3",
+-    "dm_env==1.6",
+-    "fuzzywuzzy==0.18.0",
+-    "google-generativeai",
+-    "grpcio-tools==1.71.0",
+-    "protobuf==5.29.5",
+-    "immutabledict==2.0.0",
+-    "IPython",
+-    "jsonschema==4.17.3",
+-    "numpy==1.26.3",
++    "absl-py>=2.1.0",
++    "android_env>=1.2.3",
++    "dm_env>=1.6",
++    "fuzzywuzzy>=0.18.0",
++    "immutabledict>=2.0.0",
++    "jsonschema>=4.17.3",
++    "numpy>=1.26.3",
+     "opencv-python",
+-    "pandas==2.1.4",
+-    "pydub",
++    "pandas>=2.1.4",
+     "python-Levenshtein",
+-    "pytest",
+     "requests",
+     "tenacity",
+     "termcolor",
+-    "fastapi",
+-    "uvicorn",
++    "pydub",
+ ]
+ 
+ [project.optional-dependencies]

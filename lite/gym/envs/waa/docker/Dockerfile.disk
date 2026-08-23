@@ -1,0 +1,12 @@
+# Data-only image: the prepared Windows 11 qcow2, published as cua-lite/waa-disk
+# so `install.sh pull` can adopt it and skip the ~1h local ISO install. Carries
+# NO snapshot — the ready snapshot is host/CPU/QEMU-specific (migrated RAM state)
+# and cheap (~90s), so it is always rebuilt locally after the disk lands.
+#
+# Gated by the lite.waa_disk_id label (sha256 of the pinned ISO sha + prep
+# sources) so a disk built from different sources than the puller's checkout is
+# refused — the disk analogue of the runner's lite.src_hash.
+FROM scratch
+ARG WAA_DISK_ID
+LABEL lite.waa_disk_id=$WAA_DISK_ID
+COPY windows11-waa.qcow2 /waa/windows11-waa.qcow2

@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR=/var/lib/lite-osworld
+NTP_FILE="$STATE_DIR/timedatectl_ntp"
+mkdir -p "$STATE_DIR" 2>/dev/null || true
+
+read_zone() {
+  if [ -s /etc/timezone ]; then
+    head -n1 /etc/timezone | tr -d '\r'
+    return
+  fi
+  target="$(readlink -f /etc/localtime 2>/dev/null || true)"
+  case "$target" in
+    /usr/share/zoneinfo/*) printf '%s\n' "${target#/usr/share/zoneinfo/}" ;;
+    *) printf '%s\n' "UTC" ;;
+  esac
+}
+
+ntp_value() {
+  if [ -s "$NTP_FILE" ]; then
+    cat "$NTP_FILE"
+  else
+    printf '%s\n' "no"
+  fi
+}
+
+status_value() {
+  zone="$(read_zone)"
+  abbr="$(TZ="$zone" date +%Z 2>/dev/null || printf '%s' "$zone")"
+  offset="$(TZ="$zone" date +%z 2>/dev/null || printf '%s' '+0000')"
+  local_time="$(TZ="$zone" date '+%a %Y-%m-%d %H:%M:%S' 2>/dev/null || date '+%a %Y-%m-%d %H:%M:%S')"
+  utc_time="$(date -u '+%a %Y-%m-%d %H:%M:%S')"
+  ntp="$(ntp_value | tr '[:upper:]' '[:lower:]')"
+  case "$ntp" in
+    yes|true|1|active) sync="yes"; ntp_line="active" ;;
+    *) sync="no"; ntp_line="inactive" ;;
+  esac
+  printf '               Local time: %s %s\n' "$local_time" "$abbr"
+  printf '           Universal time: %s UTC\n' "$utc_time"
+  printf '                 RTC time: %s\n' "$utc_time"
+  printf '                Time zone: %s (%s, %s)\n' "$zone" "$abbr" "$offset"
+  printf 'System clock synchronized: %s\n' "$sync"
+  printf '              NTP service: %s\n' "$ntp_line"
+  printf '          RTC in local TZ: no\n'
+}
+
+require_root_for_mutation() {
+  if [ "$(id -u)" -ne 0 ]; then
+    exec sudo -n /usr/local/bin/timedatectl "$@"
+  fi
+}
+
+case "${1:-status}" in
+  ""|status)
+    status_value
+    ;;
+  show)
+    if printf '%s\n' "$*" | grep -q -- '--property=NTP'; then
+      if printf '%s\n' "$*" | grep -q -- '--value'; then
+        ntp_value
+      else
+        printf 'NTP=%s\n' "$(ntp_value)"
+      fi
+    else
+      status_value
+    fi
+    ;;
+  set-timezone)
+    require_root_for_mutation "$@"
+    zone="${2:-}"
+    # Traversal guard: `-e /usr/share/zoneinfo/$zone` alone is bypassable — e.g.
+    # `set-timezone ../../../../etc` resolves under zoneinfo and points
+    # /etc/localtime at /etc. Reject a leading '/' and any '..' path COMPONENT, but
+    # ALLOW internal '/' so real zones (America/New_York, the default
+    # Asia/Hong_Kong) still work. Wrapping in '/'…/' makes '*/../*' match '..' as any
+    # component (bare '..', leading '../', trailing '/..', or embedded '/../').
+    case "$zone" in
+      /*) printf 'Invalid time zone: %s\n' "$zone" >&2; exit 1 ;;
+    esac
+    case "/$zone/" in
+      */../*) printf 'Invalid time zone: %s\n' "$zone" >&2; exit 1 ;;
+    esac
+    if [ -z "$zone" ] || [ ! -e "/usr/share/zoneinfo/$zone" ]; then
+      printf 'Invalid time zone: %s\n' "$zone" >&2
+      exit 1
+    fi
+    ln -sf "/usr/share/zoneinfo/$zone" /etc/localtime
+    printf '%s\n' "$zone" > /etc/timezone
+    ;;
+  set-ntp)
+    require_root_for_mutation "$@"
+    value="$(printf '%s' "${2:-true}" | tr '[:upper:]' '[:lower:]')"
+    case "$value" in
+      true|yes|1|active) printf '%s\n' "yes" > "$NTP_FILE" ;;
+      false|no|0|inactive) printf '%s\n' "no" > "$NTP_FILE" ;;
+      *) printf 'Invalid NTP value: %s\n' "$value" >&2; exit 1 ;;
+    esac
+    ;;
+  set-local-rtc)
+    require_root_for_mutation "$@"
+    ;;
+  list-timezones)
+    find /usr/share/zoneinfo -type f \
+      ! -path '*/posix/*' ! -path '*/right/*' \
+      ! -name '*.tab' ! -name 'leapseconds' ! -name 'tzdata.zi' \
+      | sed 's#^/usr/share/zoneinfo/##' | sort
+    ;;
+  *)
+    printf 'Unsupported timedatectl shim command: %s\n' "$*" >&2
+    exit 1
+    ;;
+esac

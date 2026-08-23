@@ -1,0 +1,21 @@
+# GPT mobile on MobileGym
+# 416 parameterized tasks across 28 simulated apps, deterministic state-diff judges.
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+  # No system_prompt override needed: the agent's base mobile prompt
+  # (lite/agents/models/gpt/agent.py:_MOBILE_SYSTEM_PROMPT) already establishes
+  # the delegated-task SCOPE ("perform the requested operation rather than
+  # refusing"), which covers MobileGym's sensitive payment/account/deletion
+  # tasks without a benchmark-specific jailbreak. If a future benchmark needs a
+  # different prompt, override the full ``system_prompt`` here.
+
+env_id: "mobilegym"
+env_kwargs:
+  # open_app: env extra_tool (make_open_app_tool → app-name enum from the env
+  # catalog); not native anymore — surfaced via extra_tools like qwen.
+  loop_detect: 0
+  extra_tools: ["open_app", "response", "terminate"]

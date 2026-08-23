@@ -1,0 +1,16 @@
+# Claude rollout eval on OSWorld
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/osworld.yaml  (Qwen3-VL rollout)
+#   - scripts/configs/gpt/default/osworld.yaml      (GPT rollout)
+
+agent_id: "claude"
+agent_kwargs:
+  api_kwargs:
+    effort: "medium"
+    max_tokens: 4096
+
+env_id: "osworld"
+env_kwargs:
+  max_steps: 30   # v1 step budget (osworld_2 uses 200 — see scripts/configs/claude/default/osworld_2.yaml)
+  loop_detect: 0

@@ -1,0 +1,20 @@
+# Claude mobile on AndroidWorld
+# Multi-step mobile tasks across 20 apps, evaluated by real device state.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/gpt/default/androidworld.yaml  (GPT mobile rollout)
+#   - scripts/configs/qwen3_vl/default/androidworld.yaml  (Qwen3-VL baseline)
+#   - scripts/configs/claude/default/lite.osworld.yaml  (Claude desktop rollout)
+
+agent_id: "claude"
+agent_kwargs:
+  api_kwargs:
+    effort: "medium"
+    max_tokens: 4096
+
+env_id: "androidworld"
+env_kwargs:
+  # open_app: env extra_tool (make_open_app_tool → app-name enum from the env
+  # catalog); not native anymore — surfaced via extra_tools like qwen.
+  loop_detect: 0
+  extra_tools: ["open_app", "response", "terminate"]

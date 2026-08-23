@@ -1,0 +1,12 @@
+# Qwen3.5 rollout eval on lite.cuagym.
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  sampling_kwargs:
+    temperature: 0.0
+
+env_id: "lite.cuagym"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  extra_tools: ["terminate"]

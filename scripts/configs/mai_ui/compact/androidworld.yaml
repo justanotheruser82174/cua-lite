@@ -1,0 +1,33 @@
+# MAI-UI RL training on AndroidWorld
+# Multi-step mobile tasks across 20 apps, evaluated by real device state.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/mai_ui/default/androidworld.yaml  (rollout eval)
+#
+# full_history_size=1 (reduced from the upstream default to save VRAM during training)
+
+agent_id: "mai_ui"
+agent_kwargs:
+  # Downsampled from native 1080x2400 for ~50% speedup during RL.
+  # ~1469 vision tokens/image vs 3306 at 1080p; minimal acc drop.
+  resolution: [720, 1600]
+  protocol_kwargs:
+    full_history_size: 1   # reduced from the upstream default to save VRAM during training
+    # Cap the text assistant history at 10 most-recent old turns. Upstream
+    # MAI-UI keeps every historical assistant verbatim, so deep multi-turn
+    # androidworld tasks (native int(10 * task.complexity) budget can reach
+    # 60+ turns on L3/L4) push per-Sample total_length past 7000 tokens —
+    # the per-Sample fp32 logits buffer then blows past the per-GPU
+    # activation budget mid train step. 10 keeps enough behavioral context
+    # for the agent without the OOM tail.
+    summary_history_size: 10
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    top_p: 1.0
+    top_k: -1
+
+# max_steps omitted: androidworld uses native int(10 * task.complexity) budget.
+env_id: "androidworld"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

@@ -1,0 +1,2 @@
+# Downloaded artifacts (docker-file.zip, emulator zip) fetched by scripts/install.sh.
+.cache/

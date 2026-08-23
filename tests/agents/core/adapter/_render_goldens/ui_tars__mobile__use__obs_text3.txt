@@ -1,0 +1,132 @@
+[[{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "long_press(start_box='<|box_start|>(x1,y1)<|box_end|>', time='')\n"
+                        "type(content='')\n"
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        'press_home()\n'
+                        'press_back()\n'
+                        "finished(content='') # Submit the task regardless of whether it succeeds "
+                        'or fails.\n'
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Find a laptop price.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': "Action 0.\nAction: click(start_box='(100,100)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "long_press(start_box='<|box_start|>(x1,y1)<|box_end|>', time='')\n"
+                        "type(content='')\n"
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        'press_home()\n'
+                        'press_back()\n'
+                        "finished(content='') # Submit the task regardless of whether it succeeds "
+                        'or fails.\n'
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Find a laptop price.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': "Action 0.\nAction: click(start_box='(100,100)')"}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 1},
+               {'type': 'text',
+                'text': 'After the action above is executed by the environment, the webpage '
+                        'changed (this means the last action was effective). Current URL: '
+                        'amazon.com'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': "Action 1.\nAction: click(start_box='(100,101)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "long_press(start_box='<|box_start|>(x1,y1)<|box_end|>', time='')\n"
+                        "type(content='')\n"
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        'press_home()\n'
+                        'press_back()\n'
+                        "finished(content='') # Submit the task regardless of whether it succeeds "
+                        'or fails.\n'
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Find a laptop price.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': "Action 0.\nAction: click(start_box='(100,100)')"}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 1},
+               {'type': 'text',
+                'text': 'After the action above is executed by the environment, the webpage '
+                        'changed (this means the last action was effective). Current URL: '
+                        'amazon.com'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': "Action 1.\nAction: click(start_box='(100,101)')"}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 2},
+               {'type': 'text',
+                'text': 'After the action above is executed by the environment, the webpage '
+                        'changed (this means the last action was effective). Current URL: '
+                        'amazon.com'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': "Action 2.\nAction: click(start_box='(100,102)')"}]}]]

@@ -1,0 +1,36 @@
+# GPT mobile on AndroidLab
+# 138 multi-step tasks across 9 offline apps (bluecoins, calendar, cantook,
+# clock, contacts, map, pimusic, setting, zoom). Each worker runs in its own
+# cua-lite/androidlab:latest docker container with the reference's Quick Boot
+# snapshot (seeded contacts / books / music / SQLite DBs). Eval-only.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/claude/default/androidlab.yaml  (Claude mobile)
+#   - scripts/configs/qwen3_vl/default/androidlab.yaml  (Qwen3-VL baseline)
+#   - scripts/configs/gpt/default/androidworld.yaml  (GPT on AndroidWorld)
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+  # Mobile API resolution: matches qwen3vl rollout (1080x2400 Pixel 6 native).
+  # With ``detail=original`` (default), 2380 patches well under the 10000
+  # budget — no provider-side resize expected. ``_call_api_with_actual_dim``
+  # GETs the API-echoed processed dims for coord normalization and WARNs
+  # if they differ from sent dims (graceful, never raises).
+
+env_id: "androidlab"
+env_kwargs:
+  # Reference paper uses max_steps=20 for all 138 tasks.
+  max_steps: 20
+  # observation_text defaults to "none" (screenshot only). Alternatives —
+  # only the :pixel variants are meaningful for API agents because their
+  # computer-use action space takes pixel coords (in the ``resolution``
+  # kwarg's space); :norm would mismatch the coord system used for actions.
+  #   "a11y_tree:pixel"  — reference's compressed UIAutomator tree, pixel coords
+  #   "a11y_list:pixel"  — androidworld-style flat element list, pixel coords
+  # open_app: env extra_tool (make_open_app_tool → app-name enum from the env
+  # catalog); not native anymore — surfaced via extra_tools like qwen.
+  loop_detect: 0
+  extra_tools: ["open_app", "response", "terminate"]

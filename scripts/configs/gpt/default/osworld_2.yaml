@@ -1,0 +1,16 @@
+# GPT rollout eval on OSWorld-V2 (osworld_2)
+#
+# Mirrors scripts/configs/gpt/default/osworld.yaml (v1) but with the OFFICIAL V2 step budget —
+# V2 tasks (capability-graded, cross-source) need far longer trajectories than v1's 30.
+# Related configs (sync agent_kwargs when changing): scripts/configs/gpt/default/osworld.yaml.
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "xhigh"
+    max_output_tokens: 8192
+
+env_id: "osworld_2"
+env_kwargs:
+  max_steps: 200   # OSWorld-V2 official GPT run value (run_multienv_gpt_response_api.sh --max_steps 200)
+  loop_detect: 0

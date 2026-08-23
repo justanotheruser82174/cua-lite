@@ -1,0 +1,27 @@
+# Step-GUI (GELab-Zero) rollout eval on MobileWorld
+# 161 tasks (201 upstream − 40 agent-mcp) across 20 apps in DinD boxes,
+# evaluated by real device / backend state.
+#
+# Sampling per upstream main gui model_config (temperature=0.1, top_p=0.95)
+# — same as the androidworld sibling config. Step-GUI uses a rolling summary
+# approach — no history windowing needed.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/step_gui/default/androidworld.yaml  (mobile sibling)
+#
+# NOTE: the 46 agent-user-interaction tasks need the ``ask_user`` extra
+# tool, which Step-GUI's fixed action grammar cannot express — expect those
+# tasks to score 0; GUI-only tasks are unaffected.
+
+agent_id: "step_gui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.1
+    top_p: 0.95
+
+# max_steps omitted: mobileworld's env default is 50 (upstream ``mw eval
+# --max_round 50``).
+env_id: "mobileworld"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

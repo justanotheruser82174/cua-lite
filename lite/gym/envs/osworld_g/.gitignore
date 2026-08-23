@@ -1,0 +1,3 @@
+# Cloned upstream benchmark data (run scripts/utils/download_tasks.py to populate).
+# Tracked outside git because it's ~290MB of images + 564 task annotations.
+.cache/

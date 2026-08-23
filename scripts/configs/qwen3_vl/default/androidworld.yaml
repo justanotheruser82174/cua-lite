@@ -1,0 +1,22 @@
+# Qwen3-VL rollout eval on AndroidWorld
+# Multi-step mobile tasks across 20 apps, evaluated by real device state.
+#
+# No upstream Qwen3-VL reference for AndroidWorld; greedy decoding
+# (temperature=0) matches the OSWorld sibling config.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/compact/androidworld.yaml  (RL training)
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+# max_steps is omitted so androidworld uses its native complexity-based
+# budget: int(10 * task.complexity). Pass max_steps explicitly to override.
+env_id: "androidworld"
+env_kwargs:
+  # Qwen native open parses to canonical open_app; opt in to the env-side
+  # extra_tool boundary so app launch is available in this task.
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

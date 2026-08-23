@@ -1,0 +1,29 @@
+# MAI-UI rollout eval on MobileWorld
+# 161 tasks (201 upstream − 40 agent-mcp) across 20 apps in DinD boxes,
+# evaluated by real device / backend state.
+#
+# Sampling kwargs match upstream mai_naivigation_agent.py default runtime_conf
+# (greedy, deterministic) — same as the androidworld sibling config.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/mai_ui/default/androidworld.yaml  (mobile sibling)
+#
+# NOTE: the 46 agent-user-interaction tasks need the ``ask_user`` extra
+# tool, which MAI-UI's fixed action grammar cannot express — expect those
+# tasks to score 0; GUI-only tasks are unaffected. MAI-UI bakes native
+# ``open`` / ``answer`` / ``terminate`` actions into its sysprompt; the matching
+# CUA-Lite extras below keep env acceptance aligned with that native surface.
+
+agent_id: "mai_ui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    top_p: 1.0
+    top_k: -1
+
+# max_steps omitted: mobileworld's env default is 50 (upstream ``mw eval
+# --max_round 50``).
+env_id: "mobileworld"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

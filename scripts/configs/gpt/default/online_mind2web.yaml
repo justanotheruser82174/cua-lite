@@ -1,0 +1,27 @@
+# GPT rollout eval on Online-Mind2Web.
+# Uses the Mind2Web env defaults for dataset revision pinning, v2 trajectory
+# recording, and WebJudge reward/eval.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_vl/default/online_mind2web.yaml
+#   - scripts/configs/qwen3_5/default/online_mind2web.yaml
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "online_mind2web"
+env_kwargs:
+  # Online-Mind2Web is NOT a pure-QA benchmark: its 300 tasks carry no
+  # reference answer (data/tasks.json fields: confirmed_task / level /
+  # reference_length / website) and most are imperatives ("Add a Box Combo to
+  # my bag"). The reward is WebJudge over the screenshot trajectory + the
+  # action strings (``_webjudge_online_mind2web_eval``), which never reads the
+  # agent's answer — so an action task has nothing to ``response`` with and
+  # needs ``terminate`` to signal done / infeasible instead of burning to
+  # max_steps. ``response`` stays for the QA-shaped tasks (it appends
+  # "TASK_COMPLETE -> ANSWER: …" to the judged action history).
+  extra_tools: ["goto", "back", "forward", "response", "terminate"]
+  skip_eval: false

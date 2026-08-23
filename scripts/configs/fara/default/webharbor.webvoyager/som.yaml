@@ -1,0 +1,41 @@
+# Fara-1.0 Set-of-Marks (SoM) rollout eval on WebVoyager.
+#
+# WebHarbor-style SoM observation mode for Fara.
+#   - Obs: screenshot annotated with colored bounding boxes labeled [N], plus
+#     the accessibility tree "[N]: <tag> text @ (cx, cy)" carried as the
+#     observation TEXT. FaraHistoryProtocol keeps all observation text every
+#     turn, so — unlike the qwen3_vl/qwen3_5 SoM configs — Fara needs neither the
+#     ``webvoyager.<family>.history`` turn-0 web_text splice nor
+#     ``keep_text_with_images`` (those exist only because Qwen*HistoryProtocol
+#     replaces/strips the first-turn text).
+#   - Action: still Fara's native coordinate ``computer_use`` wrapper. The Fara
+#     adapter does not render env extra_tool_schemas into the prompt, so this is
+#     not an index-output SoM tool mode. Extra schemas below only gate env
+#     acceptance of canonical standalone calls produced by Fara's native enum
+#     projection (goto/back/terminate) plus the currently-open response channel.
+#
+# NOTE: Fara is a COORDINATE-native agent (it was fine-tuned to emit pixel
+# ``computer_use`` clicks, not ``[N]`` indices), so SoM mode is OFF-DISTRIBUTION
+# / experimental — provided for parity with the qwen3_vl eval matrix. The Fara
+# adapter still uses its ``FN_CALL_TEMPLATE`` web-automation preamble and native
+# coordinate tool grammar.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/fara/default/webharbor.webvoyager/default.yaml   (coord baseline)
+#   - scripts/configs/qwen3_vl/default/webharbor.webvoyager/som.yaml
+
+agent_id: "fara"
+agent_kwargs:
+  protocol_kwargs:
+    max_n_images: 3
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "webharbor.webvoyager"
+env_kwargs:
+  max_steps: 100    # Fara reference max_rounds default
+  extra_tools: ["goto", "back", "response", "terminate"]
+  use_som: true     # draw the [N] Set-of-Marks boxes on the screenshot
+  # GUI action enum only; Fara stays coordinate-native even with SoM annotations.
+  valid_actions: ["click", "type", "key", "mouse_move", "scroll", "wait"]

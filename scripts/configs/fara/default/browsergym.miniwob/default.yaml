@@ -1,0 +1,41 @@
+# Fara-1.0 vision+coord rollout eval on cua-lite browsergym.miniwob (125 tasks).
+#
+# Fara-7B is a Qwen2.5-VL-7B web-browsing fine-tune — see
+# scripts/configs/fara/default/webharbor.webvoyager/default.yaml for the full family /
+# hyperparameter rationale (max_rounds=100, max_n_images=3, temperature=0).
+#
+# Prereqs: miniwob HTML server on 7560; MINIWOB_URL=http://localhost:7560/miniwob/.
+# Viewport/action conversion happens inside the env (miniwob: 498x321).
+
+agent_id: "fara"
+agent_kwargs:
+  # Do not set agent-side resolution: browsergym screenshots are task-fixed;
+  # stretching them to Fara's native viewport distorts text/icons.
+  protocol_kwargs:
+    max_n_images: 3
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "browsergym.miniwob"
+env_kwargs:
+  max_steps: 100   # Fara reference max_rounds default
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  # Fara is a pixel-coordinate vision agent; feed it the raw screenshot and
+  # emit coord actions. Skip the O(nodes) DOM/AXTree extraction (only the
+  # screenshot is used) to keep env.step fast.
+  use_screenshot: true
+  use_ax_tree: false
+  skip_dom_extraction: true
+  # Fara's web nav/finish is native to computer_use, but translated canonical
+  # Lite calls still need schemas for self-contained rollout parquet. Fara's
+  # adapter does not render these schemas into its native prompt grammar.
+  #
+  # ``response`` is listed for the same reason as the fara webarena / vwa /
+  # webvoyager rows: Fara never emits one natively, but a tool-call-free final
+  # turn is scored through ``make_no_tool_call_final_actions``, which only
+  # synthesizes ``response(text=…)`` when ``response`` is in the live
+  # ``extra_tool_schemas`` — otherwise the model's answer text is silently
+  # dropped in favour of a bare ``terminate``. This row was the one shipped
+  # browsergym config missing it.
+  extra_tools: ["goto", "back", "response", "terminate"]

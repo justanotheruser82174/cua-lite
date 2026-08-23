@@ -1,0 +1,282 @@
+[[{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open GIMP and export as PNG.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 0: click element 0.'}],
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [40, 60]}]}}}]}],
+ [{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open GIMP and export as PNG.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 0: click element 0.'}],
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [40, 60]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 1: click element 1.'}],
+   'tool_calls': [{'id': 'call_0001',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [45, 65]}]}}}]}],
+ [{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open GIMP and export as PNG.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 0: click element 0.'}],
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [40, 60]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 1: click element 1.'}],
+   'tool_calls': [{'id': 'call_0001',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [45, 65]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 2: click element 2.'}],
+   'tool_calls': [{'id': 'call_0002',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [50, 70]}]}}}]}],
+ [{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open GIMP and export as PNG.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 0: click element 0.'}],
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [40, 60]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 1: click element 1.'}],
+   'tool_calls': [{'id': 'call_0001',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [45, 65]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 2: click element 2.'}],
+   'tool_calls': [{'id': 'call_0002',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [50, 70]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 3}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 3: click element 3.'}],
+   'tool_calls': [{'id': 'call_0003',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [55, 75]}]}}}]}],
+ [{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open GIMP and export as PNG.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 0: click element 0.'}],
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [40, 60]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 1: click element 1.'}],
+   'tool_calls': [{'id': 'call_0001',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [45, 65]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 2: click element 2.'}],
+   'tool_calls': [{'id': 'call_0002',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [50, 70]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 3}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 3: click element 3.'}],
+   'tool_calls': [{'id': 'call_0003',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [55, 75]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 4}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 4: click element 4.'}],
+   'tool_calls': [{'id': 'call_0004',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [60, 80]}]}}}]}],
+ [{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open GIMP and export as PNG.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 0: click element 0.'}],
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [40, 60]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 1: click element 1.'}],
+   'tool_calls': [{'id': 'call_0001',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [45, 65]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 2: click element 2.'}],
+   'tool_calls': [{'id': 'call_0002',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [50, 70]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 3}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 3: click element 3.'}],
+   'tool_calls': [{'id': 'call_0003',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [55, 75]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 4}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 4: click element 4.'}],
+   'tool_calls': [{'id': 'call_0004',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [60, 80]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 5}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Step 5: click element 5.'}],
+   'tool_calls': [{'id': 'call_0005',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [65, 85]}]}}}]}]]

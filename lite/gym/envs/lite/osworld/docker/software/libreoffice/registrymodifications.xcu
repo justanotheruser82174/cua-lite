@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Canonical LibreOffice first-run suppression config (single source of truth).
+     Baked into the image and cp'd into the live profile at every boot by
+     docker/runtime/apply-osworld-settings.sh (eval re-inits the profile, so the
+     runtime cp is load-bearing — a build-time COPY alone would be wiped).
+     ooSetupLastVersion MUST match the installed LibreOffice (7.3.7.x, see the
+     libreoffice-* apt line in the Dockerfile) so the "running version N for the
+     first time / learn what's new" banner never fires. -->
+<oor:items xmlns:oor="http://openoffice.org/2001/registry"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <item oor:path="/org.openoffice.Setup/Office"><prop oor:name="FirstStartWizardCompleted" oor:op="fuse"><value>true</value></prop></item>
+  <item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="FirstRun" oor:op="fuse"><value>false</value></prop></item>
+  <item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="ShowTipOfTheDay" oor:op="fuse"><value>false</value></prop></item>
+  <item oor:path="/org.openoffice.Office.Common/Save/Document"><prop oor:name="WarnAlienFormat" oor:op="fuse"><value>false</value></prop></item>
+  <item oor:path="/org.openoffice.Setup/Product"><prop oor:name="ooSetupShowReleaseNotes" oor:op="fuse"><value>false</value></prop></item>
+  <item oor:path="/org.openoffice.Setup/Product"><prop oor:name="ooSetupLastVersion" oor:op="fuse"><value>7.3.7.2</value></prop></item>
+  <item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpUserAssistance" oor:op="fuse"><value>false</value></prop></item>
+  <item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpAgentEnabled" oor:op="fuse"><value>false</value></prop></item>
+  <item oor:path="/org.openoffice.Office.Impress/Misc/NewDoc"><prop oor:name="AutoPilot" oor:op="fuse"><value>false</value></prop></item>
+</oor:items>

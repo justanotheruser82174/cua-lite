@@ -1,0 +1,47 @@
+diff --git a/setup.py b/setup.py
+index 209ea6f..471b6ab 100644
+--- a/setup.py
++++ b/setup.py
+@@ -16,7 +16,6 @@
+ 
+ import os
+ 
+-import pkg_resources
+ import setuptools
+ from setuptools.command import build_py
+ 
+@@ -44,9 +43,8 @@ class _GenerateProtoFiles(setuptools.Command):
+     # dependencies.
+     from grpc_tools import protoc  # pylint: disable=g-import-not-at-top
+ 
+-    grpc_protos_include = pkg_resources.resource_filename(
+-        'grpc_tools', '_proto'
+-    )
++    import importlib.resources as _res
++    grpc_protos_include = str(_res.files('grpc_tools').joinpath('_proto'))
+ 
+     for proto_path in _PACKAGE_PROTOS:
+       proto_args = [
+@@ -68,9 +66,6 @@ class _BuildPy(build_py.build_py):
+     self.run_command('generate_protos')
+     super().run()
+ 
+-_GRPCIO_TOOLS_VERSION = '1.71.0'
+-_PROTOBUF_VERSION = '5.29.5'
+-
+ setuptools.setup(
+     name='android_world',
+     package_data={
+@@ -83,10 +78,8 @@ setuptools.setup(
+         ]
+     },
+     packages=setuptools.find_packages(),
+-    setup_requires=[f'grpcio-tools=={_GRPCIO_TOOLS_VERSION}'],
+-    install_requires=[
+-        f'protobuf=={_PROTOBUF_VERSION}',
+-    ],
++    setup_requires=['grpcio-tools>=1.62.0'],
++    install_requires=[],
+     cmdclass={
+         'build_py': _BuildPy,
+         'generate_protos': _GenerateProtoFiles,

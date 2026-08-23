@@ -1,0 +1,27 @@
+# Qwen2.5-VL rollout eval on ScreenSpot-Pro
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+#
+# Reference (sampling): ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/qwen25_vllm_screenspot_pro_jedi.py
+# Same upstream sampling as the Jedi eval: ``max_new_tokens=1024, temperature=0``.
+#
+# Coord wire format: pixel coords in the smart-resized image space
+# (factor=28, max_pixels=12.85M). The adapter rescales to / from cua-lite
+# [0,1000] normalized coords — see ``lite/agents/models/qwen2_5_vl/adapter.py``.
+#
+# Related configs:
+#   - scripts/configs/qwen2_5_vl/default/osworld_g.yaml         (sibling grounding bench)
+#   - scripts/configs/qwen3_vl/default/screenspot_pro.yaml      (Qwen3-VL counterpart; [0,1000] coord space)
+
+agent_id: "qwen2_5_vl"
+agent_kwargs:
+  # Grounding shape provided by Qwen2_5VLDesktopGroundingPointAdapter
+  # (see osworld_g.yaml in this directory for the full description).
+  #
+  # resolution: match SFT training (AR-preserving fit-in-box) so
+  # the model sees the same coord frame at eval as at train.
+  resolution: [1280, 720]
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1024
+
+env_id: "screenspot_pro"

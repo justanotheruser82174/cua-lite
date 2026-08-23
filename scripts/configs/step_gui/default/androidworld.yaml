@@ -1,0 +1,30 @@
+# Step-GUI (GELab-Zero) rollout eval on AndroidWorld
+# Multi-step mobile tasks across 20 apps, evaluated by real device state.
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/gelab-zero/mcp_server_config.yaml
+# Sampling per upstream main gui model_config (L10-14): temperature=0.1,
+# top_p=0.95. The reply_config / caption_config entries (L44-45, L68-69)
+# use t=0.5 but apply only to auxiliary auto-reply and captioning paths,
+# not the main agent loop.
+#
+# Step-GUI uses a rolling summary approach — no history windowing needed.
+# The model outputs a cumulative `summary:` field each step, so only the
+# latest summary is used as history context for the next turn.
+#
+# Run:
+#   CUDA_VISIBLE_DEVICES=0 uv run python scripts/rollout.py \
+#     --model-id stepfun-ai/GELab-Zero-4B-preview --env-id androidworld \
+#     --config-path scripts/configs/step_gui/default/androidworld.yaml \
+#     --save-video true --concurrency 8
+
+agent_id: "step_gui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.1
+    top_p: 0.95
+
+# max_steps omitted: androidworld uses native int(10 * task.complexity) budget.
+env_id: "androidworld"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

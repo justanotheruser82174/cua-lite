@@ -1,0 +1,65 @@
+[[{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open Settings, go to Privacy.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Click step 0.'}],
+   'reasoning_content': 'Reasoning for step 0: I should click.',
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [50, 50]}]}}}]}],
+ [{'role': 'system',
+   'content': [{'type': 'text',
+                'text': 'Perform actions on the desktop interface. Coordinates are normalized to '
+                        'the range [0, 1000].\n'
+                        '\n'
+                        '# Response format\n'
+                        '\n'
+                        'Response format for every step:\n'
+                        '1) Action: A short imperative describing what to do in the UI.\n'
+                        '2) Tool_call: A single tool_call block.\n'
+                        '\n'
+                        'Rules:\n'
+                        '- Output exactly in the order: action, tool_call.\n'
+                        '- Be brief: one sentence for action.\n'
+                        '- Do not output anything else outside those parts.\n'
+                        '- If finishing, use action=response for a question-answering task, '
+                        'otherwise use action=terminate in the tool call.'}]},
+  {'role': 'user',
+   'content': [{'type': 'image', 'index': 0},
+               {'type': 'text', 'text': 'Open Settings, go to Privacy.'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Click step 0.'}],
+   'reasoning_content': 'Reasoning for step 0: I should click.',
+   'tool_calls': [{'id': 'call_0000',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [50, 50]}]}}}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text', 'text': 'Action: Click step 1.'}],
+   'reasoning_content': 'Reasoning for step 1: I should click.',
+   'tool_calls': [{'id': 'call_0001',
+                   'type': 'function',
+                   'function': {'name': 'computer',
+                                'arguments': {'actions': [{'action': 'click',
+                                                           'coordinate': [51, 51]}]}}}]}]]

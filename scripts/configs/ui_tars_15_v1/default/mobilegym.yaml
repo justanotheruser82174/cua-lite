@@ -1,0 +1,13 @@
+# UI-TARS-1.5-7B rollout eval on MobileGym
+# 416 parameterized tasks across 28 simulated apps, deterministic state-diff judges.
+
+agent_id: "ui_tars_15_v1"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 400
+
+env_id: "mobilegym"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["response", "terminate"]

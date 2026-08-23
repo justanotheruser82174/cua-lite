@@ -1,0 +1,1 @@
+"""Lite OSWorld environment tests."""

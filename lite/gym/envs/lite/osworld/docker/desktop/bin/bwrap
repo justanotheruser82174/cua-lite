@@ -1,0 +1,41 @@
+#!/usr/bin/python3
+import os, sys
+TWO_ARG = {"--bind","--bind-try","--ro-bind","--ro-bind-try","--dev-bind",
+           "--dev-bind-try","--symlink","--setenv","--file","--bind-data",
+           "--ro-bind-data","--chmod","--overlay-src"}
+ONE_ARG = {"--chdir","--proc","--dev","--tmpfs","--mqueue","--dir","--seccomp",
+           "--sync-fd","--info-fd","--json-status-fd","--userns","--userns2",
+           "--pidns","--uid","--gid","--hostname","--unsetenv","--lock-file",
+           "--remount-ro","--exec-label","--file-label","--cap-add","--cap-drop",
+           "--perms","--size","--argv0","--level-prefix"}
+argv = sys.argv[1:]; binds=[]; setenvs=[]; chdir=None; i=0; n=len(argv)
+while i < n:
+    a = argv[i]
+    if not a.startswith("--"): break
+    if a == "--setenv": setenvs.append((argv[i+1],argv[i+2])); i+=3; continue
+    if a in ("--bind","--bind-try","--ro-bind","--ro-bind-try","--dev-bind","--dev-bind-try"):
+        binds.append((argv[i+2],argv[i+1])); i+=3; continue
+    if a in TWO_ARG: i+=3; continue
+    if a == "--chdir": chdir=argv[i+1]; i+=2; continue
+    if a in ONE_ARG: i+=2; continue
+    i += 1
+cmd = argv[i:]
+# Flag-only invocations (e.g. `bwrap --version`/`--help`, which gnome-desktop may
+# probe before using bwrap) create no namespace -> delegate to the real bwrap so
+# they succeed; only the sandbox-exec path (has a trailing command) is shimmed.
+if not cmd: os.execv("/usr/bin/bwrap.real", ["/usr/bin/bwrap.real"] + argv)
+binds.sort(key=lambda p: len(p[0]), reverse=True)
+def remap(tok):
+    pre=""; raw=tok
+    if tok.startswith("file://"): pre,raw="file://",tok[7:]
+    if not raw.startswith("/"): return tok
+    for dest,src in binds:
+        if raw==dest or raw.startswith(dest.rstrip("/")+"/"):
+            return pre+src+raw[len(dest):]
+    return tok
+cmd=[cmd[0]]+[remap(t) for t in cmd[1:]]
+for k,v in setenvs: os.environ[k]=v
+if chdir:
+    try: os.chdir(remap(chdir))
+    except OSError: pass
+os.execvp(cmd[0], cmd)

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR=/var/lib/lite-osworld
+HOSTNAME_FILE="$STATE_DIR/hostname"
+REAL_HOSTNAME=/usr/bin/hostname
+mkdir -p "$STATE_DIR" 2>/dev/null || true
+
+read_hostname() {
+  if [ -s "$HOSTNAME_FILE" ]; then
+    head -n1 "$HOSTNAME_FILE" | tr -d '\r'
+    return
+  fi
+  "$REAL_HOSTNAME"
+}
+
+require_root_for_mutation() {
+  if [ "$(id -u)" -ne 0 ]; then
+    exec sudo -n /usr/local/bin/hostname "$@"
+  fi
+}
+
+case "$#" in
+  0)
+    read_hostname
+    ;;
+  1)
+    case "${1:-}" in
+      -*)
+        exec "$REAL_HOSTNAME" "$@"
+        ;;
+      *)
+        require_root_for_mutation "$@"
+        printf '%s\n' "$1" > "$HOSTNAME_FILE"
+        printf '%s\n' "$1" > /etc/hostname 2>/dev/null || true
+        ;;
+    esac
+    ;;
+  *)
+    exec "$REAL_HOSTNAME" "$@"
+    ;;
+esac

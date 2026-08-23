@@ -1,0 +1,15 @@
+# Claude mobile on MobileGym
+# 416 parameterized tasks across 28 simulated apps, deterministic state-diff judges.
+
+agent_id: "claude"
+agent_kwargs:
+  api_kwargs:
+    effort: "medium"
+    max_tokens: 4096
+
+env_id: "mobilegym"
+env_kwargs:
+  # open_app: env extra_tool (make_open_app_tool → app-name enum from the env
+  # catalog); not native anymore — surfaced via extra_tools like qwen.
+  loop_detect: 0
+  extra_tools: ["open_app", "response", "terminate"]

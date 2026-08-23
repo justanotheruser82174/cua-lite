@@ -1,0 +1,57 @@
+# Qwen3-VL Set-of-Marks (SoM) rollout on cua-lite browsergym.visualwebarena.
+#
+# HYBRID mode: image INPUT, bid OUTPUT — VWA twin of the webarena som.yaml.
+#   - Obs: per-step screenshot annotated by ``overlay_som`` with numbered [bid]
+#     boxes, PLUS the VWA goal image(s) (the "find THIS product" inputs) shown
+#     every turn by the ``visualwebarena.goal_image`` agent.
+#   - Action: bid actions (``click('a23')``); ``action_subsets:["visualwebarena"]``
+#     + ``extra_tools`` below provide bid/nav/finish/upload tools, while
+#     ``valid_actions:[]`` only removes the coord action-batch tool.
+#
+# SoM REQUIRES the DOM extraction (marks need set_of_marks + bbox), so
+# ``skip_dom_extraction`` stays false. The ``visualwebarena.goal_image`` agent
+# points at the bid-output ``qwen3_vl.base`` adapter via ``adapter_key`` and
+# injects the goal image(s) on top of the per-turn SoM screenshot, binding
+# ``metadata["goal_images_b64"]`` to ordinary turn-0 image-prefix parts.
+
+agent_id: "visualwebarena.goal_image"
+agent_kwargs:
+  adapter_key: "qwen3_vl.base"
+  protocol_key: "browsergym.generic"
+  protocol_kwargs:
+    use_concrete_example: false
+    use_hints: true
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+  system_prompt: |-
+    You are an agent trying to solve a web task based on the content of the page and
+    user instructions. You can interact with the page and explore, and send messages to the user. Each time you
+    submit an action it will be sent to the browser and you will receive a new page.
+
+    The page screenshot is annotated with a Set-of-Marks: each interactive element
+    is drawn with a dashed bounding box and a label showing that element's bid.
+    Read the bid off the mark on the image and refer to elements by their bid in
+    your actions (e.g. click('a23'), fill('a51', 'text')). The bid is whatever
+    text is printed on the mark — it may be a NUMBER (e.g. '49') or an id (e.g.
+    'a23'); copy it EXACTLY as shown, never guess or invent one. Only bids that
+    appear as marks on the screenshot are interactable. (The separate goal
+    image(s) show the target the task refers to.)
+
+env_id: "browsergym.visualwebarena"
+env_kwargs:
+  max_steps: 30
+  use_screenshot: true
+  use_ax_tree: false
+  use_som: true
+  skip_dom_extraction: false
+  use_focused_element: true
+  use_error_logs: true
+  extract_visible_tag: true
+  extract_clickable_tag: true
+  extract_coords: "False"
+  filter_visible_elements_only: false
+  action_subsets: ["visualwebarena"]
+  extra_tools: ["scroll", "keyboard_press", "click", "fill", "hover", "switch_tab", "new_tab", "back", "forward", "goto", "close_tab", "select_option", "response", "upload_file", "terminate"]
+  # Disable only the LiteBrowser coord action-batch tool; SoM bid tools above remain
+  # active, and rejected GUI calls preserve current model-visible feedback.
+  valid_actions: []

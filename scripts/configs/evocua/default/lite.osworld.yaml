@@ -1,0 +1,20 @@
+# EvoCUA rollout eval on lite.osworld
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/EvoCUA/run_multienv_evocua.py
+# Sampling matches the upstream S2 example: temperature=0.01, top_p=0.9
+# (max_new_tokens falls back to the local.py default of 2048; empirical
+# response sizes on osworld / lite.osworld stay well under 1000 chars,
+# and 2048 lets the agent loop fail-fast on degenerate-loop turns instead
+# of burning compute on a 32768-token repeat).
+
+agent_id: "evocua"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.01
+    top_p: 0.9
+
+env_id: "lite.osworld"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  extra_tools: ["terminate"]

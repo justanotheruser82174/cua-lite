@@ -1,0 +1,305 @@
+[[{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "left_double(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "right_single(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "drag(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        "hotkey(key='')\n"
+                        'type(content=\'\') #If you want to submit your input, use "\\n" at the '
+                        'end of `content`.\n'
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', direction='down or up "
+                        "or right or left')\n"
+                        'wait() #Sleep for 5s and take a screenshot to check for any changes.\n'
+                        'finished()\n'
+                        'call_user() # Submit the task and call the user when the task is '
+                        "unsolvable, or when you need the user's help.\n"
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Open GIMP and export as PNG.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 0: click element 0.\nAction: click(start_box='(40,60)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "left_double(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "right_single(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "drag(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        "hotkey(key='')\n"
+                        'type(content=\'\') #If you want to submit your input, use "\\n" at the '
+                        'end of `content`.\n'
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', direction='down or up "
+                        "or right or left')\n"
+                        'wait() #Sleep for 5s and take a screenshot to check for any changes.\n'
+                        'finished()\n'
+                        'call_user() # Submit the task and call the user when the task is '
+                        "unsolvable, or when you need the user's help.\n"
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Open GIMP and export as PNG.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 0: click element 0.\nAction: click(start_box='(40,60)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 1: click element 1.\nAction: click(start_box='(45,65)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "left_double(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "right_single(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "drag(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        "hotkey(key='')\n"
+                        'type(content=\'\') #If you want to submit your input, use "\\n" at the '
+                        'end of `content`.\n'
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', direction='down or up "
+                        "or right or left')\n"
+                        'wait() #Sleep for 5s and take a screenshot to check for any changes.\n'
+                        'finished()\n'
+                        'call_user() # Submit the task and call the user when the task is '
+                        "unsolvable, or when you need the user's help.\n"
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Open GIMP and export as PNG.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 0: click element 0.\nAction: click(start_box='(40,60)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 1: click element 1.\nAction: click(start_box='(45,65)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 2: click element 2.\nAction: click(start_box='(50,70)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "left_double(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "right_single(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "drag(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        "hotkey(key='')\n"
+                        'type(content=\'\') #If you want to submit your input, use "\\n" at the '
+                        'end of `content`.\n'
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', direction='down or up "
+                        "or right or left')\n"
+                        'wait() #Sleep for 5s and take a screenshot to check for any changes.\n'
+                        'finished()\n'
+                        'call_user() # Submit the task and call the user when the task is '
+                        "unsolvable, or when you need the user's help.\n"
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Open GIMP and export as PNG.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 0: click element 0.\nAction: click(start_box='(40,60)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 1: click element 1.\nAction: click(start_box='(45,65)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 2: click element 2.\nAction: click(start_box='(50,70)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 3}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 3: click element 3.\nAction: click(start_box='(55,75)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "left_double(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "right_single(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "drag(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        "hotkey(key='')\n"
+                        'type(content=\'\') #If you want to submit your input, use "\\n" at the '
+                        'end of `content`.\n'
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', direction='down or up "
+                        "or right or left')\n"
+                        'wait() #Sleep for 5s and take a screenshot to check for any changes.\n'
+                        'finished()\n'
+                        'call_user() # Submit the task and call the user when the task is '
+                        "unsolvable, or when you need the user's help.\n"
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Open GIMP and export as PNG.\n'}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 0}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 0: click element 0.\nAction: click(start_box='(40,60)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 1: click element 1.\nAction: click(start_box='(45,65)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 2: click element 2.\nAction: click(start_box='(50,70)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 3}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 3: click element 3.\nAction: click(start_box='(55,75)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 4}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 4: click element 4.\nAction: click(start_box='(60,80)')"}]}],
+ [{'role': 'system', 'content': [{'type': 'text', 'text': 'You are a helpful assistant.'}]},
+  {'role': 'user',
+   'content': [{'type': 'text',
+                'text': 'You are a GUI agent. You are given a task and your action history, with '
+                        'screenshots. You need to perform the next action to complete the task.\n'
+                        '\n'
+                        '## Output Format\n'
+                        '```\n'
+                        'Thought: ...\n'
+                        'Action: ...\n'
+                        '```\n'
+                        '\n'
+                        '## Action Space\n'
+                        '\n'
+                        "click(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "left_double(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "right_single(start_box='<|box_start|>(x1,y1)<|box_end|>')\n"
+                        "drag(start_box='<|box_start|>(x1,y1)<|box_end|>', "
+                        "end_box='<|box_start|>(x3,y3)<|box_end|>')\n"
+                        "hotkey(key='')\n"
+                        'type(content=\'\') #If you want to submit your input, use "\\n" at the '
+                        'end of `content`.\n'
+                        "scroll(start_box='<|box_start|>(x1,y1)<|box_end|>', direction='down or up "
+                        "or right or left')\n"
+                        'wait() #Sleep for 5s and take a screenshot to check for any changes.\n'
+                        'finished()\n'
+                        'call_user() # Submit the task and call the user when the task is '
+                        "unsolvable, or when you need the user's help.\n"
+                        '\n'
+                        '\n'
+                        '## Note\n'
+                        '- Use English in `Thought` part.\n'
+                        '- Write a small plan and finally summarize your next action (with its '
+                        'target element) in one sentence in `Thought` part.\n'
+                        '\n'
+                        '## User Instruction\n'
+                        'Open GIMP and export as PNG.\n'}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 0: click element 0.\nAction: click(start_box='(40,60)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 1}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 1: click element 1.\nAction: click(start_box='(45,65)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 2}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 2: click element 2.\nAction: click(start_box='(50,70)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 3}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 3: click element 3.\nAction: click(start_box='(55,75)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 4}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 4: click element 4.\nAction: click(start_box='(60,80)')"}]},
+  {'role': 'user', 'content': [{'type': 'image', 'index': 5}]},
+  {'role': 'assistant',
+   'content': [{'type': 'text',
+                'text': "Step 5: click element 5.\nAction: click(start_box='(65,85)')"}]}]]

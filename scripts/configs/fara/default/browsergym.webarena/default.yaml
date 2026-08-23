@@ -1,0 +1,39 @@
+# Fara-1.0 vision+coord rollout eval on cua-lite browsergym.webarena.
+#
+# Fara-7B is a Qwen2.5-VL-7B web-browsing fine-tune — see
+# scripts/configs/fara/default/webharbor.webvoyager/default.yaml for the full family /
+# hyperparameter rationale (max_rounds=100, max_n_images=3, temperature=0).
+#
+# Prereqs: docker containers shopping/shopping_admin/forum/gitlab/wikipedia up;
+# WA_* env vars exported. See lite/gym/envs/browsergym/README.md.
+
+agent_id: "fara"
+agent_kwargs:
+  # Do not set agent-side resolution: browsergym screenshots are task-fixed;
+  # stretching them to Fara's native viewport distorts text/icons.
+  protocol_kwargs:
+    max_n_images: 3
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "browsergym.webarena"
+env_kwargs:
+  with_homepage_hint: true  # WebArena p_cot homepage hint: appends homepage URL + site list + creds to the goal (WA-only; VWA TypeErrors).
+  max_steps: 100   # Fara reference max_rounds default
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  use_screenshot: true
+  use_ax_tree: false
+  skip_dom_extraction: true
+  # Fara's web nav/finish is native to computer_use, but the translated
+  # canonical Lite calls (goto/back/terminate/response) still need schemas for
+  # env acceptance and self-contained rollout parquet. Fara's adapter does not
+  # render these schemas into its native prompt grammar.
+  #
+  # ``response`` keeps WebArena final answers explicit in the env row. Fara may
+  # finish with plain text instead of a native action; runtime maps that
+  # content-only final to internal ``response(text=...)`` for BrowserGym's
+  # ``send_msg_to_user`` answer path. This is not a prompt-rendered or
+  # live-schema-gated Fara action. Same list as the fara webgym /
+  # online_mind2web / webvoyager rows.
+  extra_tools: ["goto", "back", "response", "terminate"]

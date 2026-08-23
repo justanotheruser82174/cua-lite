@@ -1,0 +1,16 @@
+https://raw.githubusercontent.com/google/fonts/main/ofl/marcellus/Marcellus-Regular.ttf Marcellus-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/Oswald%5Bwght%5D.ttf Oswald.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat%5Bwght%5D.ttf Montserrat.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/Caveat%5Bwght%5D.ttf Caveat.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/josefinsans/JosefinSans%5Bwght%5D.ttf JosefinSans.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/gloriahallelujah/GloriaHallelujah.ttf GloriaHallelujah.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/librefranklin/LibreFranklin%5Bwght%5D.ttf LibreFranklin.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf PlayfairDisplay.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/pacifico/Pacifico-Regular.ttf Pacifico-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/apache/walterturncoat/WalterTurncoat-Regular.ttf WalterTurncoat-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/Roboto%5Bwdth,wght%5D.ttf Roboto.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/opensans/OpenSans%5Bwdth,wght%5D.ttf OpenSans.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins-Regular.ttf Poppins-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/russoone/RussoOne-Regular.ttf RussoOne-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/paytoneone/PaytoneOne-Regular.ttf PaytoneOne-Regular.ttf
+https://raw.githubusercontent.com/google/fonts/main/ofl/alice/Alice-Regular.ttf Alice-Regular.ttf

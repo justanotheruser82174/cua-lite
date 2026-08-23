@@ -1,0 +1,48 @@
+# Fara-1.0 vision+coord rollout eval on cua-lite browsergym.visualwebarena.
+#
+# Fara-7B is a Qwen2.5-VL-7B web-browsing fine-tune — see
+# scripts/configs/fara/default/webharbor.webvoyager/default.yaml for the full family /
+# hyperparameter rationale (max_rounds=100, max_n_images=3, temperature=0).
+#
+# The browsergym ``goal_image`` agent decodes the VWA goal image(s), persists
+# them as the turn-0 image prefix, and shows them on every turn. It is
+# model-agnostic and pointed at Fara's adapter via ``adapter_key: "fara"``
+# (auto-completes to ``fara@browser@use`` from the env metadata). See
+# lite/gym/envs/browsergym/README.md#goal-images.
+#
+# Prereqs: WA docker services + classifieds docker-compose + VWA_* env vars.
+
+agent_id: "visualwebarena.goal_image"
+agent_kwargs:
+  adapter_key: "fara"
+  # Do not set agent-side resolution: browsergym screenshots are task-fixed;
+  # stretching them to Fara's native viewport distorts text/icons.
+  protocol_kwargs:
+    max_n_images: 3
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "browsergym.visualwebarena"
+env_kwargs:
+  max_steps: 100   # Fara reference max_rounds default
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  use_screenshot: true
+  use_ax_tree: false
+  skip_dom_extraction: true
+  # Fara's web nav/finish is native to computer_use, but the translated
+  # canonical Lite calls (goto/back/terminate/response) still need schemas for
+  # env acceptance and self-contained rollout parquet. Fara's adapter does not
+  # render these schemas into its native prompt grammar.
+  #
+  # ``response`` is REQUIRED here even though Fara never emits one natively
+  # (its action space raises on canonical ``response``): VisualWebArena's
+  # string-match reward reads the message the agent sends
+  # (``response`` → ``send_msg_to_user(text)``, main.py), and the ONLY way a
+  # Fara turn can reach it is the content-only final —
+  # ``make_no_tool_call_final_actions`` synthesizes ``response(text=…)`` iff
+  # ``response`` is in the live ``extra_tool_schemas``, else it degrades to
+  # ``terminate`` → ``send_msg_to_user("Task completed")`` and the reward is
+  # structurally unreachable. Same list as the fara webgym /
+  # online_mind2web / webvoyager rows.
+  extra_tools: ["goto", "back", "response", "terminate"]

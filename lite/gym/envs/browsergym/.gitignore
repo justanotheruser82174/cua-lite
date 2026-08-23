@@ -1,0 +1,3 @@
+# Downloaded artifacts (WebArena tars, Wikipedia zim, Classifieds zip,
+# miniwob-plusplus clone) fetched by scripts/install.sh.
+.cache/

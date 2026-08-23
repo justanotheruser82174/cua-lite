@@ -1,0 +1,5 @@
+[submodule "slime"]
+	path = slime
+	url = git@github.com:cua-lite/slime.git
+	branch = v0.3.0
+

@@ -1,0 +1,26 @@
+# CUA-Lite native adapter SFT export — model defaults.
+#
+# This is the ONLY config the `lite` dialect has, and the only recipe in
+# scripts/configs/*/recipes/sft/ with no rollout config to align against: the
+# cua-lite reference dialect has no Agent class at all (see `_NO_AGENT` in
+# tests/agents/test_registration_complete.py), so it never rolls out — it only
+# trains on trajectories another agent collected. Nothing here can diverge from
+# inference because this dialect has no inference path. Every other family
+# should export with its rollout config (scripts/configs/<family>/default/).
+#
+# resolution belongs under agent_kwargs: the adapter applies it identically at
+# rollout and at export, which is what keeps model-IO parity.
+#
+# Agent recipe only; pass the dataset on the CLI with --data-paths (and
+# --image-root).
+#
+# Run: uv run python -m lite.train.export.export_sft \
+#         --config scripts/configs/lite/recipes/sft/default.yaml \
+#         --model-id Qwen/Qwen3-VL-4B-Instruct \
+#         --data-paths "${CUA_LITE_DATASETS_ROOT}/cua-lite/Lite.ScaleCUA" \
+#         --image-root "${CUA_LITE_DATASETS_ROOT}" \
+#         -o .data/sft/scalecua-lite/train.parquet
+
+agent_id: "lite"
+agent_kwargs:
+  resolution: [1280, 720]

@@ -1,0 +1,18 @@
+# qwen3_5 rollout eval on cua.bench.local.kicad (a real trycua/cua-xfce container; needs Docker).
+# KiCad EDA suite (25 tasks; reproduces GPT-5.5 = 6/25, mean 0.240). Long tasks → max_steps 200.
+# Setup: lite/gym/envs/cua/README.md (install.sh downloads datasets → .cache; no export).
+# Sibling structure: scripts/configs/qwen3_5/default/lite.osworld.yaml
+#
+# Run:  uv run python scripts/rollout.py --config-path scripts/configs/qwen3_5/default/cua.bench/kicad.yaml \
+#         --env-id cua.bench.local.kicad --splits eval --concurrency 1   # KiCad ONLY: per-task apt-install truncates under concurrent load
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  sampling_kwargs:   # only honored by rollout.py; RL sets sampling via the trainer
+    temperature: 0.0
+
+env_id: "cua.bench.local.kicad"
+env_kwargs:
+  max_steps: 200
+  loop_detect: 5   # force terminate after 5 identical consecutive actions
+  extra_tools: ["terminate"]

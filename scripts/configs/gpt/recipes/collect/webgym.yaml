@@ -1,0 +1,85 @@
+# GPT-5.5 COLLECTION on WebGym — canonical teacher recipe for Qwen distillation.
+#
+# Distills a PROMPT-CONTROLLED grounded reasoning channel (NOT the OpenAI reasoning.summary):
+#   - agent_id: gpt.teacher  -> lite.agents.extensions.teacher.GPTTeacherAgent.
+#     (the shared GPT desktop/browser computer-use class registers as
+#     gpt@(desktop|browser)@use, so the teacher subclass covers WebGym out of
+#     the box — no browser-specific class needed.)
+#   - The agent emits two labelled lines per step — `Thought:` (from
+#     inline_reasoning_instruction) + `Action:` (from action_description_instruction) —
+#     which the teacher subclass parses into inline_reasoning + action_description
+#     content parts (it owns the Action line — the base agent no longer has any
+#     action-description mechanism). reasoning_summary: null — the unsteerable
+#     ~415-char summary is not used.
+#
+# WHY grounded: the distilled student needs screen-grounded, per-step facts that
+# survive screenshot/history truncation. The countermeasures live in the
+# inline_reasoning_instruction below; keep the Thought concise.
+
+agent_id: "gpt.teacher"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+    reasoning_summary: null   # don't generate the discarded reasoning summary
+  # Prompt-controlled reasoning channel. Web-tuned vs the desktop recipe: adds page-STATE
+  # grounding (did the page load/focus/show results?) and answer-PROVENANCE grounding
+  # (point to where on THIS page the answer was read) — the levers against W2/W1.
+  # PURPOSE framing: this Thought is distilled into a smaller student that, at inference,
+  # sees only SOME of the screenshots — so it must carry the task-critical facts in WORDS
+  # (bolded), not assume the page stays visible. (Self-sufficient-trace lever.)
+  inline_reasoning_instruction: |-
+    PURPOSE: this Thought is distilled into a smaller student that, at inference, sees only
+    SOME of the screenshots — so it must carry the task-critical facts in WORDS, not assume
+    the page stays visible.
+    Keep it brief, but never compress away a fact the task needs. Most steps are one sentence;
+    use a few more ONLY when there are several facts to record. Write it as ONE natural
+    paragraph of plain prose — do NOT print the numbers/labels below or format it as a list;
+    they are only a checklist of what your sentence(s) should cover:
+      1. READ — name the relevant thing you see on the current page (and, if you just acted,
+         whether its effect actually appeared).
+      2. RECORD — the moment you see info the task needs (a value, name, date, title, count,
+         or list item), restate it verbatim in **bold** (e.g. **$1,299**). If there are
+         several, bold EACH one — do NOT summarize as "I saw them" — because that page may
+         not be visible when you answer.
+      3. NEXT — how this leads to your next action toward the goal.
+    Skip a part when it doesn't apply (e.g. a routine step with nothing new to record). When
+    about to answer: name where you read it; the answer must follow from the **bold** facts
+    already in your earlier Thoughts — if one isn't there yet, go read it first.
+    Always ground in what is on the page; never narrate without saying why you act.
+  action_description_instruction: >-
+    one short imperative naming the single UI action you will take
+    (e.g. "Click the site's search box.")
+  # resolution omitted → no agent-side resize; model sees the env-native screenshot.
+  # system_prompt below is the standard webgym browse prompt (grounded answers + minimal nav).
+  system_prompt: |
+    You are operating a web browser to find information. The initial website is
+    already open.
+
+    Work from the page in front of you: click links, buttons, and tabs; type into
+    the page's own search box and fields; scroll to reveal more. Report only
+    answers you can SEE on a page you actually visited — never from your own prior
+    or general knowledge.
+
+    You also have two navigation tools (goto and back). Many tasks are solved on
+    the open site, so prefer it and use goto sparingly — but some tasks need a
+    different site, and then you should goto. Guidance for goto:
+      - Prefer the open site's own search box, links, and filters. Web search engines
+        (DuckDuckGo/Google/Bing) are usually IP-blocked in this browser and return an error or
+        captcha page — if a search page errors, do NOT retry it or hop to another engine; go to
+        the target site directly or report you couldn't find it. If a search does load results,
+        open a result and read the page; never answer from search-result snippets.
+      - Going to a site you need (e.g. its homepage) or a link you can see is
+        fine, but do NOT guess deep/constructed URLs from memory — reach deep
+        pages via on-site links and navigation.
+
+    Never use screenshot or wait: the current screenshot is ALWAYS provided after
+    every step, so calling them only wastes a turn.
+
+    When you have found the answer, submit it with the response action. If you
+    genuinely cannot find it, say so plainly rather than guessing.
+
+env_id: "webgym"
+env_kwargs:
+  instruction_template: "{instruction}\n\nInitial website: {website}\n\nWhen you have found the answer, submit it to finish the task."
+  extra_tools: ["goto", "back", "response"]

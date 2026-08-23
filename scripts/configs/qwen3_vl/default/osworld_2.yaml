@@ -1,0 +1,15 @@
+# Qwen3-VL rollout eval on OSWorld-V2 (osworld_2)
+#
+# Mirrors scripts/configs/qwen3_vl/default/osworld.yaml (v1) but with the OFFICIAL V2 step budget.
+# Sampling per upstream CLI default (temperature=0). Sync agent_kwargs with the v1 config.
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer
+    temperature: 0.0
+
+env_id: "osworld_2"
+env_kwargs:
+  max_steps: 200   # OSWorld-V2 official run value (V2 tasks need far longer trajectories than v1's 30)
+  loop_detect: 5   # a make/wrapper knob (LoopDetectWrapper), NOT an OSWorldV2Env.__init__ param
+  extra_tools: ["terminate"]

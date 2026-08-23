@@ -1,0 +1,5 @@
+# Build context is this docker/ dir. Keep it lean: only the Dockerfile,
+# entrypoint.sh and patches/ should ship to the daemon.
+**/__pycache__
+**/*.pyc
+**/.pytest_cache

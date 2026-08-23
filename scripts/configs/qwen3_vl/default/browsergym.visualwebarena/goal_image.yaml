@@ -1,0 +1,40 @@
+# Qwen3-VL vision+coord rollout eval on cua-lite browsergym.visualwebarena (stratified sample).
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/OSWorld/scripts/python/run_multienv_qwen3vl.py
+# Sampling per upstream CLI defaults — TARGETS Qwen3-VL-*-Instruct (NON-thinking).
+# See miniwob/default.yaml for the full per-knob rationale.
+#
+# Prereqs: WA docker services + classifieds docker-compose. See
+# lite/gym/envs/browsergym/README.md.
+
+# The browsergym ``goal_image`` agent shows the VWA goal image(s) on every turn;
+# it's model-agnostic and pointed at the model adapter via ``adapter_key`` below.
+# It decodes ``metadata["goal_images_b64"]`` into persisted turn-0 image parts;
+# the goal images are then inferred from that ordinary image prefix.
+# The bare slug ``qwen3_vl`` auto-completes to ``qwen3_vl@<platform>@<task_type>``
+# from the env metadata (→ the vision+coord adapter). See
+# lite/gym/envs/browsergym/README.md#goal-images.
+agent_id: "visualwebarena.goal_image"
+agent_kwargs:
+  adapter_key: "qwen3_vl"
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "browsergym.visualwebarena"
+env_kwargs:
+  max_steps: 30
+  extra_tools: ["response", "terminate", "goto", "back", "forward", "new_tab", "switch_tab", "close_tab"]
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  # Defaults from ``BrowserGymConfig`` (``use_screenshot=true``,
+  # ``use_ax_tree=false``); the agent sees the page as a raw screenshot
+  # and emits coord-based actions via ``LiteBrowserActionSpace``. Listed
+  # explicitly here for symmetry with text_only.yaml's obs-mode block.
+  use_screenshot: true
+  use_ax_tree: false
+
+  # Vision fast-path: explicitly skip BrowserGym's O(nodes) per-step DOM-
+  # snapshot + AXTree + extra-properties extraction (only the screenshot is
+  # used). SAFE here: coordinate-only action space (no bids). Independent of
+  # use_ax_tree by design (keeps set-of-marks vision possible). Drops env.step
+  # ~22-32s -> ~1-2s on big WA/VWA pages. See main.py _patch_lightweight_obs.
+  skip_dom_extraction: true

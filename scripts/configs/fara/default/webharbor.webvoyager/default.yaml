@@ -1,0 +1,52 @@
+# Fara-1.0 computer-use (coord) rollout eval on WebVoyager.
+# Multi-step web navigation across self-hosted WebHarbor mirrors.
+#
+# Fara-7B is a Qwen2.5-VL-7B web-browsing fine-tune. It reuses the Qwen2.5-VL
+# wire format (pixel coords in the smart-resized image space, factor=28, dynamic
+# ``{W}x{H}`` system prompt) but with the Fara web action enum and the
+# ``FN_CALL_TEMPLATE`` "web automation agent" system prompt. See
+# ``lite/agents/models/fara/adapter.py``.
+#
+# Observation: screenshot-only (plain screenshot; SoM boxes off).
+# Action: Fara's native ``computer_use`` coordinate tools. Fara's web nav/finish
+# (visit_url / history_back / terminate) is native to that enum, but the adapter
+# translates it to canonical Lite standalone calls. The YAML therefore lists the
+# matching schemas for env acceptance and self-contained rollout parquet; Fara's
+# adapter does not render those schemas into its native prompt.
+#
+# Hyperparameters mirror the reference eval
+# (``${CUA_LITE_REFERENCES_ROOT}/fara/webeval/scripts/webvoyager.py`` +
+# ``arg_parsing.py``): max_rounds=100, max_n_images=3, temperature=0 (greedy).
+# resolution=[1440, 900] is Fara's native browser viewport.
+#
+# Related config: scripts/configs/fara/default/webharbor.webvoyager/som.yaml (SoM mode).
+
+agent_id: "fara"
+agent_kwargs:
+  # NO agent-side resolution stretch. The cua-lite WebVoyager env renders the
+  # vanilla WebVoyager viewport (~1024x768) and returns 1024x681 screenshots.
+  # Forcing Fara's native 1440x900 here would exact-stretch 1024x681 -> 1440x900
+  # (AR 1.50 -> 1.60), upscaling + distorting the page — which hurts reading of
+  # small text (e.g. nutrition/price panels). Leaving resolution unset feeds the
+  # env's native frame straight into smart_resize (factor 28), so Fara sees a
+  # sharp, undistorted image. Coordinates are unaffected: the adapter normalizes
+  # to [0,1000] from the smart-resized dims, so click accuracy is AR-agnostic.
+  resolution: null
+  protocol_kwargs:
+    max_n_images: 3   # newest-N screenshot window (FaraHistoryProtocol)
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1500
+
+env_id: "webharbor.webvoyager"
+env_kwargs:
+  max_steps: 100    # Fara reference max_rounds default
+  extra_tools: ["goto", "back", "response", "terminate"]
+  # Answer capture: WebVoyager scores via a VLM judge that only runs when the
+  # agent produced an answer, captured from a ``response`` action.
+  # The standalone ``response`` schema gates env acceptance without teaching
+  # Fara a new native action.
+  # GUI action enum only; Fara-native nav/search/memory/finish stay on the
+  # family wire, not in env_kwargs.valid_actions. The env default would also
+  # trim mouse_move, which is a GUI pointer action in Fara's coord wire.
+  valid_actions: ["click", "type", "key", "mouse_move", "scroll", "wait"]

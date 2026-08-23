@@ -1,0 +1,17 @@
+## HEAD  (2026-07-18)
+
+Initial standardized snapshot at this commit; no predecessor entry.
+VisualWebArena (910 tasks = WebArena stack + Classifieds container) runs the
+strict read/write split via
+`devs/exps/eval/browsergym.visualwebarena/run.sh`: a fully-parallel READ pass
+over non-mutating tasks, then a serial (concurrency 1) WRITE pass over mutating
+tasks in **topological** `depends_on` order, then a read-only RECONCILE pass
+that rebuilds one combined `summary.json` over all tasks that were supposed to
+run. Unlike WebArena, VWA's `depends_on` is NOT monotonic in task-id (346 of the
+533 mutating tasks have a parent registered later), so the write pass is driven
+by a generated prompt-data parquet whose row order is the topological sort.
+Default mode is `goal_image.yaml` (screenshot + coord; goal image(s) re-shown
+each turn); `mixed.yaml` (text + AXTree bid-mode + goal image(s)) and `som.yaml`
+(qwen only) selectable via `EVAL_MODE`. The LLM-judge subset and classifieds
+`require_reset` tasks run by default (need `OPENAI_API_KEY` +
+`VWA_CLASSIFIEDS_RESET_TOKEN` on the env-server); no gpt configs exist for VWA.

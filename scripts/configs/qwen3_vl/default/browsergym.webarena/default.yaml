@@ -1,0 +1,52 @@
+# Qwen3-VL vision+coord rollout eval on cua-lite browsergym.webarena (stratified sample).
+#
+# Reference: ${CUA_LITE_REFERENCES_ROOT}/OSWorld/scripts/python/run_multienv_qwen3vl.py
+# Sampling per upstream CLI defaults — TARGETS Qwen3-VL-*-Instruct (NON-thinking).
+# See miniwob/default.yaml for the full per-knob rationale.
+#
+# Prereqs: docker containers shopping/shopping_admin/forum/gitlab/wikipedia up;
+# WA_* env vars exported. See lite/gym/envs/browsergym/README.md.
+#
+# Pair with `--filter` to run only a chosen task subset
+# (e.g. 75 tasks stratified 15/site: shopping, shopping_admin, gitlab, reddit, map).
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0   # Greedy; pair with `-Instruct` variant (OSWorld convention)
+  # Keep Qwen3-VL's native response-format contract, adding only the WA
+  # strict-string final-answer rule. Setting system_prompt here replaces the
+  # adapter default, so this block intentionally includes the full base prompt.
+  system_prompt: |-
+    # Response format
+
+    Response format for every step:
+    1) Action: a short imperative describing what to do in the UI.
+    2) A single <tool_call>...</tool_call> block.
+
+    Rules:
+    - Output exactly in the order: Action, <tool_call>.
+    - Be brief: one sentence for Action.
+    - Do not output anything else outside those parts.
+    - If finishing a question-answering task, use the response tool; otherwise use the terminate tool.
+    - For WebArena final answers, the answer message must contain only the exact requested value(s). Do not include leading prose, labels, markdown, quotes unless they are part of the value, explanations, or extra facts. Preserve exact spelling, casing, punctuation, symbols, IDs, product names, prices, dates, and order from the page or user request.
+
+env_id: "browsergym.webarena"
+env_kwargs:
+  with_homepage_hint: true  # WebArena p_cot homepage hint: appends homepage URL + site list + /password.html creds to the goal (helps weak models navigate, avoids wandering to public URLs). WA-only (VWA TypeErrors).
+  max_steps: 30
+  extra_tools: ["response", "terminate", "goto", "back", "forward", "new_tab", "switch_tab", "close_tab"]
+  # ─── Obs mode: screenshot only (vision+coord) ────────────────────────
+  # Defaults from ``BrowserGymConfig`` (``use_screenshot=true``,
+  # ``use_ax_tree=false``); the agent sees the page as a raw screenshot
+  # and emits coord-based actions via ``LiteBrowserActionSpace``. Listed
+  # explicitly here for symmetry with text_only.yaml's obs-mode block.
+  use_screenshot: true
+  use_ax_tree: false
+
+  # Vision fast-path: explicitly skip BrowserGym's O(nodes) per-step DOM-
+  # snapshot + AXTree + extra-properties extraction (only the screenshot is
+  # used). SAFE here: coordinate-only action space (no bids). Independent of
+  # use_ax_tree by design (keeps set-of-marks vision possible). Drops env.step
+  # ~22-32s -> ~1-2s on big WA/VWA pages. See main.py _patch_lightweight_obs.
+  skip_dom_extraction: true

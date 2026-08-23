@@ -1,0 +1,19 @@
+# Qwen3.8 rollout eval on the original WindowsAgentArena task set.
+#
+# WAA tags 13/154 evaluator.func=infeasible tasks plus 3 trivial-reward `block:`
+# variants per split (six across both splits). The standard recipe in docs/eval.md
+# filters metadata.others.exclude_reason (-> 138 scored/split), keeping the action
+# space compatible with agents that cannot expose environment-specific tools.
+
+agent_id: "qwen3_8"
+agent_kwargs:
+  sampling_kwargs:
+    temperature: 0.0
+
+env_id: "waa"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5
+  extra_tools: ["terminate"]
+  # (A ready snapshot, built by install.sh, makes each env-server/direct VM boot
+  #  ~5x faster automatically. See the env README.)

@@ -1,0 +1,31 @@
+# Qwen3.8 rollout eval on MobileWorld
+# 161 tasks (201 upstream − 40 agent-mcp) across 20 apps in DinD boxes,
+# evaluated by real device / backend state.
+#
+# Qwen3.8 has no upstream MobileWorld agent; protocol + decoding follow the
+# androidworld sibling (rolling-window + image-fold, greedy).
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_8/default/androidworld.yaml  (mobile sibling)
+#   - scripts/configs/qwen3_vl/default/mobileworld.yaml
+#
+# The 46 agent-user-interaction tasks need the ``ask_user`` extra tool
+# (enabled below) AND OPENAI_API_KEY exported before containers spawn. Set
+# OPENAI_BASE_URL only for a custom endpoint. The vars are forwarded into each
+# box for the simulated-user LLM, whose model is the env's
+# server_kwargs.user_agent_model knob. GUI-only tasks ignore both.
+
+agent_id: "qwen3_8"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+# max_steps omitted: mobileworld's env default is 50 (upstream ``mw eval
+# --max_round 50``).
+env_id: "mobileworld"
+env_kwargs:
+  # Qwen native open parses to canonical open_app; opt in to the env-side
+  # extra_tool boundary. ask_user is the
+  # env-specific tool for agent-user-interaction tasks.
+  loop_detect: 5
+  extra_tools: ["open_app", "ask_user", "response", "terminate"]

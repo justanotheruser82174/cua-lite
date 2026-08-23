@@ -1,0 +1,14 @@
+# MAI-UI rollout eval on MobileGym
+# 416 parameterized tasks across 28 simulated apps, deterministic state-diff judges.
+
+agent_id: "mai_ui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    top_p: 1.0
+    top_k: -1
+
+env_id: "mobilegym"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

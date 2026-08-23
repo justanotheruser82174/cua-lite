@@ -1,0 +1,12 @@
+## f57d3cb  (2026-07-02)
+
+Initial standardized snapshot at this commit; no predecessor entry. WebArena
+(812 tasks) runs the strict read/write split via
+`devs/exps/eval/browsergym.webarena/run.sh`: a fully-parallel READ pass over
+non-mutating tasks, then a serial (concurrency 1) WRITE pass over mutating
+tasks in task-id order (which for WebArena already is `depends_on` order).
+Default mode is `default.yaml` (screenshot + coord); `text_only.yaml`
+(AXTree bid-mode) and `som.yaml` (qwen only) selectable via `EVAL_MODE`. The
+LLM-judge subset runs by default (needs `OPENAI_API_KEY` on the env-server);
+map tasks run by default (skip via `EVAL_READ_FILTER`/`EVAL_WRITE_FILTER` when
+built without OSM).

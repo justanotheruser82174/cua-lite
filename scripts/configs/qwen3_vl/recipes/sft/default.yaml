@@ -1,0 +1,32 @@
+# Qwen3-VL SFT export — adapter defaults (full_history_size=4), downscaled frame.
+#
+# PREFER THE ROLLOUT CONFIG. For data collected by a cua-lite rollout, export
+# with that env's rollout config (scripts/configs/qwen3_vl/default/<env>.yaml):
+# export_sft re-renders every step through the agent adapter, so exporting
+# under a different history window or resolution than the rollout used trains
+# the model on prompts it will never see at inference. Reach for this recipe
+# only for a corpus that has no rollout config of its own.
+#
+# Deliberate difference from scripts/configs/qwen3_vl/default/*.yaml:
+#   - resolution [1280, 720] — reduced from env-native (the rollout configs set
+#     no resolution) to bound vision tokens per screenshot during training.
+#     It belongs under agent_kwargs: the adapter applies it identically at
+#     rollout and at export, which is what keeps model-IO parity.
+# The history window is deliberately NOT overridden — it stays at the adapter
+# default that every rollout config uses.
+#
+# Agent recipe only; pass the dataset on the CLI with --data-paths (and
+# --image-root). Covers all ScaleCUA cohorts. The history window applies to
+# multi-step `use`; single-step grounding.action / grounding.point /
+# grounding.bbox rows have no prior turns to retain.
+#
+# Run: uv run python -m lite.train.export.export_sft \
+#         --config scripts/configs/qwen3_vl/recipes/sft/default.yaml \
+#         --model-id Qwen/Qwen3-VL-2B-Instruct \
+#         --data-paths "${CUA_LITE_DATASETS_ROOT}/cua-lite/ScaleCUA" \
+#         --image-root "${CUA_LITE_DATASETS_ROOT}" \
+#         -o .data/sft/scalecua-qwen3vl/train.parquet
+
+agent_id: "qwen3_vl"
+agent_kwargs:
+  resolution: [1280, 720]

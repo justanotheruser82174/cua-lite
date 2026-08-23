@@ -1,0 +1,17 @@
+# Qwen3.5 RL training on ScreenSpot-Pro
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+#
+# Related configs (sync env_kwargs when changing):
+#   - scripts/configs/qwen3_5/default/screenspot_pro.yaml  (rollout eval)
+#
+# history_n=1 (reduced from the rollout default to save VRAM during training)
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  resolution: [1280, 720]
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "screenspot_pro"
+env_kwargs:
+  binary_reward: true

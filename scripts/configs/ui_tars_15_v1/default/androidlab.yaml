@@ -1,0 +1,26 @@
+# UI-TARS-1.5-7B rollout eval on AndroidLab
+# 138 multi-step tasks across 9 offline apps. Docker-per-worker emulator with
+# the reference's Quick Boot snapshot (seeded state). Eval-only.
+#
+# Related configs (sync env_kwargs / sampling when changing):
+#   - scripts/configs/ui_tars/default/androidlab.yaml  (UI-TARS-7B-DPO)
+#   - scripts/configs/qwen3_vl/default/androidlab.yaml
+#
+# Decoding defaults align with UI-TARS/README_deploy.md (temperature=0.0,
+# top_p=None, max_tokens=400). Kept identical to ui_tars/androidlab.yaml for
+# fair cross-checkpoint comparison unless reproducing a paper-specific table.
+
+agent_id: "ui_tars_15_v1"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    # max_new_tokens=400 matches UI-TARS/README_deploy.md (default would
+    # be 2048 from scripts/rollout.py; we cap to stay aligned with
+    # the upstream deploy example + ui_tars sibling).
+    max_new_tokens: 400
+
+env_id: "androidlab"
+env_kwargs:
+  max_steps: 20
+  loop_detect: 5
+  extra_tools: ["response", "terminate"]

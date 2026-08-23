@@ -1,0 +1,15 @@
+# Env-local scratch guardrail only.
+#
+# Canonical generated task state belongs at repo root:
+#   .cache/lite.scalecua_tasks/
+#
+# Do not place task JSONL catalogs, HF snapshots, judge overlays, exported
+# parquet files, or rollout logs under lite/gym/envs/lite/scalecua/.
+
+.cache/
+tmp/
+staging/
+artifacts/
+rollouts/
+*.log
+*.parquet

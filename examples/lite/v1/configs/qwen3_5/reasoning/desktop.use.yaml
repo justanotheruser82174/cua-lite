@@ -1,0 +1,26 @@
+# Qwen3.5 shared desktop.use config — NATIVE <think> reasoning (no custom prompt).
+#
+# One config for the WHOLE desktop.use family (Lite.OSWorld / Lite.ScaleCUA /
+# Lite.CUAGym / Lite.CUAWorld). They share the same qwen3_5 reasoning adapter and
+# identical agent_kwargs, so a single config drives the joint SFT export.
+#
+# Reasoning uses Qwen3.5's NATIVE <think>...</think> channel (enable_thinking: true) —
+# NOT a prompted "Thought:" system prompt. system_prompt is omitted, so the adapter
+# falls back to its canonical USE_SYSTEM_PROMPT (Action-only, no Thought: line).
+# The teacher stores its Thought as an inline_reasoning content part, so run
+# examples/lite/v1/internalize_cot.py on the dataset FIRST to move it into the
+# reasoning_content field — the chat template then renders it as <think>.
+#
+# NO env_id: export_sft never reads it (adapter is picked per-row from the data's
+# metadata.dims + this agent_id → qwen3_5@desktop@use). For RL/rollout
+# the env is selected separately (ENV_ID / --env-id), and env_kwargs below apply.
+#
+# max_steps=30.
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  # resolution: [1920, 1080]   # default
+  enable_thinking: true     # native <think> channel (no prompted Thought:/Action: format)
+
+env_kwargs:
+  max_steps: 30

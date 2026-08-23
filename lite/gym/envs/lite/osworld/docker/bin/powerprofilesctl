@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR=/var/lib/lite-osworld
+PROFILE_FILE="$STATE_DIR/powerprofilesctl_profile"
+mkdir -p "$STATE_DIR" 2>/dev/null || true
+
+read_profile() {
+  if [ -s "$PROFILE_FILE" ]; then
+    head -n1 "$PROFILE_FILE" | tr -d '\r'
+  else
+    printf '%s\n' "balanced"
+  fi
+}
+
+validate_profile() {
+  case "${1:-}" in
+    power-saver|balanced|performance) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+require_root_for_mutation() {
+  if [ "$(id -u)" -ne 0 ]; then
+    exec sudo -n /usr/local/bin/powerprofilesctl "$@"
+  fi
+}
+
+case "${1:-get}" in
+  ""|get)
+    read_profile
+    ;;
+  set)
+    require_root_for_mutation "$@"
+    profile="${2:-}"
+    if ! validate_profile "$profile"; then
+      printf 'Invalid power profile: %s\n' "$profile" >&2
+      exit 1
+    fi
+    printf '%s\n' "$profile" > "$PROFILE_FILE"
+    ;;
+  list)
+    current="$(read_profile)"
+    for profile in power-saver balanced performance; do
+      if [ "$profile" = "$current" ]; then
+        printf '* %s\n' "$profile"
+      else
+        printf '  %s\n' "$profile"
+      fi
+    done
+    ;;
+  *)
+    printf 'Unsupported powerprofilesctl shim command: %s\n' "$*" >&2
+    exit 1
+    ;;
+esac

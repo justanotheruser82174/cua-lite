@@ -1,0 +1,39 @@
+# Qwen2.5-VL rollout eval on OSWorld-G
+# Single-step click grounding: agent sees screenshot + instruction, outputs click.
+# 564 tasks across bbox / polygon / refusal modes; refusals are tagged
+# ``exclude_reason="refusal"`` — skip via
+# ``--filter "lambda m: not m.others.get('exclude_reason')"``.
+#
+# Reference (sampling): ${CUA_LITE_REFERENCES_ROOT}/OSWorld-G/evaluation/qwen25_vllm_osworld_g_jedi.py
+# Upstream Jedi eval uses ``max_new_tokens=1024, temperature=0``. We keep
+# max_new_tokens=1024 — the wire format is a single short ``<tool_call>``
+# block, so the extra headroom from the qwen3_vl config (10000) isn't
+# needed and just inflates the rollout step timeout budget.
+#
+# Coord wire format: pixel coords in the smart-resized image space
+# (factor=28, max_pixels=12.85M). The adapter rescales to / from cua-lite
+# [0,1000] normalized coords automatically — see
+# ``lite/agents/models/qwen2_5_vl/adapter.py``.
+#
+# Related configs:
+#   - scripts/configs/qwen2_5_vl/default/screenspot_pro.yaml   (sibling grounding bench)
+#   - scripts/configs/qwen3_vl/default/osworld_g.yaml          (Qwen3-VL counterpart; [0,1000] coord space)
+
+agent_id: "qwen2_5_vl"
+agent_kwargs:
+  # Grounding shape provided by Qwen2_5VLDesktopGroundingPointAdapter:
+  # trimmed ``computer_use`` schema (only ``left_click``), dynamic
+  # ``{display_width_px}x{display_height_px}`` system prompt, plus the
+  # ``# Response format`` rules block. Routed via the env's
+  # ``task_type="grounding.point"``.
+  #
+  # resolution: AR-preserving fit-in-box to the SFT training resolution BEFORE
+  # smart_resize, so train/eval prompt + image frame stay byte-identical.
+  # Without this the eval system prompt's ``{W}x{H}`` and the model-side image
+  # tokens both shift, and an SFT checkpoint collapses to near-zero accuracy.
+  resolution: [1280, 720]
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    max_new_tokens: 1024
+
+env_id: "osworld_g"

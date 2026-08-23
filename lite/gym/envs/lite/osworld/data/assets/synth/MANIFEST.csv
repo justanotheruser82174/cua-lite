@@ -1,0 +1,163 @@
+asset_path,license,source_url,intended_use
+# Asset bundle for synth tasks. See README.md for sourcing priority + structure + naming convention.
+# source_url = full re-fetchable URL. Run scripts/utils/assets.sh build to re-pull from manifest.
+# Filename rule: kebab-case content-descriptive (see README §"Naming convention"). NEVER use NASA catalog ID alone.
+photos/space/earth-blue-marble-apollo17.jpg,PD-NASA,https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~orig.jpg,Apollo 17 "Blue Marble" Earth photo (4579x4579) — high-res landscape
+photos/space/earthrise-apollo8.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/NASA-Apollo8-Dec24-Earthrise.jpg/1280px-NASA-Apollo8-Dec24-Earthrise.jpg,Apollo 8 Earthrise — Earth rising over lunar horizon (William Anders, 1968)
+photos/space/europa-ice-surface.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Europa_in_natural_color.png/1280px-Europa_in_natural_color.png,Jupiter moon Europa natural-color disk (icy cracked surface)
+photos/space/io-volcanic-eruption.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/e/e4/Io_Volcanic_Eruption_Galileo.png,Jupiter moon Io volcanic eruption (Galileo)
+photos/space/jupiter-full-disk.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Jupiter%2C_image_taken_by_NASA%27s_Hubble_Space_Telescope%2C_June_2019_-_Edited.jpg/1280px-Jupiter%2C_image_taken_by_NASA%27s_Hubble_Space_Telescope%2C_June_2019_-_Edited.jpg,Jupiter full-disk Hubble view (June 2019)
+photos/space/mars-rover-vista.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/PIA25176-MarsCuriosityRover-GatorBackRocks-20220323.jpg/1280px-PIA25176-MarsCuriosityRover-GatorBackRocks-20220323.jpg,Mars rover vista — Curiosity GatorBack rocks panorama
+photos/space/mars-curiosity-panorama.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Panorama_of_Vera_Rubin_Ridge_NASA_PIA22545.jpg/1280px-Panorama_of_Vera_Rubin_Ridge_NASA_PIA22545.jpg,Mars Curiosity rover panorama — Vera Rubin Ridge
+photos/space/saturn-moon-titan.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/4/45/Titan_in_true_color.jpg,Saturn moon Titan with hazy atmosphere (Cassini true color)
+photos/nature/galaxy-andromeda.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Andromeda_Galaxy_%28with_h-alpha%29.jpg/1280px-Andromeda_Galaxy_%28with_h-alpha%29.jpg,Andromeda galaxy spiral disk (Hα composite)
+photos/nature/galaxy-hubble.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hubble_ultra_deep_field.jpg/1280px-Hubble_ultra_deep_field.jpg,Hubble Ultra-Deep Field — distant galaxies
+photos/portrait/astronaut-apollo11-crew.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Apollo_11_Crew.jpg/1280px-Apollo_11_Crew.jpg,Apollo 11 crew portrait (Armstrong / Collins / Aldrin)
+photos/architecture/nasa-facility.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/VAB_exterior_and_LCC.jpg/1280px-VAB_exterior_and_LCC.jpg,NASA Vehicle Assembly Building exterior — Kennedy Space Center
+photos/education/nebula-pillars-of-creation.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/1280px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg,Hubble "Pillars of Creation" nebula (Eagle Nebula M16)
+photos/education/sun-solar-flare.jpg,PD-NASA,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Mid-level_Solar_Flare_%2815422408952%29.jpg/1280px-Mid-level_Solar_Flare_%2815422408952%29.jpg,Sun with mid-level solar flare (SDO)
+graphics/icon/folder.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/6/68/File_folder_icon.svg,UI icon — folder
+graphics/icon/calendar.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/f/fa/Line-style-icons-calendar-black.svg,UI icon — calendar (event/training decks)
+graphics/icon/clock.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/f/fb/Icon_Clock.svg,UI icon — clock (schedule/timing decks)
+graphics/icon/email.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/e/e8/Email_icon.svg,UI icon — email envelope (contact/signature)
+graphics/icon/gift.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/8/84/Gift_Flat_Icon_Vector.svg,UI icon — gift box (event/promo decks)
+graphics/icon/heart.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg,UI icon — heart (charity/wellness decks)
+graphics/icon/lightbulb.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/0/0c/Idea_lightbulb_silhouette.svg,UI icon — lightbulb (idea/innovation decks)
+graphics/icon/phone.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/d/df/Phone_icon_rotated.svg,UI icon — phone receiver (contact info)
+graphics/icon/settings-gear.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/0/05/Gnome-emblem-system.svg,UI icon — gear (tech/process decks)
+graphics/icon/star.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/a/a7/Star_gradient_icon.svg,UI icon — star (rating/award decks)
+graphics/logo/abstract.svg,CC-BY,https://upload.wikimedia.org/wikipedia/commons/2/22/SVG_Simple_Logo.svg,Abstract corporate logo (SVG logo mark — geometric)
+graphics/logo/circle.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/b/b1/Circle_7_Logo.svg,Simple circle logo (Circle 7 mark)
+graphics/logo/coffee-cup.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/9/9a/Coffee_cup_icon.svg,Coffee-cup themed logo
+graphics/logo/mountain-line.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/8/89/High_mountain_region_silhouette.svg,Mountain silhouette / outdoor / travel themed logo
+graphics/logo/wave-blue.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/2/24/Blue_Flag_Logo.svg,Blue wave / aquatic themed logo
+graphics/badge/award-medal.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/0/0b/Golden_Award_with_a_Blue_Ribbon.svg,Award medal with blue ribbon — certificate decoration
+graphics/badge/ribbon.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/a/af/Scroll-Ribbon.svg,Ribbon scroll banner — decoration
+graphics/diagram/flowchart-simple.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/a/a6/Flowchart_structured_programming.svg,Structured-programming flowchart diagram
+graphics/diagram/network-diagram.svg,PD,https://upload.wikimedia.org/wikipedia/commons/9/97/NetworkTopology-Mesh.svg,Network topology diagram (mesh)
+graphics/emoji-style/cat-face.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/8/8c/Green_cat_emoji.svg,Cat-face emoji-style illustration (casual decks)
+graphics/emoji-style/sun-cute.svg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/4/49/Sun_with_rays_%28fixed_width%29.svg,Sun-with-rays illustration (casual decks)
+# Content-aware Wikimedia Commons batch (mostly CC-BY-SA / CC0 / PD; see Commons file pages for per-asset license)
+photos/food/restaurant-meal.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Food-plate-toast-restaurant_%2824031208550%29.jpg/1024px-Food-plate-toast-restaurant_%2824031208550%29.jpg,Restaurant meal close-up — recipe / hospitality decks
+photos/food/pizza-dish.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/MargheritaPizzaUS.jpg/1024px-MargheritaPizzaUS.jpg,Margherita pizza dish — food/restaurant deck
+photos/food/salad-bowl.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bowl_of_vegetable_salad_001.jpg/1024px-Bowl_of_vegetable_salad_001.jpg,Vegetable salad bowl — healthy-eating / restaurant deck
+photos/food/coffee-latte.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Cup_of_coffee_with_latte_art_2016.jpg/1024px-Cup_of_coffee_with_latte_art_2016.jpg,Coffee latte with latte art — coffee shop deck
+photos/wildlife/bird-perch.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Small_bird_perching_on_a_branch.jpg/1024px-Small_bird_perching_on_a_branch.jpg,Small bird perched on branch — wildlife / nature deck
+photos/wildlife/fox-portrait.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Red_Fox_Portrait.jpg/1024px-Red_Fox_Portrait.jpg,Red fox portrait — wildlife deck
+photos/wildlife/horse-meadow.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Gray_horse_on_green_and_yellow_meadow_%28Unsplash%29.jpg/1024px-Gray_horse_on_green_and_yellow_meadow_%28Unsplash%29.jpg,Gray horse on meadow — wildlife / farm deck
+photos/wildlife/tiger-closeup.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Royal_White_Bengal_Tiger_headshot_at_Cougar_Mountain_Zoological_Park_2.jpg/1024px-Royal_White_Bengal_Tiger_headshot_at_Cougar_Mountain_Zoological_Park_2.jpg,White Bengal tiger headshot — wildlife / conservation deck
+photos/architecture/house-modern.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Modern_house_exterior_with_red_roof_and_landscaped_garden_under_clear_blue_sky.jpg/1280px-Modern_house_exterior_with_red_roof_and_landscaped_garden_under_clear_blue_sky.jpg,Modern house exterior with red-tile roof — real-estate deck
+photos/architecture/office-building.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Vista_desde_abajo_del_exterior_de_un_moderno_edificio_de_oficinas.jpg/1280px-Vista_desde_abajo_del_exterior_de_un_moderno_edificio_de_oficinas.jpg,Modern glass office building shot from below — corporate deck
+photos/architecture/living-room.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Modern_living_room_with_stylish_furniture_and_a_view_of_the_outdoors_in_a_cozy_apartment_setting.jpg/1280px-Modern_living_room_with_stylish_furniture_and_a_view_of_the_outdoors_in_a_cozy_apartment_setting.jpg,Modern living-room interior with sofa, coffee table and TV — real-estate / interior-design deck
+photos/architecture/skyscraper-glass.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Reflective_skyscraper_facade_%28Unsplash%29.jpg/1024px-Reflective_skyscraper_facade_%28Unsplash%29.jpg,Reflective glass skyscraper facade — corporate deck
+photos/event/wedding-decor.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Wedding_Banquet_setting.jpeg/1024px-Wedding_Banquet_setting.jpeg,Wedding banquet table setting — wedding / event deck
+photos/event/concert-stage.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Drummer_performs_energetically_on_stage_with_vibrant_lights_in_a_lively_concert_setting_during_the_night.jpg/1024px-Drummer_performs_energetically_on_stage_with_vibrant_lights_in_a_lively_concert_setting_during_the_night.jpg,Drummer on stage with vibrant lights — music event deck
+photos/event/birthday-table.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/a/ac/Birthday_party_cake.jpg,Birthday cake with lit candles — party / event deck
+photos/office/team-meeting.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Intourist_Onego_Palace_Hotel_meeting_room.JPG/1024px-Intourist_Onego_Palace_Hotel_meeting_room.JPG,Meeting room with conference table — corporate / training deck
+photos/office/laptop-desk.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Modern_workspace_with_a_laptop%2C_books%2C_an_apple%2C_and_a_small_potted_plant_on_a_bright_desk.jpg/1024px-Modern_workspace_with_a_laptop%2C_books%2C_an_apple%2C_and_a_small_potted_plant_on_a_bright_desk.jpg,Laptop workspace on bright desk — tech / WFH deck
+photos/office/server-room.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/BalticServers_data_center.jpg/1280px-BalticServers_data_center.jpg,Server racks with blue indicator lights inside a data center — datacenter / tech deck
+photos/product/wristwatch.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/TAG_Heuer_Monaco%2C_2020.jpg/1024px-TAG_Heuer_Monaco%2C_2020.jpg,TAG Heuer Monaco wristwatch — luxury / e-commerce deck
+photos/product/sneakers.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/HK_clothing_NIKE_brand_Vaporfly_Next_sneakers_white_n_silver_shoes_October_2022_Px3_03.jpg/1024px-HK_clothing_NIKE_brand_Vaporfly_Next_sneakers_white_n_silver_shoes_October_2022_Px3_03.jpg,Nike Vaporfly sneakers product shot — footwear deck
+photos/product/headphones.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/2023_S%C5%82uchawki_Sony_WI-XB400_%281%29.jpg/1024px-2023_S%C5%82uchawki_Sony_WI-XB400_%281%29.jpg,Sony WI-XB400 headphones — tech / audio deck
+photos/city/street-night.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Street_lights_in_Rome_at_night.jpg/1024px-Street_lights_in_Rome_at_night.jpg,Rome street lights at night — travel / urban deck
+photos/city/european-street.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/A_View_of_Traditional_Portuguese_Buildings_with_Yellow_Umbrellas_and_People_on_a_Cobblestone_Street_%2855245786212%29.jpg/1024px-A_View_of_Traditional_Portuguese_Buildings_with_Yellow_Umbrellas_and_People_on_a_Cobblestone_Street_%2855245786212%29.jpg,Portuguese cobblestone street scene — travel / Europe deck
+photos/city/asian-skyline.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Tokyo_Skyline20210123.jpg/1024px-Tokyo_Skyline20210123.jpg,Tokyo skyline — travel / Asia deck
+photos/classroom/desk-and-board.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Classroom_with_chairs_and_blackboard_at_Cornell_University.jpg/1024px-Classroom_with_chairs_and_blackboard_at_Cornell_University.jpg,Classroom with chairs and blackboard — school / education deck
+photos/classroom/library-shelves.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Books_and_Bookshelves_in_Mansueto_Library.jpg/1024px-Books_and_Bookshelves_in_Mansueto_Library.jpg,Mansueto Library bookshelves — education / academic deck
+photos/classroom/open-books.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Warm_cup_of_coffee_sits_on_an_open_book_on_a_wooden_table_in_a_cozy_workspace.jpg/1280px-Warm_cup_of_coffee_sits_on_an_open_book_on_a_wooden_table_in_a_cozy_workspace.jpg,Open book and coffee on a wooden desk — reading / study deck
+photos/medical/stethoscope.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/2023_Stetoskop.jpg/1024px-2023_Stetoskop.jpg,Stethoscope close-up — medical deck
+photos/medical/lab-bench.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/CSIRO_ScienceImage_4229_Laboratory_equipment.jpg/1280px-CSIRO_ScienceImage_4229_Laboratory_equipment.jpg,Laboratory pipettes dispensing into well plate — medical research / science deck
+photos/portrait/person-headshot-1.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Pamela_Anderson_2024_Headshot_by_Norman_Wong.jpg/1024px-Pamela_Anderson_2024_Headshot_by_Norman_Wong.jpg,Person portrait #1 — generic people deck
+photos/portrait/person-headshot-2.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/f/f1/JD_Vance_official_portrait_%28headshot%29.jpg,Person portrait #2 — generic people deck
+photos/portrait/person-headshot-3.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/0/00/Ruth_Bader_Ginsburg_official_SCOTUS_portrait_%28headshot%29.jpg,Person portrait #3 — generic people deck
+photos/landscape/mountain-range.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg/1280px-Mountains_in_snow%2C_Mountain_lake%2C_Chola_Valley%2C_Nepal%2C_Himalayas.jpg,Himalayan mountain range — outdoor / travel deck (non-NASA landscape)
+photos/landscape/beach-sunset.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sunset_at_Ocean_Beach_in_San_Francisco.jpg/1280px-Sunset_at_Ocean_Beach_in_San_Francisco.jpg,Beach sunset (Ocean Beach SF) — vacation / travel deck
+photos/landscape/forest-trail.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Forest_path_through_a_deciduous_forest_in_spring%2C_Finland.jpg/1024px-Forest_path_through_a_deciduous_forest_in_spring%2C_Finland.jpg,Forest path through deciduous forest — outdoor / hiking deck
+photos/landscape/desert-dunes.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Sossusvlei_sand_dunes.jpg/1280px-Sossusvlei_sand_dunes.jpg,Sossusvlei red sand dunes (Namibia) — adventure / geography deck
+photos/energy/wind-turbine.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/a/ac/Res_wind_turbine_poppy_field.jpg,Wind turbine in a poppy field — renewable-energy / sustainability deck
+photos/energy/solar-farm.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Solar_Panel_Farm.jpg/1280px-Solar_Panel_Farm.jpg,Solar panel farm in desert — renewable-energy / sustainability deck
+photos/industrial/factory-loom.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/9/93/Modern_Chafiyeh_Production_Line_Taban_Yazd_Mirjalili.jpg,Textile factory production-line machinery — industrial / manufacturing deck
+photos/education/chalkboard-classroom.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Natalia_Krizhanovskaya_writes_mathematical_formulas_on_the_blackboard_2021.jpg/1280px-Natalia_Krizhanovskaya_writes_mathematical_formulas_on_the_blackboard_2021.jpg,Teacher writing math formulas on classroom whiteboard — education / teaching deck
+photos/education/graduation-ceremony.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Hats_off_to_the_graduates_%28529100529%29.jpg/1280px-Hats_off_to_the_graduates_%28529100529%29.jpg,Graduates tossing caps at commencement ceremony — education / milestone deck
+photos/education/students-studying.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Students_reading_in_leisure_time.jpg/1280px-Students_reading_in_leisure_time.jpg,Schoolchildren reading books together — education / learning deck
+photos/energy/hydroelectric-dam.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Hoover_Dam_Aerial_View2.JPG/1280px-Hoover_Dam_Aerial_View2.JPG,Hoover Dam aerial view with reservoir — energy / hydroelectric deck
+photos/energy/nuclear-cooling-tower.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Cofrentes_nuclear_power_plant_cooling_towers_retouched.jpg/1280px-Cofrentes_nuclear_power_plant_cooling_towers_retouched.jpg,Cofrentes nuclear plant hyperboloid cooling towers with steam plume — energy / nuclear deck
+photos/industrial/cargo-port.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Shipping_container_stacks_-_Port_of_Rotterdam_-_2017_-_1.jpg/1280px-Shipping_container_stacks_-_Port_of_Rotterdam_-_2017_-_1.jpg,Stacked shipping containers at Port of Rotterdam — industrial / logistics deck
+photos/industrial/assembly-line.jpg,CC-BY-SA,https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Hyundai_car_assembly_line.jpg/1280px-Hyundai_car_assembly_line.jpg,Hyundai automotive assembly line with workers and car bodies — industrial / manufacturing deck
+# Wikipedia article HTML (CC-BY-SA — attribution req)
+html/wikipedia/earth.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Earth,Wikipedia Earth article — chrome page-content tasks
+html/wikipedia/solar-system.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Solar_System,Wikipedia Solar System — chrome multi-tab tasks
+html/wikipedia/apollo-program.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Apollo_program,Wikipedia Apollo Program — chrome print-to-PDF
+html/wikipedia/renewable-energy.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Renewable_energy,Wikipedia Renewable Energy — chrome
+html/wikipedia/photosynthesis.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Photosynthesis,Wikipedia Photosynthesis — chrome find-in-page
+html/wikipedia/coffee.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Coffee,Wikipedia Coffee — chrome bookmarks
+html/wikipedia/bicycle.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Bicycle,Wikipedia Bicycle — chrome homepage
+html/wikipedia/pasta.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Pasta,Wikipedia Pasta — chrome translate
+html/wikipedia/mount-everest.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Mount_Everest,Wikipedia Mount Everest — chrome reading list
+html/wikipedia/eiffel-tower.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Eiffel_Tower,Wikipedia Eiffel Tower — chrome pin tab
+html/wikipedia/library-computing.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Library_%28computing%29,Wikipedia Library — chrome zoom
+html/wikipedia/internet-of-things.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Internet_of_things,Wikipedia IoT — chrome save webpage
+# arxiv PDFs (mostly CC-BY; verify per paper)
+docs/pdf/arxiv-1706-03762.pdf,CC-BY-arxiv,https://arxiv.org/pdf/1706.03762.pdf,arxiv 'Attention Is All You Need' — multi_apps PDF extract
+docs/pdf/arxiv-1810-04805.pdf,CC-BY-arxiv,https://arxiv.org/pdf/1810.04805.pdf,arxiv 'BERT' paper — multi_apps PDF
+docs/pdf/arxiv-2005-14165.pdf,CC-BY-arxiv,https://arxiv.org/pdf/2005.14165.pdf,arxiv 'GPT-3' paper — multi_apps PDF
+docs/pdf/arxiv-1611-07004.pdf,CC-BY-arxiv,https://arxiv.org/pdf/1611.07004.pdf,arxiv 'pix2pix' paper — multi_apps PDF
+# Project Gutenberg PD txt
+docs/gutenberg/pride-and-prejudice.txt,PD-Gutenberg,https://www.gutenberg.org/files/1342/1342-0.txt,Pride and Prejudice text — multi_apps text-pipeline
+docs/gutenberg/alice-in-wonderland.txt,PD-Gutenberg,https://www.gutenberg.org/files/11/11-0.txt,Alice in Wonderland text — multi_apps
+docs/gutenberg/frankenstein.txt,PD-Gutenberg,https://www.gutenberg.org/files/84/84-0.txt,Frankenstein text — multi_apps text ops
+docs/gutenberg/tale-of-two-cities.txt,PD-Gutenberg,https://www.gutenberg.org/files/98/98-0.txt,Tale of Two Cities text — multi_apps
+# Real CSVs (PD US gov + Census)
+data/csv/us-population-states.csv,PD-USGov,https://api.census.gov/data/2020/dec/pl?get=NAME%2CP1_001N&for=state%3A*,US Census 2020 state populations (3 cols: State / Population2020 / FIPS) — calc sort/rank/sum
+data/csv/us-state-median-income.csv,PD-USGov,https://api.census.gov/data/2022/acs/acs1?get=NAME%2CB19013_001E&for=state%3A*,US Census ACS 2022 state median household income (3 cols) — calc sort/filter/lookup
+data/csv/us-gdp.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=GDP,FRED US GDP quarterly 1947- (2 cols: date/GDP) — calc time-series tasks
+data/csv/us-unemployment.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=UNRATE,FRED US unemployment rate monthly (2 cols) — calc conditional/chart tasks
+data/csv/us-inflation-cpi.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL,FRED CPI inflation monthly (2 cols) — calc derived col / YoY change
+data/csv/us-fed-funds-rate.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=FEDFUNDS,FRED federal funds rate monthly (2 cols) — calc filter / overlay tasks
+data/csv/us-housing-starts.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=HOUST,FRED US housing starts monthly thousands (2 cols) — calc seasonal aggregate
+data/csv/us-mortgage-30yr.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=MORTGAGE30US,FRED 30-yr mortgage rate weekly 2021-2026 (2 cols, 260 rows) — calc rolling stats
+data/csv/oil-wti-daily.csv,PD-USGov,https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILWTICO,FRED WTI crude oil price daily 2021-2026 (2 cols, 1300 rows) — calc volatility / gaps
+data/csv/world-gdp-2022.csv,CC-BY-WorldBank,https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.CD?date=2022&format=json&per_page=300,World Bank GDP per country 2022 (4 cols: code / name / year / GDP) — calc top-N / group / lookup
+data/csv/world-population-2022.csv,CC-BY-WorldBank,https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?date=2022&format=json&per_page=300,World Bank population per country 2022 (4 cols) — calc text+num table tasks
+# GitHub MIT-licensed code samples
+code/python/pytest-init.py,CC0,manual:pytest-fixture-example,pytest fixture/test example (hand-authored, ~50 lines) — vs_code F&R
+code/python/requests-api.py,Apache-2.0,https://raw.githubusercontent.com/psf/requests/main/src/requests/api.py,requests api.py (Apache-2.0) — vs_code docstring
+code/python/flask-app.py,BSD-3,https://raw.githubusercontent.com/pallets/flask/main/src/flask/app.py,Flask app.py (BSD-3) — vs_code format-document
+code/python/django-utils.py,BSD-3,https://raw.githubusercontent.com/django/django/main/django/utils/text.py,Django utils/text.py (BSD-3) — vs_code multi-cursor
+code/python/numpy-init.py,BSD-3,https://raw.githubusercontent.com/numpy/numpy/main/numpy/__init__.py,numpy __init__.py (BSD-3) — vs_code outline + search
+code/javascript/express-index.js,MIT,https://raw.githubusercontent.com/expressjs/express/master/index.js,express index.js (MIT) — vs_code indent convert
+code/gitignore/Python.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore,github/gitignore Python (CC0) — vs_code .gitignore create
+code/gitignore/Node.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore,github/gitignore Node (CC0)
+code/gitignore/Java.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/Java.gitignore,github/gitignore Java (CC0)
+code/gitignore/Go.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/Go.gitignore,github/gitignore Go (CC0)
+code/gitignore/Rust.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/Rust.gitignore,github/gitignore Rust (CC0)
+code/gitignore/C++.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/C++.gitignore,github/gitignore C++ (CC0)
+code/gitignore/Swift.gitignore,CC0,https://raw.githubusercontent.com/github/gitignore/main/Swift.gitignore,github/gitignore Swift (CC0)
+code/vscode-config/python-settings.json,MIT,https://raw.githubusercontent.com/microsoft/vscode-python/main/.vscode/settings.json,vscode-python settings.json (MIT) — vs_code real settings
+code/java/mockito-bdd.java,MIT,https://raw.githubusercontent.com/mockito/mockito/main/mockito-core/src/main/java/org/mockito/BDDMockito.java,Mockito BDDMockito.java (MIT) — vs_code Java multi-language coverage
+code/go/gin-handler.go,MIT,https://raw.githubusercontent.com/gin-gonic/gin/master/gin.go,Gin web framework gin.go (MIT) — vs_code Go format/F&R
+code/go/chi-mux.go,MIT,https://raw.githubusercontent.com/go-chi/chi/master/mux.go,go-chi router mux.go (MIT) — vs_code Go variant
+code/typescript/typescript-types.ts,Apache-2.0,https://raw.githubusercontent.com/microsoft/TypeScript/main/src/lib/es5.d.ts,TypeScript es5.d.ts (Apache-2.0; truncated 500 lines) — vs_code TS type-defs
+code/typescript/vscode-uri.ts,MIT,https://raw.githubusercontent.com/microsoft/vscode-uri/main/src/uri.ts,vscode-uri uri.ts (MIT) — vs_code real TS source
+code/rust/serde-lib.rs,MIT,https://raw.githubusercontent.com/serde-rs/serde/master/serde/src/lib.rs,serde lib.rs (MIT/Apache dual) — vs_code Rust coverage
+code/rust/tokio-lib.rs,MIT,https://raw.githubusercontent.com/tokio-rs/tokio/master/tokio/src/lib.rs,tokio lib.rs (MIT) — vs_code Rust async runtime sample
+# Additional expansion: more Gutenberg texts + Wikipedia + JSON samples
+docs/gutenberg/art-of-war.txt,PD-Gutenberg,https://www.gutenberg.org/files/132/132-0.txt,Sun Tzu Art of War — multi_apps/os text-pipeline (philosophy genre)
+docs/gutenberg/importance-of-being-earnest.txt,PD-Gutenberg,https://www.gutenberg.org/files/844/844-0.txt,Wilde drama — multi_apps text genre variety
+docs/gutenberg/metamorphosis.txt,PD-Gutenberg,https://www.gutenberg.org/files/5200/5200-0.txt,Kafka Metamorphosis — multi_apps text genre variety
+docs/gutenberg/sherlock-adventures.txt,PD-Gutenberg,https://www.gutenberg.org/files/1661/1661-0.txt,Sherlock Holmes Adventures — multi_apps mystery genre
+docs/gutenberg/moby-dick.txt,PD-Gutenberg,https://www.gutenberg.org/files/2701/2701-0.txt,Moby Dick — multi_apps long-form text
+docs/gutenberg/tom-sawyer.txt,PD-Gutenberg,https://www.gutenberg.org/files/74/74-0.txt,Tom Sawyer — multi_apps adventure genre
+docs/gutenberg/treasure-island.txt,PD-Gutenberg,https://www.gutenberg.org/files/120/120-0.txt,Treasure Island — multi_apps adventure
+html/wikipedia/pizza.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Pizza,Wikipedia Pizza — chrome food-topic content
+html/wikipedia/yoga.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Yoga,Wikipedia Yoga — chrome wellness/lifestyle
+html/wikipedia/origami.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Origami,Wikipedia Origami — chrome arts/crafts
+html/wikipedia/volleyball.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Volleyball,Wikipedia Volleyball — chrome sports
+html/wikipedia/beethoven.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Beethoven,Wikipedia Beethoven — chrome music
+html/wikipedia/mona-lisa.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Mona_Lisa,Wikipedia Mona Lisa — chrome art
+html/wikipedia/octopus.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Octopus,Wikipedia Octopus — chrome wildlife/biology
+html/wikipedia/volcano.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Volcano,Wikipedia Volcano — chrome geology
+html/wikipedia/paper-airplane.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Paper_airplane,Wikipedia Paper Airplane — chrome short article
+html/wikipedia/lego.html,CC-BY-SA,https://en.wikipedia.org/api/rest_v1/page/html/Lego,Wikipedia Lego — chrome consumer/toys
+data/json/github-rust-repo.json,GitHub-API,https://api.github.com/repos/rust-lang/rust,GitHub API repo metadata sample — multi_apps json parse
+data/json/openweather-sample.json,CC0,manual:openweather-current-weather-sample,OpenWeatherMap current-weather API sample payload (hand-authored) — multi_apps json parse

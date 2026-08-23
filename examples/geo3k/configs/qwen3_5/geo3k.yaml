@@ -1,0 +1,14 @@
+# Qwen3.5 base-agent GRPO config for Geo3K.
+#
+# Single-turn Geo3K is the max_turns=1 special case.
+
+agent_id: "qwen3_5.base"
+agent_kwargs:
+  render_tools_section: false
+  system_prompt: |-
+    Solve the geometry problem. Reply in natural language, and put the final answer on the last line as:
+    Answer: \boxed{...}
+
+env_id: "geo3k"
+env_kwargs:
+  max_turns: 1

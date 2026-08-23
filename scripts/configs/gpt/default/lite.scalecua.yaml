@@ -1,0 +1,26 @@
+# GPT-5.5 rollout defaults for lite.scalecua.
+#
+# lite.scalecua is an OSWorld-task adapter on top of the lite.osworld desktop
+# substrate and does not define a separate Docker image. The default runtime
+# image is the normal `cua-lite/lite.osworld:latest`; pass --env-kwargs only for
+# an explicit diagnostic override.
+#
+# IMPORTANT: this env has excluded/auth/proxy-incompatible rows. Always pass the
+# explicit runtime filter before sampling or scoring:
+#
+#   --filter "lambda m: not m.others.get('exclude_reason')"
+#
+# Keep this file aligned with scripts/configs/gpt/default/lite.osworld.yaml:
+# native 1920x1080 screenshots, response chaining/truncation from code defaults,
+# and a 30-step cap for desktop tasks.
+
+agent_id: "gpt"
+agent_kwargs:
+  api_kwargs:
+    reasoning_effort: "medium"
+    max_output_tokens: 4096
+
+env_id: "lite.scalecua"
+env_kwargs:
+  max_steps: 30
+  loop_detect: 5

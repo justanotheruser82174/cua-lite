@@ -1,0 +1,26 @@
+# MAI-UI RL training on MobileGym
+# Related configs: scripts/configs/mai_ui/default/mobilegym.yaml
+
+agent_id: "mai_ui"
+agent_kwargs:
+  resolution: [720, 1600]
+  protocol_kwargs:
+    full_history_size: 1
+    # Cap the text assistant history at 10 most-recent old turns. Upstream
+    # MAI-UI keeps every historical assistant verbatim, so deep multi-turn
+    # tasks (30+ turns is common on mobilegym L3/L4) push per-Sample
+    # total_length past 7000 tokens — the per-Sample fp32 logits buffer
+    # then blows past the per-GPU activation budget mid train step. 10
+    # keeps enough behavioral context for the agent without the OOM tail.
+    summary_history_size: 10
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    top_p: 1.0
+    top_k: -1
+
+# max_steps is omitted so mobilegym uses its native difficulty-based
+# budget: L1=15, L2=30, L3=45, L4=60. Pass max_steps explicitly to override.
+env_id: "mobilegym"
+env_kwargs:
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

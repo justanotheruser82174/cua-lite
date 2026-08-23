@@ -1,0 +1,27 @@
+# MAI-UI rollout eval on AndroidLab
+# 138 multi-step tasks across 9 offline apps. Docker-per-worker emulator with
+# the reference's Quick Boot snapshot (seeded state). Eval-only.
+#
+# Sampling kwargs match upstream mai_naivigation_agent.py default runtime_conf
+# (greedy, deterministic, seed=42). Reference:
+#   ${CUA_LITE_REFERENCES_ROOT}/MAI-UI/src/mai_naivigation_agent.py:228-235
+# and the actual API call at line 535-545.
+#
+# Run:
+#   CUDA_VISIBLE_DEVICES=7 uv run python scripts/rollout.py \
+#     --model-id Tongyi-MAI/MAI-UI-2B --env-id androidlab \
+#     --config-path scripts/configs/mai_ui/default/androidlab.yaml \
+#     --head 2
+
+agent_id: "mai_ui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+    top_p: 1.0
+    top_k: -1
+
+env_id: "androidlab"
+env_kwargs:
+  max_steps: 20
+  loop_detect: 5
+  extra_tools: ["open_app", "response", "terminate"]

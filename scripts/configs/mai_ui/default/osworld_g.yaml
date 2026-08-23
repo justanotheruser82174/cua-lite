@@ -1,0 +1,14 @@
+# MAI-UI rollout eval on OSWorld-G
+# Single-step click grounding via the upstream ``MAI_GROUNDING_SYS_PROMPT``
+# wire format: ``<grounding_think>...</grounding_think><answer>{"coordinate":[x,y]}</answer>``.
+# Cookbook reference: ${CUA_LITE_REFERENCES_ROOT}/MAI-UI/cookbook/grounding.ipynb
+#
+# Related configs:
+#   - scripts/configs/mai_ui/default/screenspot_pro.yaml   (sibling grounding bench)
+
+agent_id: "mai_ui"
+agent_kwargs:
+  sampling_kwargs:  # only honored by rollout.py; RL sets sampling via the trainer (--rollout-temperature/--eval-temperature)
+    temperature: 0.0
+
+env_id: "osworld_g"

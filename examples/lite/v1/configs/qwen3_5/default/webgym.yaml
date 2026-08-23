@@ -1,0 +1,27 @@
+# Qwen3.5 RL training on WebGym
+# Multi-step web information retrieval tasks via OmniBoxes HTTP API.
+#
+# Related configs (sync env_kwargs when changing):
+#   - examples/lite/v1/configs/qwen3_5/reasoning/webgym.yaml  (reasoning SFT/RL/eval)
+#   - scripts/configs/qwen3_5/default/webgym.yaml      (shipped default rollout eval)
+
+agent_id: "qwen3_5"
+agent_kwargs:
+  resolution: [1280, 720]   # RL agent-side downsample (VRAM)
+  # system_prompt omitted → inherits the adapter's canonical USE_SYSTEM_PROMPT
+  # (Action-only; qwen wire "answer" is available only when the saved metadata
+  # exposes canonical response, and terminate only when its schema is active.)
+
+# max_steps is omitted so webgym uses per-difficulty budgets based on split:
+#   train: easy(1-3)→15, medium(4-6)→25, hard(7+)→35
+#   eval:  easy(1-3)→30, medium(4-6)→50, hard(7+)→70
+# Pass max_steps to override.
+env_id: "webgym"
+env_kwargs:
+  instruction_template: "{instruction}\n\nInitial website: {website}\n\nWhen you have found the answer, submit it to finish the task."
+  # WebGym extra_tools: webgym is a Playwright env whose screenshot has
+  # NO browser chrome (no address bar / tabs), so cross-page tasks are only
+  # solvable with nav tools. Opened so the student's surface matches the gpt
+  # teacher recipe (gpt/recipes/collect/webgym.yaml) — the same surface the
+  # SFT data is collected under (export_sft replays it from saved metadata).
+  extra_tools: ["goto", "back", "response"]  # Name selector; env resolves these to metadata.extra_tool_schemas.

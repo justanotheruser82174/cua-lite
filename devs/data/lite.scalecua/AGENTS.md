@@ -210,7 +210,7 @@ uv run python -m lite.data.hf.stage \
               ".data/rollout/lite.scalecua/gpt/$COMMIT/train_annotated" \
   --config-names desktop.use.rl desktop.use.train \
   --name Lite.ScaleCUA \
-  --description "Lite.ScaleCUA GPT-5.5 grounded teacher trajectories; ordinary quality gates tagged in metadata.others.exclude_reason, publish-invalid tool leaks/OOB coordinates hard-dropped (filter with not exclude_reason and episode_return>0.5)"
+  --repo-dir devs/data/lite.scalecua
 
 : "${HF_ORG:?set HF_ORG to your Hub user/org for the private smoke repo}"
 uv run python -m lite.data.hf.upload Lite.ScaleCUA --org "$HF_ORG" --private --tag "$COMMIT"

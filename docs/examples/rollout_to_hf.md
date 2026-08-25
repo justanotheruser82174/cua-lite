@@ -37,7 +37,9 @@ uv run python -m lite.data.hf.stage \
   --log-roots .logs/rollout/scalecua-rl \
   --filter "lambda m: (m.others.get('episode_return') or 0) > 0.5" \
   --name Lite.ScaleCUA.Test \
-  --description "Lite.ScaleCUA rl-split GPT-5.5 desktop trajectories"
+  --description "Lite.ScaleCUA rl-split GPT-5.5 desktop trajectories" \
+  --original-urls https://github.com/THUDM/SCALE-CUA https://huggingface.co/datasets/extreme1228/ScaleCUA \
+  --citation "See https://arxiv.org/abs/2607.11185 (SCALECUA, Lv et al., 2026)."
 
 # 3. upload a private dataset repo to the Hub
 uv run python -m lite.data.hf.upload Lite.ScaleCUA.Test --org "$HF_ORG" --private
@@ -139,6 +141,8 @@ uv run python -m lite.data.hf.stage \
   --log-roots .logs/rollout/scalecua-rl-more \
   --filter "lambda m: (m.others.get('episode_return') or 0) > 0.5" \
   --name Lite.ScaleCUA.Test \
+  --original-urls https://github.com/THUDM/SCALE-CUA https://huggingface.co/datasets/extreme1228/ScaleCUA \
+  --citation "See https://arxiv.org/abs/2607.11185 (SCALECUA, Lv et al., 2026)." \
   --out "$COMBINED_STAGING"
 uv run python -m lite.data.hf.upload Lite.ScaleCUA.Test \
   --org "$HF_ORG" --private --staging "$COMBINED_STAGING"

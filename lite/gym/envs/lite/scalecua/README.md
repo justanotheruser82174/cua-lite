@@ -3,7 +3,7 @@
 `--env-id` `lite.scalecua`
 
 `lite.scalecua` runs the OSWorld subset of
-[ScaleCUA](https://github.com/xlang-ai/ScaleCUA) on the standard CUA-Lite local
+[ScaleCUA](https://github.com/THUDM/SCALE-CUA) on the standard CUA-Lite local
 desktop runtime.
 
 ScaleCUA upstream provides OSWorld-shaped task JSON, setup actions, postconfig
@@ -170,3 +170,19 @@ provisions ScaleCUA task catalogs so the env is runnable.
 
 Validation details, large-run gates, and audit criteria are maintained in
 `devs/envs/lite.scalecua/`.
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{lv2026scalecuascalingcomputeruse,
+  title         = {SCALECUA: Scaling Computer Use Agents with Verifiable Task Synthesis and Efficient Online RL},
+  author        = {Bowen Lv and Xiao Liu and Yanyu Ren and Hanyu Lai and Bohao Jing and Hanchen Zhang and Yanxiao Zhao and Shuntian Yao and Jie Tang and Yuxiao Dong},
+  year          = {2026},
+  eprint        = {2607.11185},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2607.11185}
+}
+```

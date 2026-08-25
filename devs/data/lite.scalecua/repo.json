@@ -1,0 +1,10 @@
+{
+  "description": "Lite.ScaleCUA GPT-5.5 grounded teacher trajectories collected on ScaleCUA's OSWorld tasks and judges via the cua-lite `lite.scalecua` runtime; ordinary quality gates tagged in metadata.others.exclude_reason, publish-invalid tool leaks/OOB coordinates hard-dropped (filter with not exclude_reason and episode_return>0.5)",
+  "original_urls": [
+    "https://github.com/THUDM/SCALE-CUA",
+    "https://huggingface.co/datasets/extreme1228/ScaleCUA",
+    "https://arxiv.org/abs/2607.11185"
+  ],
+  "license": "See original project (THUDM/SCALE-CUA) and dataset (extreme1228/ScaleCUA).",
+  "citation": "See https://arxiv.org/abs/2607.11185 (SCALECUA, Lv et al., 2026)."
+}

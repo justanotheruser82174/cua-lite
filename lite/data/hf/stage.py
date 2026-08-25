@@ -64,6 +64,7 @@ from lite.core.messages.final import (
 from lite.core.metadata import LiteCUAMetadata, metadata_from_dict
 from lite.core.samples import PERSISTED_FINAL_STOP_REASONS
 from lite.core.utils.filters import parse_filter
+from lite.data.hf.card import load_repo_json
 from lite.data.staging import (
     CANONICAL_SPLITS,
     ImageStore,
@@ -108,8 +109,10 @@ def stage(
     val_frac: float = 0.0,
     seed: int = 42,
     config_names: list[str] | None = None,
+    repo_dir: Path | None = None,
     description: str = "",
-    license: str = "other",
+    original_urls: list[str] | None = None,
+    license: str | None = None,
     citation: str = "",
     overwrite: bool = False,
 ) -> None:
@@ -227,14 +230,19 @@ def stage(
     # falls back to <staging>/repo.json when --preproc-dir is absent.
     repo_json = out_dir / "repo.json"
     if not repo_json.exists():
+        # Static per-dataset facts (upstream links, citation, license) are owned by the
+        # route's checked-in repo.json -- the SAME file shape `lite/data/preproc/<dataset>/`
+        # publishes, read through its owner. The run-derived half below is owned by this run.
+        # Explicit flags win over the file so an ad-hoc stage can still override.
+        meta = load_repo_json(repo_dir) if repo_dir else {}
         repo_payload = {
-            "description": description or (
+            "description": description or meta.get("description") or (
                 f"{name}: agent rollout trajectories staged into the canonical "
                 "cua-lite layout for SFT distillation."
             ),
-            "original_urls": [],
-            "license": license,
-            "citation": citation,
+            "original_urls": list(original_urls or meta.get("original_urls") or []),
+            "license": license or meta.get("license") or "other",
+            "citation": citation or meta.get("citation") or "",
             # No row carries a split marker, so hash_split's two inputs are the
             # only way a consumer can reproduce or audit the carve. Record them.
             "extra_notes": (
@@ -298,8 +306,20 @@ def main() -> None:
     cn.add_argument("--config-name", default=None,
                     help="OVERRIDE the HF config_name with a single label broadcast to all "
                          "--log-roots. Shorthand for `--config-names X X ...`.")
+    ap.add_argument("--repo-dir", type=Path, default=None,
+                    help="directory owning this dataset's `repo.json` (description, "
+                         "original_urls, license, citation) — the same file `hf.upload "
+                         "--preproc-dir` reads. Published rollout routes keep it at "
+                         "`devs/data/<route>/`, so the route runbook and the migration runbook "
+                         "cannot drift. The per-field flags below "
+                         "(--description/--original-urls/--license/--citation) override it.")
     ap.add_argument("--description", default="", help="dataset card description (repo.json)")
-    ap.add_argument("--license", default="other", help="dataset license (repo.json)")
+    ap.add_argument("--original-urls", nargs="+", default=None,
+                    help="upstream source URL(s) the rollouts derive from — the task/judge repo, "
+                         "dataset, and paper (repo.json `original_urls`, rendered as the card's "
+                         "`## Origin` list). e.g. `--original-urls "
+                         "https://github.com/THUDM/SCALE-CUA https://arxiv.org/abs/2607.11185`")
+    ap.add_argument("--license", default=None, help="dataset license (repo.json; default 'other')")
     ap.add_argument("--citation", default="", help="dataset citation (repo.json)")
     ap.add_argument("--overwrite", action="store_true",
                     help="replace an existing non-empty output staging dir. Without this, stage "
@@ -328,7 +348,9 @@ def main() -> None:
         val_frac=args.val_frac,
         seed=args.seed,
         config_names=config_names,
+        repo_dir=args.repo_dir,
         description=args.description,
+        original_urls=args.original_urls,
         license=args.license,
         citation=args.citation,
         overwrite=args.overwrite,

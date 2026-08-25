@@ -47,6 +47,13 @@ The dev-side uploaded rollout route table is exactly:
 | `Lite.ScaleCUA` | [devs/data/lite.scalecua/AGENTS.md](/devs/data/lite.scalecua/AGENTS.md) |
 | `WebGym` | [devs/data/webgym/AGENTS.md](/devs/data/webgym/AGENTS.md) |
 
+Each route also owns exactly one `devs/data/<route>/repo.json` — the static HF card
+fields (`description`, `original_urls`, `license`, `citation`). Pass its directory to `hf.stage`
+as `--repo-dir`; `hf.upload` renders `## Origin` and `## License & citation` from it.
+It is the single source for both this route's runbook and
+[devs/migration/AGENTS.md](/devs/migration/AGENTS.md), so a re-stage from either side
+publishes the same upstream attribution. Do not retype those values into a `--description`.
+
 These five routes are also the entire user-defined migration whitelist for
 HF-uploaded rollout datasets. The match is the exact canonical dataset route,
 not a scratch alias, copy, or lookalike child path. Any other uploaded dataset is

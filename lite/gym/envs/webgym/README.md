@@ -181,3 +181,19 @@ The live cursor/cleanup smoke brings up a real `cua-lite/webgym` container, driv
 **References:** [paper](https://arxiv.org/abs/2601.02439) · [dataset](https://huggingface.co/datasets/microsoft/webgym_tasks) · [github](https://github.com/microsoft/webgym)
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{bai2026webgym,
+  title         = {WebGym: Scaling Training Environments for Visual Web Agents with Realistic Tasks},
+  author        = {Hao Bai and Alexey Taymanov and Tong Zhang and Aviral Kumar and Spencer Whitehead},
+  year          = {2026},
+  eprint        = {2601.02439},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2601.02439}
+}
+```

@@ -1,0 +1,10 @@
+{
+  "description": "WebGym gpt-5.5 trajectories collected on WebGym OmniBoxes tasks and judge via the cua-lite `webgym` runtime \u2014 25/60/15 site-start difficulty tiers + curated popular-2102 pool, balanced prompt, serp-only+loop cleaned",
+  "original_urls": [
+    "https://github.com/microsoft/webgym",
+    "https://huggingface.co/datasets/microsoft/webgym_tasks",
+    "https://arxiv.org/abs/2601.02439"
+  ],
+  "license": "See original project (microsoft/webgym, MIT) and task dataset (microsoft/webgym_tasks, CDLA-Permissive-2.0).",
+  "citation": "See https://arxiv.org/abs/2601.02439 (WebGym, Bai et al., 2026)."
+}

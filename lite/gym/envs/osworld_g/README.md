@@ -123,3 +123,17 @@ Single-step (`terminated=True` after one step), identical scoring shape to `scre
 [{"call": "click", "args": {"x": 1436, "y": 340}}]
 [{"call": "report_infeasible", "args": {"reason": "no such element"}}]
 ```
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{xie2025osworldg,
+  author    = {Tianbao Xie and Jiaqi Deng and Xiaochuan Li and Junlin Yang and Haoyuan Wu and Jixuan Chen and Wenjing Hu and Xinyuan Wang and Yuhui Xu and Zekun Wang and Yiheng Xu and Junli Wang and Doyen Sahoo and Tao Yu and Caiming Xiong},
+  title     = {Scaling Computer-Use Grounding via User Interface Decomposition and Synthesis},
+  booktitle = {Advances in Neural Information Processing Systems 38: Annual Conference on Neural Information Processing Systems 2025, NeurIPS 2025, San Diego, CA, USA, December 2-7, 2025 / Mexico City, Mexico, November 30 - December 5, 2025},
+  year      = {2025},
+  url       = {http://papers.nips.cc/paper\_files/paper/2025/hash/22c868099177ee278eb7baccec649f35-Abstract-Datasets\_and\_Benchmarks\_Track.html}
+}
+```

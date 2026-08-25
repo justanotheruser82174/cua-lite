@@ -218,3 +218,20 @@ identical standard/no-context pairs share one VM run; results are resumable unde
 `.data/waa/task-smoke` (gitignored).
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{bonatti2025windows,
+  author    = {Rogerio Bonatti and Dan Zhao and Francesco Bonacci and Dillon Dupont and Sara Abdali and Yinheng Li and Yadong Lu and Justin Wagle and Kazuhito Koishida and Arthur Bucker and Lawrence Keunho Jang and Zheng Hui},
+  title     = {Windows Agent Arena: Evaluating Multi-Modal {OS} Agents at Scale},
+  booktitle = {Forty-second International Conference on Machine Learning, {ICML} 2025, Vancouver, BC, Canada, July 13-19, 2025},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {267},
+  publisher = {{PMLR} / OpenReview.net},
+  year      = {2025},
+  url       = {https://proceedings.mlr.press/v267/bonatti25a.html}
+}
+```

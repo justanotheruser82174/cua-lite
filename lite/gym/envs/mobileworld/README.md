@@ -152,3 +152,20 @@ Key `server_kwargs` (see [Configuration](#configuration) for the file + override
 **Rebuild semantics:** changes under `docker/` (Dockerfile, the `MOBILEWORLD_SHA` pin) are picked up by re-running `install.sh` (use `rebuild` to force; then re-run `scripts/tasks.sh` if tasks changed). Changes to host-side code (main.py, container.py) take effect on the next env-server restart.
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{kong2026mobileworld,
+  author    = {Quyu Kong and Xu Zhang and Zhenyu Yang and Nolan Gao and Chen Liu and Panrong Tong and Chenglin Cai and Hanzhang Zhou and Jianan Zhang and Liangyu Chen and Zhidan Liu and Steven Hoi and Yue Wang},
+  title     = {MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments},
+  booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), {ACL} 2026, San Diego, California, United States, July 2-7, 2026},
+  pages     = {6142--6167},
+  publisher = {Association for Computational Linguistics},
+  year      = {2026},
+  url       = {https://doi.org/10.18653/v1/2026.acl-long.278},
+  doi       = {10.18653/V1/2026.ACL-LONG.278}
+}
+```

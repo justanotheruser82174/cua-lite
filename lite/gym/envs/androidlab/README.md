@@ -160,3 +160,20 @@ Per-episode reset is a fast `adb emu avd snapshot load default_boot` (~3–5 s).
 | Host port range | 21000–21999 | (hardcoded in `container.py`) |
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{xu2025androidlab,
+  author    = {Yifan Xu and Xiao Liu and Xueqiao Sun and Siyi Cheng and Hao Yu and Hanyu Lai and Shudan Zhang and Dan Zhang and Jie Tang and Yuxiao Dong},
+  title     = {AndroidLab: Training and Systematic Benchmarking of Android Autonomous Agents},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), {ACL} 2025, Vienna, Austria, July 27 - August 1, 2025},
+  pages     = {2144--2166},
+  publisher = {Association for Computational Linguistics},
+  year      = {2025},
+  url       = {https://doi.org/10.18653/v1/2025.acl-long.107},
+  doi       = {10.18653/V1/2025.ACL-LONG.107}
+}
+```

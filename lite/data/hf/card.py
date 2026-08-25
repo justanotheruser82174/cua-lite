@@ -7,8 +7,8 @@ identical (front matter, sections, stats table format).
 Inputs:
 
 * ``name`` — repo name (e.g. ``"ScaleCUA"``).
-* ``repo`` — dict loaded from ``lite/data/preproc/<dataset>/repo.json``;
-  see :func:`load_repo_json`. Carries ``description``, ``license``,
+* ``repo`` — dict loaded from a dataset's ``repo.json``; see
+  :func:`load_repo_json`. Carries ``description``, ``license``,
   ``citation``, ``original_urls``, ``extra_notes``.
 * ``stats`` — :class:`lite.data.staging.DatasetStats` with
   ``by_partition``, ``unique_images``, ``image_store_bytes``.
@@ -33,7 +33,12 @@ from lite.data.staging import ORG, DatasetStats
 # ---------------------------------------------------------------------------
 
 def load_repo_json(preproc_dir: Path | str) -> dict:
-    """Read ``repo.json`` from a dataset's preproc directory.
+    """Read ``repo.json`` from a directory that owns one.
+
+    Three producers write this file: ``lite/data/preproc/<dataset>/`` (checked in,
+    preproc datasets), ``devs/data/<route>/`` (checked in, published rollout routes,
+    passed to ``lite.data.hf.stage --repo-dir``), and a rollout staging dir, which
+    ``stage`` writes by merging the route file with this run's provenance.
 
     Required keys: ``description``, ``original_urls`` (list[str]), ``license``,
     ``citation``. Optional: ``extra_notes`` (default ``""``).

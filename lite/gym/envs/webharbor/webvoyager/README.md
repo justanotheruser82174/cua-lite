@@ -203,3 +203,28 @@ lite/gym/envs/webharbor/webvoyager/
 **References:** [paper](https://arxiv.org/abs/2401.13919) · [github](https://github.com/MinorJerry/WebVoyager) · [WebHarbor](https://github.com/aiming-lab/WebHarbor)
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{he2024webvoyager,
+  author    = {Hongliang He and Wenlin Yao and Kaixin Ma and Wenhao Yu and Yong Dai and Hongming Zhang and Zhenzhong Lan and Dong Yu},
+  title     = {WebVoyager: Building an End-to-End Web Agent with Large Multimodal Models},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), {ACL} 2024, Bangkok, Thailand, August 11-16, 2024},
+  pages     = {6864--6890},
+  publisher = {Association for Computational Linguistics},
+  year      = {2024},
+  url       = {https://doi.org/10.18653/v1/2024.acl-long.371},
+  doi       = {10.18653/V1/2024.ACL-LONG.371}
+}
+
+@misc{webharbor2026,
+  title  = {WebHarbor: Docking Real Websites for Evolving GUI Agent Environments},
+  author = {{WebHarbor Team and Contributors}},
+  year   = {2026},
+  url    = {https://aiming-lab.github.io/webharbor.github.io},
+  note   = {Project website.}
+}
+```

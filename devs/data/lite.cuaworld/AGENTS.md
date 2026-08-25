@@ -217,7 +217,7 @@ uv run python -m lite.data.hf.stage \
   --log-roots .data/rollout/lite.cuaworld/gpt/$COMMIT/*/train_annotated \
   --config-names <one desktop.use.<software> per --log-roots, same order> \
   --name Lite.CUAWorld \
-  --description "Lite.CUAWorld GPT-5.5 grounded teacher trajectories (train, 38 softwares); trajectories kept except /opt/env and OOB-coordinate hard-drops, quality gates tagged in metadata.others.exclude_reason (filter with not exclude_reason and episode_return>0.5)"
+  --repo-dir devs/data/lite.cuaworld
 
 # Private smoke upload; use the release org only for the approved final publish.
 : "${HF_ORG:?set HF_ORG to your Hub user/org for the private smoke repo}"

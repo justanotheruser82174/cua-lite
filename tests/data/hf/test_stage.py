@@ -93,6 +93,101 @@ def test_stage_accepts_final_gui_action_without_tool_result(tmp_path) -> None:
     assert messages[-1]["tool_calls"][0]["id"] == "call_0000"
 
 
+def test_stage_records_upstream_origin_urls(tmp_path) -> None:
+    log_root = tmp_path / "logroot"
+    _write_stage_input(log_root, _final_gui_action_row())
+
+    out = tmp_path / "staged"
+    stage(
+        [log_root],
+        name="X",
+        out_dir=out,
+        filter_expr=None,
+        original_urls=["https://github.com/THUDM/SCALE-CUA", "https://arxiv.org/abs/2607.11185"],
+        citation="See https://arxiv.org/abs/2607.11185",
+    )
+
+    repo = json.loads((out / "repo.json").read_text())
+    assert repo["original_urls"] == [
+        "https://github.com/THUDM/SCALE-CUA",
+        "https://arxiv.org/abs/2607.11185",
+    ]
+    assert repo["citation"] == "See https://arxiv.org/abs/2607.11185"
+
+
+def test_stage_seeds_card_fields_from_repo_dir(tmp_path) -> None:
+    log_root = tmp_path / "logroot"
+    _write_stage_input(log_root, _final_gui_action_row())
+    repo_dir = tmp_path / "route"
+    repo_dir.mkdir()
+    (repo_dir / "repo.json").write_text(json.dumps({
+        "description": "route-owned description",
+        "original_urls": ["https://github.com/THUDM/SCALE-CUA"],
+        "license": "other",
+        "citation": "See https://arxiv.org/abs/2607.11185",
+    }))
+
+    out = tmp_path / "staged"
+    stage([log_root], name="X", out_dir=out, filter_expr=None, repo_dir=repo_dir)
+
+    repo = json.loads((out / "repo.json").read_text())
+    assert repo["description"] == "route-owned description"
+    assert repo["original_urls"] == ["https://github.com/THUDM/SCALE-CUA"]
+    assert repo["citation"] == "See https://arxiv.org/abs/2607.11185"
+    # the run-derived half is still this run's, not the file's
+    assert "Staged via `lite.data.hf.stage`" in repo["extra_notes"]
+
+
+def test_stage_flags_override_repo_dir(tmp_path) -> None:
+    log_root = tmp_path / "logroot"
+    _write_stage_input(log_root, _final_gui_action_row())
+    repo_dir = tmp_path / "route"
+    repo_dir.mkdir()
+    (repo_dir / "repo.json").write_text(json.dumps({
+        "description": "route-owned", "original_urls": ["https://example.com/route"],
+        "license": "other", "citation": "route citation",
+    }))
+
+    out = tmp_path / "staged"
+    stage([log_root], name="X", out_dir=out, filter_expr=None, repo_dir=repo_dir,
+          description="ad-hoc", original_urls=["https://example.com/adhoc"])
+
+    repo = json.loads((out / "repo.json").read_text())
+    assert repo["description"] == "ad-hoc"
+    assert repo["original_urls"] == ["https://example.com/adhoc"]
+    assert repo["citation"] == "route citation"  # unset flag falls back to the file
+
+
+def test_stage_takes_license_from_repo_dir_and_defaults_to_other(tmp_path) -> None:
+    log_root = tmp_path / "logroot"
+    _write_stage_input(log_root, _final_gui_action_row())
+    repo_dir = tmp_path / "route"
+    repo_dir.mkdir()
+    (repo_dir / "repo.json").write_text(json.dumps({
+        "description": "d", "original_urls": [], "license": "See upstream (MIT).", "citation": "c",
+    }))
+
+    stage([log_root], name="X", out_dir=tmp_path / "a", filter_expr=None, repo_dir=repo_dir)
+    assert json.loads((tmp_path / "a" / "repo.json").read_text())["license"] == (
+        "See upstream (MIT)."
+    )
+
+    stage([log_root], name="X", out_dir=tmp_path / "b", filter_expr=None)
+    assert json.loads((tmp_path / "b" / "repo.json").read_text())["license"] == "other"
+
+
+def test_stage_rejects_repo_dir_missing_a_required_key(tmp_path) -> None:
+    log_root = tmp_path / "logroot"
+    _write_stage_input(log_root, _final_gui_action_row())
+    repo_dir = tmp_path / "route"
+    repo_dir.mkdir()
+    (repo_dir / "repo.json").write_text(json.dumps({"description": "d", "license": "other"}))
+
+    with pytest.raises(KeyError, match="original_urls"):
+        stage([log_root], name="X", out_dir=tmp_path / "staged", filter_expr=None,
+              repo_dir=repo_dir)
+
+
 def test_stage_rejects_out_of_bounds_coordinates(tmp_path) -> None:
     row = {
         "images": [],

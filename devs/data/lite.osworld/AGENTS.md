@@ -212,7 +212,7 @@ uv run python -m lite.data.hf.stage \
               ".data/rollout/lite.osworld/gpt/$COMMIT/train.perturb_annotated" \
   --config-names desktop.use.synth desktop.use.perturb \
   --name Lite.OSWorld \
-  --description "Lite.OSWorld GPT-5.5 grounded teacher trajectories; ordinary quality gates tagged in metadata.others.exclude_reason, publish-invalid /opt/env leaks and OOB coordinates hard-dropped (filter with not exclude_reason and episode_return>0.5)"
+  --repo-dir devs/data/lite.osworld
 
 : "${HF_ORG:?set HF_ORG to your Hub user/org for the private smoke repo}"
 uv run python -m lite.data.hf.upload Lite.OSWorld --org "$HF_ORG" --private --tag "$COMMIT"

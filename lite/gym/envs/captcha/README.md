@@ -269,3 +269,29 @@ lite/gym/envs/captcha/
 ```
 
 Each `servers/*.py` is self-contained — Flask + PIL + inline HTML/CSS/JS, no shared utilities. Assets (images + JSON configs) are hosted at [OnAnOrange/captcha-assets](https://huggingface.co/datasets/OnAnOrange/captcha-assets) and downloaded into `.cache/assets/` by `install.sh`.
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{chen2026captcha,
+  title         = {CAPTCHA Solving for Native GUI Agents: Automated Reasoning-Action Data Generation and Self-Corrective Training},
+  author        = {Yuxi Chen and Haoyu Zhai and Chenkai Wang and Rui Yang and Lingming Zhang and Gang Wang and Huan Zhang},
+  year          = {2026},
+  eprint        = {2603.23559},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  url           = {https://arxiv.org/abs/2603.23559}
+}
+
+@inproceedings{teoh2025halligan,
+  author    = {Xiwen Teoh and Yun Lin and Siqi Li and Ruofan Liu and Avi Sollomoni and Yaniv Harel and Jin Song Dong},
+  title     = {Are CAPTCHAs Still Bot-hard? Generalized Visual {CAPTCHA} Solving with Agentic Vision Language Model},
+  booktitle = {34th {USENIX} Security Symposium, {USENIX} Security 2025, Seattle, WA, USA, August 13-15, 2025},
+  pages     = {3747--3766},
+  publisher = {{USENIX} Association},
+  year      = {2025},
+  url       = {https://www.usenix.org/conference/usenixsecurity25/presentation/teoh}
+}
+```

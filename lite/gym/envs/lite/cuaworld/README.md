@@ -276,3 +276,19 @@ lite/gym/envs/lite/cuaworld/
 - [cua-lite/lite.cuaworld-assets](https://huggingface.co/datasets/cua-lite/lite.cuaworld-assets) — materials repo (HF dataset)
 - Image stack: `cua-lite/lite.cuaworld.base` (the shared `lite/gym/sandbox/docker/Dockerfile.linux` built with `--build-arg USER=ga`, so the in-container unix user is `ga` — matching the upstream assets, which hardcode `ga`) → `cua-lite/lite.cuaworld.<software>` (runs that software's install hooks)
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{aggarwal2026gymanything,
+  title         = {Gym-Anything: Turn any Software into an Agent Environment},
+  author        = {Pranjal Aggarwal and Graham Neubig and Sean Welleck},
+  year          = {2026},
+  eprint        = {2604.06126},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2604.06126}
+}
+```

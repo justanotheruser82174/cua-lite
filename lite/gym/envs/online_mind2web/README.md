@@ -152,3 +152,25 @@ lite/gym/envs/online_mind2web/
 **References:** [paper](https://arxiv.org/abs/2410.13232) · [dataset](https://huggingface.co/datasets/osunlp/Online-Mind2Web) · [github](https://github.com/OSU-NLP-Group/Online-Mind2Web)
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{xue2025an,
+  title     = {An Illusion of Progress? Assessing the Current State of Web Agents},
+  author    = {Tianci Xue and Weijian Qi and Tianneng Shi and Chan Hee Song and Boyu Gou and Dawn Song and Huan Sun and Yu Su},
+  booktitle = {Second Conference on Language Modeling},
+  year      = {2025},
+  url       = {https://openreview.net/forum?id=6jZi4HSs6o}
+}
+
+@inproceedings{deng2023mind2web,
+  author    = {Xiang Deng and Yu Gu and Boyuan Zheng and Shijie Chen and Samual Stevens and Boshi Wang and Huan Sun and Yu Su},
+  title     = {Mind2Web: Towards a Generalist Agent for the Web},
+  booktitle = {Advances in Neural Information Processing Systems 36: Annual Conference on Neural Information Processing Systems 2023, NeurIPS 2023, New Orleans, LA, USA, December 10 - 16, 2023},
+  year      = {2023},
+  url       = {http://papers.nips.cc/paper\_files/paper/2023/hash/5950bf290a1570ea401bf98882128160-Abstract-Datasets\_and\_Benchmarks.html}
+}
+```

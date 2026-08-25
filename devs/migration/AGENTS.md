@@ -219,8 +219,17 @@ uv run python -m lite.data.hf.stage \
     --config-names desktop.use.rl desktop.use.train \
     --filter "lambda m: 'incomplete' not in (m.others.get('exclude_reason') or '').split(',')" \
     --name Lite.ScaleCUA \
+    --repo-dir devs/data/lite.scalecua \
     --out .data/hf/staged/cua-lite/Lite.ScaleCUA
 ```
+
+**Always pass `--repo-dir` here, and pass the route's directory — not a description typed
+in this doc.** It is a runbook rule, not a CLI default: `stage` runs happily without it.
+`upload` renders the card from the `repo.json` this `stage` writes, so a re-stage without it
+republishes the dataset with an empty `## Origin` and no citation, silently discarding the
+upstream attribution the route already publishes. Every route in the
+[devs/data route table](/devs/data/AGENTS.md) owns exactly one `devs/data/<route>/repo.json`;
+pass that directory so the migration runbook and the route runbook cannot drift.
 
 **Trap — one log-root per config, not one call with every `--config-names`.** Passing
 `--config-names desktop.use.rl desktop.use.train` to a single `unstage` writes both cohorts into

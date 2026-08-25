@@ -208,3 +208,17 @@ lite/gym/envs/lite/osworld/
 - [CUA](https://github.com/trycua/cua) — desktop image lineage only (`cua-xfce` + its noVNC fork); the host↔container transport is [exec-stdio](/lite/gym/sandbox/exec_stdio/), not the `cua` agent / computer-server SDK
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{xie2024osworld,
+  author    = {Tianbao Xie and Danyang Zhang and Jixuan Chen and Xiaochuan Li and Siheng Zhao and Ruisheng Cao and Toh Jing Hua and Zhoujun Cheng and Dongchan Shin and Fangyu Lei and Yitao Liu and Yiheng Xu and Shuyan Zhou and Silvio Savarese and Caiming Xiong and Victor Zhong and Tao Yu},
+  title     = {OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments},
+  booktitle = {Advances in Neural Information Processing Systems 37: Annual Conference on Neural Information Processing Systems 2024, NeurIPS 2024, Vancouver, BC, Canada, December 10 - 15, 2024},
+  year      = {2024},
+  url       = {http://papers.nips.cc/paper\_files/paper/2024/hash/5d413e48f84dc61244b6be550f1cd8f5-Abstract-Datasets\_and\_Benchmarks\_Track.html}
+}
+```

@@ -223,7 +223,7 @@ READBACK_ROOT="$PWD/.data/huggingface-readback"
 uv run python -m lite.data.hf.stage \
   --log-roots ".data/rollout/lite.cuagym/gpt/$COMMIT/train_annotated" \
   --name Lite.CUAGym \
-  --description "Lite.CUAGym GPT-5.5 grounded teacher trajectories; trajectories kept except /opt/env and OOB-coordinate hard-drops, quality gates tagged in metadata.others.exclude_reason (filter with not exclude_reason and episode_return>0.5)"
+  --repo-dir devs/data/lite.cuagym
 
 : "${HF_ORG:?set HF_ORG to your Hub user/org for the private smoke repo}"
 uv run python -m lite.data.hf.upload Lite.CUAGym --org "$HF_ORG" --private --tag "$COMMIT"

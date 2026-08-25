@@ -269,7 +269,7 @@ uv run python -m lite.data.hf.stage \
               .data/rollout/webgym/gpt/$COMMIT/d5_clean .data/rollout/webgym/gpt/$COMMIT/d6_clean \
               .data/rollout/webgym/gpt/$COMMIT/d7_clean .data/rollout/webgym/gpt/$COMMIT/popular_clean \
   --name WebGym \
-  --description "WebGym gpt-5.5 trajectories — 25/60/15 site-start difficulty tiers + curated popular-2102 pool, balanced prompt, serp-only+loop cleaned"
+  --repo-dir devs/data/webgym
 
 # step 4: upload to a private smoke repo. Upload is transport only: it packages,
 #   pushes, and tags the staged tree; it does not replace stage validation.

@@ -175,3 +175,19 @@ lite/gym/envs/mobilegym/
 | Media & Reading | Bilibili (哔哩哔哩), Spotify, WeChat Reading (微信读书) |
 | Travel & Life | 12306 (铁路12306), Map, Tencent Meeting (腾讯会议), Weather |
 | System | Launcher, Settings, Contacts, SMS, Notes, Calendar, Clock, Calculator, Files, Gallery, Browser, Compass, AnswerSheet, ThemeStore |
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{wu2026mobilegym,
+  title         = {MobileGym: A Verifiable and Highly Parallel Simulation Platform for Mobile GUI Agent Research},
+  author        = {Dingbang Wu and Rui Hao and Haiyang Wang and Shuzhe Wu and Han Xiao and Zhenghong Li and Bojiang Zhou and Zheng Ju and Zichen Liu and Lue Fan and Zhaoxiang Zhang},
+  year          = {2026},
+  eprint        = {2605.26114},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2605.26114}
+}
+```

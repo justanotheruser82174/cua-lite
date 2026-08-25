@@ -145,3 +145,18 @@ Key `server_kwargs` (see [Configuration](#configuration) for the file + override
 **Rebuild semantics:** changes to `docker/Dockerfile`, `docker/apps.sh`, patches, or image-time pip deps are picked up by re-running `install.sh` (use `rebuild` to force). `docker/server.py` and host-side code (main.py, container.py) take effect on the next env-server restart because the server is bind-mounted at run time.
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{rawles2025androidworld,
+  author    = {Christopher Rawles and Sarah Clinckemaillie and Yifan Chang and Jonathan Waltz and Gabrielle Lau and Marybeth Fair and Alice Li and William E. Bishop and Wei Li and Folawiyo Campbell{-}Ajala and Daniel Kenji Toyama and Robert James Berry and Divya Tyamagundlu and Timothy P. Lillicrap and Oriana Riva},
+  title     = {AndroidWorld: {A} Dynamic Benchmarking Environment for Autonomous Agents},
+  booktitle = {The Thirteenth International Conference on Learning Representations, {ICLR} 2025, Singapore, April 24-28, 2025},
+  publisher = {OpenReview.net},
+  year      = {2025},
+  url       = {https://openreview.net/forum?id=il5yUQsrjC}
+}
+```

@@ -274,3 +274,19 @@ uv run python scripts/rollout.py \
   --config-path scripts/configs/gpt/default/lite.cuagym.yaml \
   --head 5
 ```
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{wang2026cuagymscalingverifiabletraining,
+  title         = {CUA-Gym: Scaling Verifiable Training Environments and Tasks for Computer-Use Agents},
+  author        = {Bowen Wang and Dunjie Lu and Junli Wang and Tianyi Bai and Shixuan Liu and Zhipeng Zhang and Haiquan Wang and Hao Hu and Tianbao Xie and Shuai Bai and Dayiheng Liu and Que Shen and Junyang Lin and Tao Yu},
+  year          = {2026},
+  eprint        = {2605.25624},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2605.25624}
+}
+```

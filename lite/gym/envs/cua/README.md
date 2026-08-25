@@ -100,3 +100,17 @@ Runs **only at episode end** (`terminate` / `response` / `max_steps`) via cua-be
 > which truncates under concurrent load — verified: at `--concurrency 4` the canary `154d0750` scored
 > `0.0` (+ reset errors) vs `0.667` sequentially. `basic`/`workflows` have no per-task install, so they
 > run concurrently fine (e.g. `--concurrency 8`).
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@software{cua2025,
+  author  = {{Cua AI, Inc.}},
+  title   = {Cua},
+  year    = {2025},
+  url     = {https://github.com/trycua/cua},
+  license = {MIT}
+}
+```

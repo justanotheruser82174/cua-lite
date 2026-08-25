@@ -315,3 +315,48 @@ MINIWOB_URL=http://localhost:7560/miniwob/ uv run pytest tests/gym/envs/browserg
 | Reset timeouts at 32+ concurrent envs | MiniWoB | Reduce `--concurrency` to 16, or use a faster HTTP server (nginx) |
 
 </details>
+
+## Citation
+
+Please cite BrowserGym and the benchmark(s) you run alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@article{chezelles2025browsergym,
+  title   = {The BrowserGym Ecosystem for Web Agent Research},
+  author  = {Thibault Le Sellier de Chezelles and Maxime Gasse and Alexandre Lacoste and Massimo Caccia and Alexandre Drouin and L{\'e}o Boisvert and Megh Thakkar and Tom Marty and Rim Assouel and Sahar Omidi Shayegan and Lawrence Keunho Jang and Xing Han L{\`u} and Ori Yoran and Dehan Kong and Frank F. Xu and Siva Reddy and Graham Neubig and Quentin Cappart and Russ Salakhutdinov and Nicolas Chapados},
+  journal = {Transactions on Machine Learning Research},
+  issn    = {2835-8856},
+  year    = {2025},
+  url     = {https://openreview.net/forum?id=5298fKGmv3},
+  note    = {Expert Certification}
+}
+
+@inproceedings{liu2018miniwob,
+  author    = {Evan Zheran Liu and Kelvin Guu and Panupong Pasupat and Tianlin Shi and Percy Liang},
+  title     = {Reinforcement Learning on Web Interfaces using Workflow-Guided Exploration},
+  booktitle = {6th International Conference on Learning Representations, {ICLR} 2018, Vancouver, BC, Canada, April 30 - May 3, 2018, Conference Track Proceedings},
+  publisher = {OpenReview.net},
+  year      = {2018},
+  url       = {https://openreview.net/forum?id=ryTp3f-0-}
+}
+
+@inproceedings{zhou2024webarena,
+  author    = {Shuyan Zhou and Frank F. Xu and Hao Zhu and Xuhui Zhou and Robert Lo and Abishek Sridhar and Xianyi Cheng and Tianyue Ou and Yonatan Bisk and Daniel Fried and Uri Alon and Graham Neubig},
+  title     = {WebArena: {A} Realistic Web Environment for Building Autonomous Agents},
+  booktitle = {The Twelfth International Conference on Learning Representations, {ICLR} 2024, Vienna, Austria, May 7-11, 2024},
+  publisher = {OpenReview.net},
+  year      = {2024},
+  url       = {https://openreview.net/forum?id=oKn9c6ytLx}
+}
+
+@inproceedings{koh2024visualwebarena,
+  author    = {Jing Yu Koh and Robert Lo and Lawrence Jang and Vikram Duvvur and Ming Chong Lim and Po{-}Yu Huang and Graham Neubig and Shuyan Zhou and Russ Salakhutdinov and Daniel Fried},
+  title     = {VisualWebArena: Evaluating Multimodal Agents on Realistic Visual Web Tasks},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), {ACL} 2024, Bangkok, Thailand, August 11-16, 2024},
+  pages     = {881--905},
+  publisher = {Association for Computational Linguistics},
+  year      = {2024},
+  url       = {https://doi.org/10.18653/v1/2024.acl-long.50},
+  doi       = {10.18653/V1/2024.ACL-LONG.50}
+}
+```

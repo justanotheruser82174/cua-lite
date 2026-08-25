@@ -80,3 +80,17 @@ A handful of tasks under the `eval` split (e.g. `create_file`). Metadata in `env
 ## Evaluation
 
 Runs **only at episode end** (`terminate` / `response` / `max_steps`) via each task's deterministic evaluator (binary reward), with an oracle for validation.
+
+## Citation
+
+Please cite [CUA-Lite](/README.md#citation).
+
+```bibtex
+@misc{cua-lite,
+  author       = {Zhanhui Zhou and Weichen Zhang and Haoran Liu and Lingjie Chen and Tianneng Shi and Kevin Lin and Zhengyuan Yang and Lijuan Wang and Dawn Song},
+  title        = {CUA-Lite: Computer-Use Agents Made Simple},
+  year         = {2026},
+  howpublished = {\url{https://github.com/cua-lite/cua-lite}},
+  note         = {Accessed: 2026-08-24}
+}
+```

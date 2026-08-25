@@ -101,3 +101,20 @@ lite/gym/envs/screenspot_pro/
 - Reference eval code: [ScreenSpot-Pro-GUI-Grounding](https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding)
 
 </details>
+
+## Citation
+
+Please cite the upstream work alongside [CUA-Lite](/README.md#citation).
+
+```bibtex
+@inproceedings{li2025screenspotpro,
+  author    = {Kaixin Li and Ziyang Meng and Hongzhan Lin and Ziyang Luo and Yuchen Tian and Jing Ma and Zhiyong Huang and Tat{-}Seng Chua},
+  title     = {ScreenSpot-Pro: {GUI} Grounding for Professional High-Resolution Computer Use},
+  booktitle = {Proceedings of the 33rd {ACM} International Conference on Multimedia, {MM} 2025, Dublin, Ireland, October 27-31, 2025},
+  pages     = {8778--8786},
+  publisher = {{ACM}},
+  year      = {2025},
+  url       = {https://doi.org/10.1145/3746027.3755688},
+  doi       = {10.1145/3746027.3755688}
+}
+```

